@@ -1,0 +1,12 @@
+#Tue May 10 11:59:08 CEST 2011
+eclipse.preferences.version=1
+encoding//.settings/org.eclipse.xtend.shared.ui.prefs=MacRoman
+encoding//src/metamodel/Checks.chk=MacRoman
+encoding//src/metamodel/Extensions.ext=MacRoman
+encoding//src/metamodel/metamodel.ecore=MacRoman
+encoding//src/template/GeneratorExtensions.ext=MacRoman
+encoding//src/template/Template.xpt=ISO-8859-1
+encoding//src/workflow/generator.mwe=MacRoman
+encoding//src/workflow/generatorWithBackend.mwe=MacRoman
+encoding//src/workflow/generatorWithProfiler.mwe=MacRoman
+encoding/<project>=MacRoman

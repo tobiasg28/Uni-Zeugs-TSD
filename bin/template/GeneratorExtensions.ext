@@ -1,0 +1,12 @@
+import metamodel;
+
+extension metamodel::Extensions reexport;
+
+getter(Attribute this) :
+	"get"+name.toFirstUpper();
+	
+setter(Attribute this) :
+	"set"+name.toFirstUpper();
+
+tablename(Attribute this) :
+    "swag_"+name.toLowerCase();

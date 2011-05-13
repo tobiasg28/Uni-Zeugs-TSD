@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="ASCII"?>
+<metamodel:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metamodel="http://www.example.org/metamodel" xsi:schemaLocation="http://www.example.org/metamodel metamodel/metamodel.ecore">
+  <types xsi:type="metamodel:Datatype" name="String"/>
+  <types xsi:type="metamodel:Datatype" name="int"/>
+  <types xsi:type="metamodel:Datatype" name="java.util.Date"/>
+  <types xsi:type="metamodel:Datatype" name="java.util.TimeZone"/>
+  <types xsi:type="metamodel:Datatype" name="boolean"/>
+  <types xsi:type="metamodel:Entity" name="User">
+    <attributes name="username" type="//@types.0">
+      <annotations annotationType="Column" unique="true"/>
+    </attributes>
+    <attributes name="password" type="//@types.0"/>
+    <attributes name="fullName" type="//@types.0"/>
+    <attributes name="adress" type="//@types.0"/>
+    <attributes name="timezone" type="//@types.3"/>
+    <attributes name="outMessages" type="//@types.6" list="true">
+      <annotations mappedBy="//@types.6/@attributes.0"/>
+    </attributes>
+    <attributes name="inMessages" type="//@types.6" list="true">
+      <annotations mappedBy="//@types.6/@attributes.1"/>
+    </attributes>
+    <attributes name="participations" type="//@types.9" list="true">
+      <annotations mappedBy="//@types.9/@attributes.2"/>
+    </attributes>
+  </types>
+  <types xsi:type="metamodel:Entity" name="Message">
+    <attributes name="fromUser" type="//@types.5">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="toUser" type="//@types.5">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="title" type="//@types.0"/>
+    <attributes name="content" type="//@types.0"/>
+    <attributes name="date" type="//@types.2"/>
+  </types>
+  <types xsi:type="metamodel:Entity" name="GameMap">
+    <attributes name="name" type="//@types.0"/>
+    <attributes name="maxUsers" type="//@types.1"/>
+    <attributes name="participations" type="//@types.9" list="true">
+      <annotations mappedBy="//@types.9/@attributes.3"/>
+    </attributes>
+    <attributes name="squares" type="//@types.13" list="true">
+      <annotations mappedBy="//@types.13/@attributes.0"/>
+    </attributes>
+  </types>
+  <types xsi:type="metamodel:Entity" name="Resource">
+    <attributes name="name" type="//@types.0"/>
+  </types>
+  <types xsi:type="metamodel:Entity" name="Participation">
+    <attributes name="since" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="lastLogin" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="participant" type="//@types.5">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="map" type="//@types.7">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="resources" type="//@types.19" list="true">
+      <annotations/>
+    </attributes>
+    <attributes name="troops" type="//@types.11" list="true">
+      <annotations mappedBy="//@types.11/@attributes.4"/>
+    </attributes>
+    <attributes name="bases" type="//@types.18" list="true">
+      <annotations mappedBy="//@types.18/@attributes.2"/>
+    </attributes>
+  </types>
+  <types xsi:type="metamodel:Entity" name="GameStep">
+    <attributes name="date" type="//@types.2"/>
+  </types>
+  <types xsi:type="metamodel:Entity" name="Troop">
+    <attributes name="created" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="upgradeLevel" type="//@types.12">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="levelUpgradeStart" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="levelUpgradeFinish" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="participation" type="//@types.9">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="currentSquare" type="//@types.13">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="targetSquare" type="//@types.13">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="movementStart" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="movementFinish" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+  </types>
+  <types xsi:type="metamodel:Entity" name="TroopType">
+    <attributes name="strength" type="//@types.1"/>
+    <attributes name="speed" type="//@types.1"/>
+    <attributes name="initialCost" type="//@types.19">
+      <annotations annotationType="OneToOne"/>
+    </attributes>
+    <attributes name="upgradeCost" type="//@types.19">
+      <annotations annotationType="OneToOne"/>
+    </attributes>
+  </types>
+  <types xsi:type="metamodel:Entity" name="Square">
+    <attributes name="map" type="//@types.7">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="positionX" type="//@types.1"/>
+    <attributes name="positionY" type="//@types.1"/>
+    <attributes name="privilegedFor" type="//@types.8">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="building" type="//@types.17">
+      <annotations annotationType="OneToOne" mappedBy="//@types.17/@attributes.2"/>
+    </attributes>
+  </types>
+  <types xsi:type="metamodel:Entity" name="ItemType"/>
+  <types xsi:type="metamodel:Entity" name="CachedInvalidationEntry">
+    <attributes name="targetType" type="//@types.14">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+  </types>
+  <types xsi:type="metamodel:Entity" name="BuildingType">
+    <attributes name="initialCost" type="//@types.19">
+      <annotations annotationType="OneToOne"/>
+    </attributes>
+    <attributes name="upgradeCost" type="//@types.19">
+      <annotations annotationType="OneToOne"/>
+    </attributes>
+    <attributes name="productionRate" type="//@types.1"/>
+    <attributes name="productionType" type="//@types.8">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+  </types>
+  <types xsi:type="metamodel:Entity" name="Building">
+    <attributes name="created" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="base" type="//@types.18">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="square" type="//@types.13">
+      <annotations annotationType="OneToOne"/>
+    </attributes>
+    <attributes name="type" type="//@types.16">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="upgradeLevel" type="//@types.1"/>
+    <attributes name="levelUpgradeStart" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="levelUpgradeFinish" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="lastProductionStep" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+  </types>
+  <types xsi:type="metamodel:Entity" name="Base">
+    <attributes name="created" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="destroyed" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="participation" type="//@types.9">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="square" type="//@types.13">
+      <annotations annotationType="OneToOne"/>
+    </attributes>
+    <attributes name="starterBase" type="//@types.4"/>
+    <attributes name="lastProductionStep" type="//@types.10">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="buildings" type="//@types.17" list="true">
+      <annotations mappedBy="//@types.17/@attributes.1"/>
+    </attributes>
+  </types>
+  <types xsi:type="metamodel:Entity" name="ResourceAmount">
+    <attributes name="resource" type="//@types.8">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
+    <attributes name="amount" type="//@types.1"/>
+  </types>
+</metamodel:Model>
