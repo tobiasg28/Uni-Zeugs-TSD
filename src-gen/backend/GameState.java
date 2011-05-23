@@ -10,9 +10,12 @@ import entities.GameMap;
 import entities.GameStep;
 import entities.Participation;
 import entities.ResourceAmount;
+import entities.Square;
 import entities.Troop;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -98,9 +101,36 @@ class GameState {
             }
             p.setBases(destroyBases(p.getBases()));
             
-            //Attack Troops
-            for(Troop t : p.getTroops()){
-                //TODO
+            
+        }
+        
+        //Attack Troops vs Troops
+        Map<Square, List<Troop>> fights = new HashMap<Square, List<Troop>>();
+        for(Troop t : troops){
+            if(fights.containsKey(t.getCurrentSquare())){
+                fights.get(t.getCurrentSquare()).add(t);
+            }else{
+                ArrayList<Troop> list = new ArrayList<Troop>();
+                list.add(t);
+                fights.put(t.getCurrentSquare(), list);
+            }
+        }
+        for(Square s : fights.keySet()){
+            Participation winner = getWinner(fights.get(s));
+            if(winner != null){
+                //Just the winner troops stay alive
+                for(Troop t : fights.get(s)){
+                    if(!t.getParticipation().equals(winner)){
+                        Participation p = t.getParticipation();
+                        p.getTroops().remove(t);
+                    }
+                }
+            }else{
+                //All losers
+                for(Troop t : fights.get(s)){
+                    Participation p = t.getParticipation();
+                    p.getTroops().remove(t);
+                }
             }
         }
         
@@ -207,6 +237,11 @@ class GameState {
         }
         
         return nextBases;
+    }
+
+    //TODO
+    private static Participation getWinner(List<Troop> get) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
 }
