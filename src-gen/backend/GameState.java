@@ -148,7 +148,7 @@ public class GameState {
      * @param bases
      * @return 
      */
-    private static List<ResourceAmount> createRessources(List<ResourceAmount> resources, List<Base> bases) {
+    public static List<ResourceAmount> createRessources(List<ResourceAmount> resources, List<Base> bases) {
         List<ResourceAmount> nextResources = resources;
 
         for (ResourceAmount r : nextResources) {
@@ -156,13 +156,15 @@ public class GameState {
             r.setAmount(r.getAmount() + 100);
             for (Base b : bases) {
                 //ProductionBuildings
-                for (Building bu : b.getBuildings()) {
-                    if (bu.getType().getProductionType().equals(r.getResource())) {
-                        r.setAmount(r.getAmount() + (bu.getType().getProductionRate() * bu.getUpgradeLevel()));
+                if (b.getBuildings() != null) {
+                    for (Building bu : b.getBuildings()) {
+                        if (bu.getType().getProductionType().equals(r.getResource())) {
+                            r.setAmount(r.getAmount() + (bu.getType().getProductionRate() * bu.getUpgradeLevel()));
+                        }
                     }
                 }
                 //Privileged Squares
-                if (b.getSquare().getPrivilegedFor().equals(r.getResource())) {
+                if (b.getSquare().getPrivilegedFor() != null && b.getSquare().getPrivilegedFor().equals(r.getResource())) {
                     r.setAmount(r.getAmount() + 50);
                 }
             }
@@ -258,7 +260,7 @@ public class GameState {
         Iterator it = strengths.keySet().iterator();
         Participation winner = (Participation) it.next();
         //The winner
-        
+
         if (strengths.get(winner) > strengths.get(it.next())) {
             return winner;
         }
@@ -277,7 +279,7 @@ public class GameState {
         });
 
         Map result = new LinkedHashMap();
-        for(int i = list.size()-1;i>-1;i--){
+        for (int i = list.size() - 1; i > -1; i--) {
             Map.Entry entry = (Map.Entry) list.get(i);
             result.put(entry.getKey(), entry.getValue());
         }

@@ -5,10 +5,17 @@
 package backend.test;
 
 import backend.GameState;
+import entities.Base;
+import entities.Building;
+import entities.BuildingType;
+import entities.GameStep;
 import entities.Participation;
+import entities.Resource;
+import entities.ResourceAmount;
 import entities.Square;
 import entities.Troop;
 import entities.TroopType;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -158,5 +165,69 @@ public class GameStateTest {
         
         
         Assert.assertEquals(p1, GameState.getWinner(troops));
+    }
+    
+    @Test
+    public void createRessourcesTest(){
+        List<Base> bases = new LinkedList<Base>();
+        List<ResourceAmount> resources = new LinkedList<ResourceAmount>();
+        
+        Resource type1 = new Resource();
+        type1.setId(new Long(1));
+        type1.setName("Type1");
+        Resource type2 = new Resource();
+        type2.setId(new Long(2));
+        type2.setName("Type2");
+        Resource type3 = new Resource();
+        type3.setId(new Long(3));
+        type3.setName("Type3");
+        
+        ResourceAmount r1 = new ResourceAmount();
+        r1.setAmount(0);
+        r1.setResource(type1);
+        resources.add(r1);
+        ResourceAmount r2 = new ResourceAmount();
+        r2.setAmount(10);
+        r2.setResource(type2);
+        resources.add(r2);
+        ResourceAmount r3 = new ResourceAmount();
+        r3.setAmount(100);
+        r3.setResource(type3);
+        resources.add(r3);
+        
+        Base b1 = new Base();
+        Square s1 = new Square();
+        s1.setId(new Long(1));
+        s1.setPrivilegedFor(type2);
+        b1.setSquare(s1);
+        bases.add(b1);
+        
+        Base b2 = new Base();
+        Square s2 = new Square();
+        s2.setId(new Long(2));
+        b2.setSquare(s2);
+        List<Building> bus = new LinkedList<Building>();
+        Building bu1 = new Building();
+        bu1.setId(new Long(1));
+        bu1.setUpgradeLevel(2);
+        BuildingType bt1 = new BuildingType();
+        bt1.setId(new Long(1));
+        bt1.setProductionType(type3);
+        bt1.setProductionRate(20);
+        bu1.setType(bt1);
+        bus.add(bu1);
+        b2.setBuildings(bus);
+        bases.add(b2);
+        
+        resources = GameState.createRessources(resources, bases);
+        
+        Assert.assertEquals(100, resources.get(0).getAmount());
+        Assert.assertEquals(160, resources.get(1).getAmount());
+        Assert.assertEquals(240, resources.get(2).getAmount());
+    }
+    
+    @Test
+    public void nextStateTest(){
+        //TODO nextStateTest
     }
 }
