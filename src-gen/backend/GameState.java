@@ -202,13 +202,13 @@ public class GameState {
     private static List<Troop> upgradeTroops(List<Troop> troops) {
         List<Troop> nextTroops = troops;
 
-        for (Troop t : nextTroops) {
-            if (t.getLevelUpgradeFinish() != null && t.getLevelUpgradeFinish().getDate().getTime() <= currentGameStep.getDate().getTime()) {
+        //for (Troop t : nextTroops) {
+        //    if (t.getLevelUpgradeFinish() != null && t.getLevelUpgradeFinish().getDate().getTime() <= currentGameStep.getDate().getTime()) {
                 //TODO What should the function do here???
                 //t.setUpgradeLevel(t.getUpgradeLevel());
-                t.setLevelUpgradeFinish(null);
-            }
-        }
+        //        t.setLevelUpgradeFinish(null);
+        //    }
+        //}
 
         return nextTroops;
     }
@@ -224,7 +224,7 @@ public class GameState {
         for (Troop t : nextTroops) {
             if (t.getMovementFinish() != null && t.getMovementFinish().getDate().getTime() <= currentGameStep.getDate().getTime()) {
                 t.setCurrentSquare(t.getTargetSquare());
-                t.setLevelUpgradeFinish(null);
+                t.setMovementFinish(null);
             }
         }
 
@@ -233,7 +233,7 @@ public class GameState {
 
     private static List<Base> destroyBases(List<Base> bases) {
         List<Base> nextBases = bases;
-
+//TODO StarterBase
         for (int i = 0; i < nextBases.size(); i++) {
             if (nextBases.get(i).getDestroyed() != null && nextBases.get(i).getDestroyed().getDate().getTime() <= currentGameStep.getDate().getTime()) {
                 nextBases.remove(i);
