@@ -26,7 +26,7 @@ import java.util.Map;
  *
  * @author wi3s3r
  */
-class GameState {
+public class GameState {
 
     private static GameStep currentGameStep;
 
@@ -241,7 +241,7 @@ class GameState {
         return nextBases;
     }
 
-    private static Participation getWinner(List<Troop> fighters) {
+    public static Participation getWinner(List<Troop> fighters) {
         Map<Participation, Integer> strengths = new HashMap<Participation, Integer>();
         for (Troop t : fighters) {
             if (strengths.containsKey(t.getParticipation())) {
@@ -250,28 +250,35 @@ class GameState {
                 strengths.put(t.getParticipation(), t.getUpgradeLevel().getStrength());
             }
         }
-        Participation winner = null;
-        if(strengths.size() < 2){
+        //Just troops of one participation
+        if (strengths.size() < 2) {
             return strengths.keySet().iterator().next();
         }
         strengths = sortMapByValue(strengths);
-        //TODO
+        Iterator it = strengths.keySet().iterator();
+        Participation winner = (Participation) it.next();
+        //The winner
         
-        return winner;
+        if (strengths.get(winner) > strengths.get(it.next())) {
+            return winner;
+        }
+        //two troops have the same strength
+        return null;
     }
 
-    private static Map sortMapByValue(Map map) {
+    public static Map sortMapByValue(Map map) {
         List list = new LinkedList(map.entrySet());
         Collections.sort(list, new Comparator() {
 
+            @Override
             public int compare(Object o1, Object o2) {
                 return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
             }
         });
 
         Map result = new LinkedHashMap();
-        for (Iterator it = list.iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
+        for(int i = list.size()-1;i>-1;i--){
+            Map.Entry entry = (Map.Entry) list.get(i);
             result.put(entry.getKey(), entry.getValue());
         }
         return result;
