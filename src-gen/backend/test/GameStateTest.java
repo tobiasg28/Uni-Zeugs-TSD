@@ -376,11 +376,264 @@ public class GameStateTest {
         Assert.assertEquals(s2, map.getParticipations().get(0).getTroops().get(2).getCurrentSquare());
         Assert.assertEquals(s1, map.getParticipations().get(0).getTroops().get(3).getCurrentSquare());
         
-        //TODO Troops UpgradeLevel
+        //TODO Troops UpgradeLevel Assertions
         
         Assert.assertEquals(4, map.getParticipations().get(0).getBases().get(0).getBuildings().get(0).getUpgradeLevel());
         
         Assert.assertEquals(150, map.getParticipations().get(0).getResources().get(0).getAmount());
         Assert.assertEquals(170, map.getParticipations().get(0).getResources().get(1).getAmount());
+    }
+    
+    @Test
+    public void nextStateTest_ForTwoParticipation(){
+        /*GameStep*/
+        GameStep before = new GameStep();
+        before.setId(new Long(1));
+        before.setDate(new Date(new Date().getTime()));
+        
+        GameStep current = new GameStep();
+        current.setId(new Long(2));
+        current.setDate(new Date(new Date().getTime()));
+        
+        
+        /*Types*/
+        TroopType tt = new TroopType();
+        tt.setId(new Long(1));
+        tt.setStrength(1);
+        
+        Resource rt1 = new Resource();
+        rt1.setId(new Long(1));
+        rt1.setName("r1");
+        Resource rt2 = new Resource();
+        rt2.setId(new Long(2));
+        rt2.setName("r2");
+        
+        BuildingType bt1 = new BuildingType();
+        bt1.setId(new Long(1));
+        bt1.setProductionType(rt2);
+        bt1.setProductionRate(20);
+        
+        /*MAP*/
+        GameMap map = new GameMap();
+        map.setId(new Long(1));
+        map.setMaxUsers(3);
+        map.setName("Welt");
+        
+        /*Squares*/
+        List<Square> squares = new LinkedList<Square>();
+        Square s1 = new Square();
+        s1.setId(new Long(1));
+        s1.setPositionX(0);
+        s1.setPositionY(0);
+        s1.setPrivilegedFor(rt1);
+        Square s2 = new Square();
+        s2.setId(new Long(1));
+        s2.setPositionX(1);
+        s2.setPositionY(0);
+        Square s3 = new Square();
+        s3.setId(new Long(1));
+        s3.setPositionX(0);
+        s3.setPositionY(1);
+        Square s4 = new Square();
+        s4.setId(new Long(1));
+        s4.setPositionX(1);
+        s4.setPositionY(1);
+        s4.setPrivilegedFor(rt2);
+        
+        map.setSquares(squares);
+        
+        //Participations
+        List<Participation> parts = new LinkedList<Participation>();
+        Participation p1 = new Participation();
+        p1.setId(new Long(1));
+        
+        
+        
+        List<Troop> troops = new LinkedList<Troop>();
+        Troop t1 = new Troop();
+        t1.setId(new Long(1));
+        t1.setUpgradeLevel(tt);
+        t1.setParticipation(p1);
+        t1.setCurrentSquare(s1);
+        t1.setLevelUpgradeFinish(before);
+        t1.setTargetSquare(s2);
+        t1.setMovementFinish(before);
+        troops.add(t1);
+        Troop t2 = new Troop();
+        t2.setId(new Long(2));
+        t2.setUpgradeLevel(tt);
+        t2.setParticipation(p1);
+        t2.setCurrentSquare(s1);
+        t2.setLevelUpgradeFinish(null);
+        t2.setTargetSquare(s2);
+        t2.setMovementFinish(null);
+        troops.add(t2);
+        Troop t3 = new Troop();
+        t3.setId(new Long(3));
+        t3.setUpgradeLevel(tt);
+        t3.setParticipation(p1);
+        t3.setCurrentSquare(s1);
+        t3.setLevelUpgradeFinish(null);
+        t3.setTargetSquare(s2);
+        t3.setMovementFinish(before);
+        troops.add(t3);
+        Troop t4 = new Troop();
+        t4.setId(new Long(4));
+        t4.setUpgradeLevel(tt);
+        t4.setParticipation(p1);
+        t4.setCurrentSquare(s1);
+        t4.setLevelUpgradeFinish(before);
+        t4.setTargetSquare(s2);
+        t4.setMovementFinish(null);
+        troops.add(t4);
+        p1.setTroops(troops);
+        
+        List<ResourceAmount> resources = new LinkedList<ResourceAmount>();
+        
+        ResourceAmount r1 = new ResourceAmount();
+        r1.setId(new Long(1));
+        r1.setAmount(0);
+        r1.setResource(rt1);
+        resources.add(r1);
+        ResourceAmount r2 = new ResourceAmount();
+        r2.setId(new Long(2));
+        r2.setAmount(10);
+        r2.setResource(rt2);
+        resources.add(r2);
+        
+        p1.setResources(resources);
+        
+        List<Base> bases = new LinkedList<Base>();
+        Base b1 = new Base();
+        b1.setId(new Long(1));
+        b1.setSquare(s1);
+        b1.setDestroyed(null);
+        b1.setStarterBase(true);
+        List<Building> bus = new LinkedList<Building>();
+        Building bu1 = new Building();
+        bu1.setId(new Long(1));
+        bu1.setUpgradeLevel(3);
+        bu1.setLevelUpgradeFinish(before);
+        bu1.setType(bt1);
+        bus.add(bu1);
+        b1.setBuildings(bus);
+        bases.add(b1);
+         
+        p1.setBases(bases);
+        
+        parts.add(p1);
+        
+        Participation p2 = new Participation();
+        p1.setId(new Long(2));
+        
+        
+        
+        troops = new LinkedList<Troop>();
+        t1 = new Troop();
+        t1.setId(new Long(5));
+        t1.setUpgradeLevel(tt);
+        t1.setParticipation(p2);
+        t1.setCurrentSquare(s4);
+        t1.setLevelUpgradeFinish(before);
+        t1.setTargetSquare(s2);
+        t1.setMovementFinish(before);
+        troops.add(t1);
+        t2 = new Troop();
+        t2.setId(new Long(6));
+        t2.setUpgradeLevel(tt);
+        t2.setParticipation(p2);
+        t2.setCurrentSquare(s4);
+        t2.setLevelUpgradeFinish(null);
+        t2.setTargetSquare(s2);
+        t2.setMovementFinish(null);
+        troops.add(t2);
+        t3 = new Troop();
+        t3.setId(new Long(7));
+        t3.setUpgradeLevel(tt);
+        t3.setParticipation(p2);
+        t3.setCurrentSquare(s4);
+        t3.setLevelUpgradeFinish(null);
+        t3.setTargetSquare(s2);
+        t3.setMovementFinish(null);
+        troops.add(t3);
+        t4 = new Troop();
+        t4.setId(new Long(8));
+        t4.setUpgradeLevel(tt);
+        t4.setParticipation(p2);
+        t4.setCurrentSquare(s4);
+        t4.setLevelUpgradeFinish(before);
+        t4.setTargetSquare(s2);
+        t4.setMovementFinish(null);
+        troops.add(t4);
+        p2.setTroops(troops);
+        
+        resources = new LinkedList<ResourceAmount>();
+        
+        r1 = new ResourceAmount();
+        r1.setId(new Long(3));
+        r1.setAmount(0);
+        r1.setResource(rt1);
+        resources.add(r1);
+        r2 = new ResourceAmount();
+        r2.setId(new Long(4));
+        r2.setAmount(10);
+        r2.setResource(rt2);
+        resources.add(r2);
+        
+        p2.setResources(resources);
+        
+        bases = new LinkedList<Base>();
+        b1 = new Base();
+        b1.setId(new Long(2));
+        b1.setSquare(s4);
+        b1.setDestroyed(null);
+        b1.setStarterBase(true);
+        bus = new LinkedList<Building>();
+        bu1 = new Building();
+        bu1.setId(new Long(2));
+        bu1.setUpgradeLevel(3);
+        bu1.setLevelUpgradeFinish(before);
+        bu1.setType(bt1);
+        bus.add(bu1);
+        b1.setBuildings(bus);
+        bases.add(b1);
+         
+        p2.setBases(bases);
+        
+        parts.add(p2);
+        
+        map.setParticipations(parts);
+        
+        map = GameState.nextState(map, current);
+        
+        Assert.assertNotNull(map);
+        
+        //TODO Troops UpgradeLevel Assertions
+        
+        Assert.assertEquals(4, map.getParticipations().get(0).getBases().get(0).getBuildings().get(0).getUpgradeLevel());
+        
+        Assert.assertEquals(150, map.getParticipations().get(0).getResources().get(0).getAmount());
+        Assert.assertEquals(170, map.getParticipations().get(0).getResources().get(1).getAmount());
+        
+        //TODO Troops UpgradeLevel Assertions
+        
+        Assert.assertEquals(4, map.getParticipations().get(1).getBases().get(0).getBuildings().get(0).getUpgradeLevel());
+        
+        Assert.assertEquals(100, map.getParticipations().get(1).getResources().get(0).getAmount());
+        Assert.assertEquals(220, map.getParticipations().get(1).getResources().get(1).getAmount());
+        
+        
+        //After the war
+        Assert.assertEquals(4, map.getParticipations().get(0).getTroops().size());
+        Assert.assertEquals(s2, map.getParticipations().get(0).getTroops().get(0).getCurrentSquare());
+        Assert.assertEquals(s1, map.getParticipations().get(0).getTroops().get(1).getCurrentSquare());
+        Assert.assertEquals(s2, map.getParticipations().get(0).getTroops().get(2).getCurrentSquare());
+        Assert.assertEquals(s1, map.getParticipations().get(0).getTroops().get(3).getCurrentSquare());
+        
+        Assert.assertEquals(3, map.getParticipations().get(1).getTroops().size());
+        Assert.assertEquals(s4, map.getParticipations().get(1).getTroops().get(0).getCurrentSquare());
+        Assert.assertEquals(s4, map.getParticipations().get(1).getTroops().get(1).getCurrentSquare());
+        Assert.assertEquals(s4, map.getParticipations().get(1).getTroops().get(2).getCurrentSquare());
+        
     }
 }
