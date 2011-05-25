@@ -67,7 +67,6 @@ public class GameState {
             List<Troop> defense = new ArrayList<Troop>();
 
             //Attack Base
-            //TODO losing Resources
             for (Base b : p.getBases()) {
                 myStrength = 100;
                 opponentStrength = 0;
@@ -98,7 +97,21 @@ public class GameState {
                         }
                         if (!b.getStarterBase()) {
                             b.setDestroyed(currentGameStep);
+                        } else {
+                            List<Participation> plist = new ArrayList<Participation>();
+                            for (Troop t : attack) {
+                                if (!plist.contains(t.getParticipation())) {
+                                    plist.add(t.getParticipation());
+                                }
+                            }
+                            for (ResourceAmount r : p.getResources()) {
+                                r.setAmount(r.getAmount() / plist.size() + 1);
+                                for (Participation o : plist) {
+                                    o.getResources().get(o.getResources().indexOf(r)).setAmount(o.getResources().get(o.getResources().indexOf(r)).getAmount() + r.getAmount());
+                                }
+                            }
                         }
+
                     }
                 }
             }
@@ -204,8 +217,8 @@ public class GameState {
 
         //for (Troop t : nextTroops) {
         //    if (t.getLevelUpgradeFinish() != null && t.getLevelUpgradeFinish().getDate().getTime() <= currentGameStep.getDate().getTime()) {
-                //TODO What should the function do here???
-                //t.setUpgradeLevel(t.getUpgradeLevel());
+        //TODO What should the function do here???
+        //t.setUpgradeLevel(t.getUpgradeLevel());
         //        t.setLevelUpgradeFinish(null);
         //    }
         //}
@@ -233,7 +246,6 @@ public class GameState {
 
     private static List<Base> destroyBases(List<Base> bases) {
         List<Base> nextBases = bases;
-//TODO StarterBase
         for (int i = 0; i < nextBases.size(); i++) {
             if (nextBases.get(i).getDestroyed() != null && nextBases.get(i).getDestroyed().getDate().getTime() <= currentGameStep.getDate().getTime()) {
                 nextBases.remove(i);
