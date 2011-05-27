@@ -67,4 +67,15 @@ public class TroopType implements Serializable {
 		return upgradeCost;
 	}
 
+	@ManyToOne()
+	private TroopType nextLevel;
+
+	public void setNextLevel(TroopType nextLevel) {
+		this.nextLevel = nextLevel;
+	}
+
+	public TroopType getNextLevel() {
+		return nextLevel;
+	}
+
 }

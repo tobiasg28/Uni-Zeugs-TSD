@@ -111,6 +111,9 @@
     <attributes name="upgradeCost" type="//@types.19">
       <annotations annotationType="OneToOne"/>
     </attributes>
+    <attributes name="nextLevel" type="//@types.12">
+      <annotations annotationType="ManyToOne"/>
+    </attributes>
   </types>
   <types xsi:type="metamodel:Entity" name="Square">
     <attributes name="map" type="//@types.7">
