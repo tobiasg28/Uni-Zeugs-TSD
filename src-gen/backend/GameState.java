@@ -208,20 +208,20 @@ public class GameState {
     }
 
     /**
-     * TODO upgrade == next Type???
+     * Upgrade: if LevelUpgradeFinish == null then no upgrade
+     *          if LevelUpgradeFinish <= gamestep then upgradelevel = upgradelevel.nextLevel
      * @param troops
      * @return 
      */
     private static List<Troop> upgradeTroops(List<Troop> troops) {
         List<Troop> nextTroops = troops;
 
-        //for (Troop t : nextTroops) {
-        //    if (t.getLevelUpgradeFinish() != null && t.getLevelUpgradeFinish().getDate().getTime() <= currentGameStep.getDate().getTime()) {
-        //TODO What should the function do here???
-        //t.setUpgradeLevel(t.getUpgradeLevel());
-        //        t.setLevelUpgradeFinish(null);
-        //    }
-        //}
+        for (Troop t : nextTroops) {
+            if (t.getLevelUpgradeFinish() != null && t.getLevelUpgradeFinish().getDate().getTime() <= currentGameStep.getDate().getTime()) {
+                t.setUpgradeLevel(t.getUpgradeLevel().getNextLevel());
+                t.setLevelUpgradeFinish(null);
+            }
+        }
 
         return nextTroops;
     }

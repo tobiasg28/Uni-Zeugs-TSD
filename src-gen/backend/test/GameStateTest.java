@@ -31,7 +31,7 @@ import org.junit.Test;
 public class GameStateTest {
     
     private GameStep before, current;
-    private TroopType tt;
+    private TroopType tt, ntt;
     private Resource rt1, rt2;
     private BuildingType bt1;
     private GameMap map;
@@ -53,9 +53,14 @@ public class GameStateTest {
         current.setDate(new Date(new Date().getTime()));
         
         /*Types*/
+        ntt = new TroopType();
+        ntt.setId(new Long(2));
+        ntt.setStrength(2);
         tt = new TroopType();
         tt.setId(new Long(1));
         tt.setStrength(1);
+        tt.setNextLevel(ntt);
+        
         
         rt1 = new Resource();
         rt1.setId(new Long(1));
@@ -258,7 +263,10 @@ public class GameStateTest {
         Assert.assertEquals(s2, map.getParticipations().get(0).getTroops().get(2).getCurrentSquare());
         Assert.assertEquals(s1, map.getParticipations().get(0).getTroops().get(3).getCurrentSquare());
         
-        //TODO Troops UpgradeLevel Assertions
+        Assert.assertEquals(ntt, map.getParticipations().get(0).getTroops().get(0).getUpgradeLevel());
+        Assert.assertEquals(tt, map.getParticipations().get(0).getTroops().get(1).getUpgradeLevel());
+        Assert.assertEquals(tt, map.getParticipations().get(0).getTroops().get(2).getUpgradeLevel());
+        Assert.assertEquals(ntt, map.getParticipations().get(0).getTroops().get(3).getUpgradeLevel());
         
         Assert.assertEquals(4, map.getParticipations().get(0).getBases().get(0).getBuildings().get(0).getUpgradeLevel());
         
@@ -331,14 +339,19 @@ public class GameStateTest {
         
         Assert.assertNotNull(map);
         
-        //TODO Troops UpgradeLevel Assertions
+        Assert.assertEquals(ntt, map.getParticipations().get(0).getTroops().get(0).getUpgradeLevel());
+        Assert.assertEquals(tt, map.getParticipations().get(0).getTroops().get(1).getUpgradeLevel());
+        Assert.assertEquals(tt, map.getParticipations().get(0).getTroops().get(2).getUpgradeLevel());
+        Assert.assertEquals(ntt, map.getParticipations().get(0).getTroops().get(3).getUpgradeLevel());
         
         Assert.assertEquals(4, map.getParticipations().get(0).getBases().get(0).getBuildings().get(0).getUpgradeLevel());
         
         Assert.assertEquals(150, map.getParticipations().get(0).getResources().get(0).getAmount());
         Assert.assertEquals(170, map.getParticipations().get(0).getResources().get(1).getAmount());
         
-        //TODO Troops UpgradeLevel Assertions
+        Assert.assertEquals(tt, map.getParticipations().get(1).getTroops().get(0).getUpgradeLevel());
+        Assert.assertEquals(tt, map.getParticipations().get(1).getTroops().get(1).getUpgradeLevel());
+        Assert.assertEquals(ntt, map.getParticipations().get(1).getTroops().get(2).getUpgradeLevel());
         
         Assert.assertEquals(4, map.getParticipations().get(1).getBases().get(0).getBuildings().get(0).getUpgradeLevel());
         
