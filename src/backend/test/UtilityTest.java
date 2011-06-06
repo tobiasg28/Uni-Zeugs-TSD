@@ -4,6 +4,7 @@
  */
 package backend.test;
 
+import backend.Util;
 import backend.GameState;
 import entities.Base;
 import entities.Building;
@@ -41,11 +42,10 @@ public class UtilityTest {
         map.put(10, 10);
         map.put(2, 2);
         map.put(9, 9);
-        map = GameState.sortMapByValue(map);
-        List list = new LinkedList(map.entrySet());
+        map = Util.sortMapByValue(map);
+        List<Map.Entry<Integer,Integer>> list = new LinkedList<Map.Entry<Integer,Integer>>(map.entrySet());
         Integer before = 11;
-        for (Iterator it = list.iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
+        for (Map.Entry<Integer,Integer> entry : list) {
             Assert.assertEquals(entry.getKey(), entry.getValue());
             Assert.assertTrue((Integer) entry.getValue() < before);
             before = (Integer) entry.getValue();

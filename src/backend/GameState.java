@@ -13,12 +13,8 @@ import entities.ResourceAmount;
 import entities.Square;
 import entities.Troop;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -268,8 +264,8 @@ public class GameState {
         if (strengths.size() < 2) {
             return strengths.keySet().iterator().next();
         }
-        strengths = sortMapByValue(strengths);
-        Iterator it = strengths.keySet().iterator();
+        strengths = Util.sortMapByValue(strengths);
+        Iterator<Participation> it = strengths.keySet().iterator();
         Participation winner = (Participation) it.next();
         //The winner
 
@@ -278,23 +274,5 @@ public class GameState {
         }
         //two troops have the same strength
         return null;
-    }
-
-    public static Map sortMapByValue(Map map) {
-        List list = new LinkedList(map.entrySet());
-        Collections.sort(list, new Comparator() {
-
-            @Override
-            public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o1)).getValue()).compareTo(((Map.Entry) (o2)).getValue());
-            }
-        });
-
-        Map result = new LinkedHashMap();
-        for (int i = list.size() - 1; i > -1; i--) {
-            Map.Entry entry = (Map.Entry) list.get(i);
-            result.put(entry.getKey(), entry.getValue());
-        }
-        return result;
     }
 }
