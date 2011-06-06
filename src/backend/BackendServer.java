@@ -34,7 +34,7 @@ public class BackendServer {
 		try {
 			logger.info("Registering NotificationServer as '" + Constants.BACKEND_RMI_NAME + "'...");
 			Backend backend = (Backend)UnicastRemoteObject.exportObject(server, 0);
-			Registry registry = LocateRegistry.createRegistry(0);
+			Registry registry = LocateRegistry.createRegistry(Constants.BACKEND_RMI_PORT);
 			registry.bind(Constants.BACKEND_RMI_NAME, backend);
 			logger.info("Backend server up and running. Press Enter to shutdown.");
 			

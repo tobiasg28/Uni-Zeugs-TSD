@@ -6,4 +6,7 @@ public class Constants {
 	
 	/* Well-known RMI object name for the backend server */
 	public static final String BACKEND_RMI_NAME = "SWAGBackend";
+	
+	/* Well-known RMI port for the backend's RMI registry */
+	public static final int BACKEND_RMI_PORT = 10203;
 }
