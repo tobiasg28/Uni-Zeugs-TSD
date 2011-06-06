@@ -1,0 +1,70 @@
+
+Public API for accessing the Backend services from the Frontend
+===============================================================
+
+Das Backend bietet ein paar Services für das Frontend (siehe
+die Klasse notification.Backend):
+
+ * registerClient() - um sich für Notifications zu registrieren
+ * unregisterClient() - um die Notifications wieder abzubestellen
+
+ * onMapCreated() - "kümmere dich um die Updates für eine bestimmte Map"
+ * onMapDestroyed() - "die Map gibt's nicht mehr - keine Updates ausführen"
+
+Die Frontends müssen (zB hardcodiert oder über eine Konfigurations-Datei) über
+die einzelnen Hosts bescheid wissen, auf denen Backend-Instanzen laufen.
+
+
+Finden einer Backend-Instanz für einen bestimmten Host
+------------------------------------------------------
+
+Dafür gibt's die Helper-Klasse "backend.BackendLocator", die eine statische
+Funktion "getBackendByHost(String)" besitzt. Übergibt man den Hostnamen, und
+läuft auf dem entsprechenden Host eine Backend-Instanz, so bekommt man ein
+"notification.Backend"-Objekt als Resultat, welches die oben beschriebenen
+Methoden bereit stellt.
+
+
+API, die das Backend vom Frontend erwartet
+------------------------------------------
+
+Das Frontend muss das Interface "notification.Frontend" implementieren. Dieses
+Interface hat eh nur 1 Methode:
+
+ * onGameStepCreated() - Backend hat soeben einen neuen GameStep erstellt
+
+Die implementierende Instanz muss beim Aufruf von registerClient() und beim
+Aufruf von unregisterClient() übergeben werden.
+
+
+Typischer Ablauf (am Beispiel 1 Frontend, 1 Backend)
+----------------------------------------------------
+
+1.) Backend wird gestartet:
+
+    java backend.BackendServer
+
+2.) Frontend wird gestartet, und macht (schematisch) folgende Aufrufe:
+
+    Backend backend = BackendLocator.getBackendByHost("backend1.local");
+    backend.registerClient(this);
+    // ... Mainloop ...
+    backend.unregisterClient(this);
+
+3.) Wenn eine neue Map erstellt wird, ruft das Frontend folgendes auf:
+
+    long newMapId = /* ID der neuen Map */;
+    backend.onMapCreated(newMapId);
+
+4.) Wenn eine Map beendet/geschlossen/entfernt wird, macht das Frontend:
+
+    long oldMapId = /* ID der gelöschten Map */;
+    backend.onMapDestroyed(oldMapId);
+
+5.) Das Frontend implementiert die Methode onGameStepCreated(). wenn diese
+    Funktion aufgerufen wird, dann muss sich das Frontend darum kümmern, die
+    neuen Daten aus der Datenbank zu lesen, und diese den Clients anzuzeigen.
+
+
+Fragen? -> thp
+

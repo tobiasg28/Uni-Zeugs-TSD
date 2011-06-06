@@ -5,7 +5,7 @@
 package backend.test;
 
 import backend.Util;
-import backend.GameState;
+import backend.GameStateUpdater;
 import entities.Base;
 import entities.Building;
 import entities.BuildingType;
@@ -86,7 +86,7 @@ public class UtilityTest {
         t5.setParticipation(p3);
         troops.add(t5);
 
-        Assert.assertEquals(p1, GameState.getWinner(troops));
+        Assert.assertEquals(p1, GameStateUpdater.getWinner(troops));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class UtilityTest {
         troops.add(t4);
 
 
-        Assert.assertEquals(null, GameState.getWinner(troops));
+        Assert.assertEquals(null, GameStateUpdater.getWinner(troops));
     }
 
     @Test
@@ -150,7 +150,7 @@ public class UtilityTest {
         troops.add(t4);
 
 
-        Assert.assertEquals(p1, GameState.getWinner(troops));
+        Assert.assertEquals(p1, GameStateUpdater.getWinner(troops));
     }
 
     @Test
@@ -205,7 +205,7 @@ public class UtilityTest {
         b2.setBuildings(bus);
         bases.add(b2);
 
-        resources = GameState.createRessources(resources, bases);
+        resources = GameStateUpdater.createRessources(resources, bases);
 
         Assert.assertEquals(100, resources.get(0).getAmount());
         Assert.assertEquals(160, resources.get(1).getAmount());

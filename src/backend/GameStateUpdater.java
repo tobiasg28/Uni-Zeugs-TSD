@@ -22,7 +22,7 @@ import java.util.Map;
  *
  * @author wi3s3r
  */
-public class GameState {
+public class GameStateUpdater {
 
     private static GameStep currentGameStep;
 

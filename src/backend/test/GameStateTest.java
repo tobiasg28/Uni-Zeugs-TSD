@@ -4,7 +4,7 @@
  */
 package backend.test;
 
-import backend.GameState;
+import backend.GameStateUpdater;
 import entities.Base;
 import entities.Building;
 import entities.BuildingType;
@@ -255,7 +255,7 @@ public class GameStateTest {
         parts.add(p1);
         map.setParticipations(parts);
         
-        map = GameState.nextState(map, current);
+        map = GameStateUpdater.nextState(map, current);
         
         Assert.assertNotNull(map);
         Assert.assertEquals(s2, map.getParticipations().get(0).getTroops().get(0).getCurrentSquare());
@@ -335,7 +335,7 @@ public class GameStateTest {
         parts.add(p2);
         map.setParticipations(parts);
         
-        map = GameState.nextState(map, current);
+        map = GameStateUpdater.nextState(map, current);
         
         Assert.assertNotNull(map);
         

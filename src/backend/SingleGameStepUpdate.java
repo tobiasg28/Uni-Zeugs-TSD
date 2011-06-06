@@ -15,14 +15,15 @@ import storage.DAOException;
  *
  * @author wi3s3r
  */
-class MainUpdater implements Runnable{
+class SingleGameStepUpdate implements Runnable{
     
     private GameMapDAO gameMapDAO;
+    private NotificationServer notificationServer;
     
     private Long gameMapId;
     private GameStep currentGameStep;
 
-    public MainUpdater(long gameMapId, GameStep currentGameStep) {
+    public SingleGameStepUpdate(NotificationServer notificationServer, long gameMapId, GameStep currentGameStep) {
         this.gameMapId = gameMapId;
         this.currentGameStep = currentGameStep;
         
@@ -33,12 +34,14 @@ class MainUpdater implements Runnable{
     public void run() {
         try {
             GameMap currentGameMap = gameMapDAO.get(gameMapId);
-            GameMap nextGameMap = GameState.nextState(currentGameMap, currentGameStep);
+            GameMap nextGameMap = GameStateUpdater.nextState(currentGameMap, currentGameStep);
             gameMapDAO.update(nextGameMap);
         } catch (DAOException ex) {
-            Logger.getLogger(MainUpdater.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SingleGameStepUpdate.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //TODO Notification
+        
+        /* Notify the frontends that a new GameStep is available */
+        notificationServer.onGameStepCreated(currentGameStep);
     }
     
 }
