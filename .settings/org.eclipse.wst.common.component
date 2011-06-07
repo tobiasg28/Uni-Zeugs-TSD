@@ -4,6 +4,8 @@
         <wb-resource deploy-path="/" source-path="/WebContent"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src-gen"/>
+        <wb-resource deploy-path="/WEB-INF/lib" source-path="/lib"/>
+        <wb-resource deploy-path="/WEB-INF/classes/META-INF" source-path="/hibernate"/>
         <property name="context-root" value="Uni-Zeugs-TSD"/>
         <property name="java-output-path" value="/Uni-Zeugs-TSD/bin"/>
     </wb-module>
