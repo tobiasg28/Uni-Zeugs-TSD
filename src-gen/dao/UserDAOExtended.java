@@ -16,5 +16,6 @@ public class UserDAOExtended extends UserDAO {
 		} catch (NoResultException ex) {
 			return null;
 		}
+            return null;
 	}
 }

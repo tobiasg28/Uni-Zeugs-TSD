@@ -71,6 +71,7 @@ public class DAOImpl{
             logger.debug("DAOException during getting of " + c.getName());
             throw new DAOException(e);
         }
+        return null;
     }
 
     public <T> T update(T object) throws DAOException {
