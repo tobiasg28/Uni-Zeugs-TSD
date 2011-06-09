@@ -26,7 +26,8 @@
       <property name="hibernate.connection.url" value="jdbc:postgresql://localhost/swa"/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-      <property name="hibernate.hbm2ddl.auto" value="create"/>
+      <!-- http://stackoverflow.com/questions/438146/hibernate-question-hbm2ddl-auto-possible-values-and-what-they-do -->
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
     </properties>
   </persistence-unit>
 </persistence>
