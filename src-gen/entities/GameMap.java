@@ -45,7 +45,7 @@ public class GameMap implements Serializable {
 		return maxUsers;
 	}
 
-	@OneToMany(mappedBy = "map")
+	@OneToMany(mappedBy = "map", cascade = CascadeType.ALL)
 	private List<Participation> participations;
 
 	public void setParticipations(List<Participation> participations) {
@@ -56,7 +56,7 @@ public class GameMap implements Serializable {
 		return participations;
 	}
 
-	@OneToMany(mappedBy = "map")
+	@OneToMany(mappedBy = "map", cascade = CascadeType.ALL)
 	private List<Square> squares;
 
 	public void setSquares(List<Square> squares) {

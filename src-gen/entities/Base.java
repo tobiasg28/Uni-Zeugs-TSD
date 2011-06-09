@@ -90,7 +90,7 @@ public class Base implements Serializable {
 		return lastProductionStep;
 	}
 
-	@OneToMany(mappedBy = "base")
+	@OneToMany(mappedBy = "base", cascade = CascadeType.ALL)
 	private List<Building> buildings;
 
 	public void setBuildings(List<Building> buildings) {
