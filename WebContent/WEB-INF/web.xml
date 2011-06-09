@@ -34,4 +34,14 @@
     <servlet-name>RegisterServlet</servlet-name>
     <url-pattern>/RegisterServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CreateMapServlet</display-name>
+    <servlet-name>CreateMapServlet</servlet-name>
+    <servlet-class>frontend.CreateMapServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreateMapServlet</servlet-name>
+    <url-pattern>/CreateMapServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
