@@ -22,19 +22,29 @@
 %>
 <form method="post" action="RegisterServlet">
 	<p>
-		username: <input type="text" name="username">
+		username: <input type="text" name="username"
+			value="<%if (request.getAttribute("username") != null)
+					out.write((String) request.getAttribute("username"));%>" />
 	</p>
 	<p>
-		password: <input type="password" name="password" />
+		password: <input type="password" name="password"
+			value="<%if (request.getAttribute("password") != null)
+					out.write((String) request.getAttribute("password"));%>" />
 	</p>
 	<p>
-		first name: <input type="text" name="firstname">
+		first name: <input type="text" name="firstname"
+			value="<%if (request.getAttribute("firstname") != null)
+					out.write((String) request.getAttribute("firstname"));%>" />
 	</p>
 	<p>
-		last name: <input type="text" name="lastname">
+		last name: <input type="text" name="lastname"
+			value="<%if (request.getAttribute("lastname") != null)
+					out.write((String) request.getAttribute("lastname"));%>" />
 	</p>
 	<p>
-		adress: <input type="text" name="adress">
+		adress: <input type="text" name="adress"
+			value="<%if (request.getAttribute("adress") != null)
+					out.write((String) request.getAttribute("adress"));%>" />
 	</p>
 	<p>
 		<input type="submit" value="register" />
