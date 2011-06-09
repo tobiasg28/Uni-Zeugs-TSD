@@ -26,6 +26,12 @@
 							if (p.equals("register")) {
 						%> <jsp:include page="register.jsp" />
 						<%
+							} else if (p.equals("maps")) {
+						%> <jsp:include page="maps.jsp" />
+						<%
+							} else if (p.equals("createMap")) {
+						%> <jsp:include page="createMap.jsp" />
+						<%
 							} else {
 						%> <jsp:include page="login.jsp" /> <%
  	}

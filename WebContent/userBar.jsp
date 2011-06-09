@@ -11,7 +11,7 @@
 		</ul>
 	</div>
 	<div>
-		<a href="?page=map">map</a>
+		<a href="?page=maps">maps</a>
 		<ul>
 			<li><a href="#">map1</a>
 			</li>
