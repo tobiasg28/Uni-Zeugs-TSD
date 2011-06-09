@@ -1,6 +1,25 @@
-<jsp:useBean id="user" class="entities.User" scope="session"/>
-<h2>Register:</h2>
-<% if (user.getUsername() == null){%>
+<jsp:useBean id="user" class="entities.User" scope="session" />
+
+<%
+	if (session.getAttribute("loggedIn") != null
+			&& (Boolean) session.getAttribute("loggedIn")) {
+%>
+<p>
+	You are already logged in as
+	<%=session.getAttribute("loggedIn")%>!
+</p>
+<%
+	} else {
+%>
+<h2>register:</h2>
+<%
+	if (request.getAttribute("error") != null
+				&& (Boolean) request.getAttribute("error")) {
+%>
+<p><%=request.getAttribute("errorMsg")%></p>
+<%
+	}
+%>
 <form method="post" action="RegisterServlet">
 	<p>
 		username: <input type="text" name="username">
@@ -21,6 +40,6 @@
 		<input type="submit" value="register" />
 	</p>
 </form>
-<% }else { %>
-<p>You are already logged in as <%= user.getUsername() %>!</p>
-<%  } %>
+<%
+	}
+%>
