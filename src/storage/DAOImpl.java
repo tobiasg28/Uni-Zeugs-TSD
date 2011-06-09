@@ -68,14 +68,13 @@ public class DAOImpl{
     public <T> List<T> getAll(Class<T> c) throws DAOException {
         logger.debug("Request: GetAll");
         try {
-            Query query = entityManager.createQuery("SELECT o FROM " + "swag_" + c.getName(), c);
+            Query query = entityManager.createQuery("SELECT o FROM " + c.getName() + " o", c);
             List<T> res = query.getResultList();
             return res;
         } catch (Exception e) {
             logger.debug("DAOException during getting of " + c.getName());
             throw new DAOException(e);
         }
-        return null;
     }
 
     public <T> T update(T object) throws DAOException {
