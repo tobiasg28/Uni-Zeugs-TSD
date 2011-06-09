@@ -19,6 +19,16 @@ public class DatabaseInitializer {
 		ResourceDAO dao = new ResourceDAO();
 		
 		try {
+			if (dao.getAll().size() > 0) {
+				System.out.println("Hey, Rocker - you already got some resources. Good for you!");
+				return;
+			}
+		} catch (DAOException e1) {
+			System.err.println("What the Fax? Cannot READ from the DB? ORLY?!??!?!");
+			e1.printStackTrace();
+		}
+		
+		try {
 			dao.create(create("Food"));
 			dao.create(create("Wood"));
 			dao.create(create("Stone"));
@@ -26,7 +36,10 @@ public class DatabaseInitializer {
 		} catch (DAOException e) {
 			System.err.println("DatabaseInitializer error resource");
 			e.printStackTrace();
+			return;
 		}
+		
+		System.out.println("Domination! We got some resources in the DB!");
 	}
 
 }
