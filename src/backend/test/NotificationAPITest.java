@@ -11,6 +11,7 @@ import notification.Frontend;
 import org.apache.log4j.Logger;
 
 import storage.DAOException;
+import swag.Constants;
 
 import dao.GameMapDAO;
 
@@ -61,8 +62,8 @@ public class NotificationAPITest extends UnicastRemoteObject implements Frontend
 			backend.registerClient(frontend);
 			logger.info("Requesting update for Map " + mapId);
 			backend.onMapCreated(mapId);
-			logger.info("Sleeping a bit...");
-			Thread.sleep(5000);
+			logger.info("Sleeping a bit (gamestep duration + 5 seconds)...");
+			Thread.sleep(5000+Constants.GAMESTEP_DURATION_MS);
 			logger.info("Unregistering the Map with ID " + mapId);
 			backend.onMapDestroyed(mapId);
 		} catch (RemoteException e) {
