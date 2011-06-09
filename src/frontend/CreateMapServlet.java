@@ -27,7 +27,6 @@ public class CreateMapServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
 
 		HttpSession session = request.getSession(true);
 		// an error-attribute is set
@@ -67,8 +66,11 @@ public class CreateMapServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
+			response.sendRedirect("./?page=maps");
+			return;
 		}
-
+		
+		response.setContentType("text/html;charset=UTF-8");
 		dispatcher.forward(request, response);
 
 	}

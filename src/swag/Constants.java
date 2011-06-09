@@ -9,4 +9,7 @@ public class Constants {
 	
 	/* Well-known RMI port for the backend's RMI registry */
 	public static final int BACKEND_RMI_PORT = 10203;
+	
+	/* Square size on the webpage */
+	public static final int SQUARE_SIZE = 70;
 }

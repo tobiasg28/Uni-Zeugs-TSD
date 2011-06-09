@@ -80,16 +80,23 @@ public class GameStart {
                 }
             }
         }
-        map.setSquares(squares);
         try {
             if (mDao.create(map) && map.getId() != null) {
+            	/* FIX For associating  squares with the right map! */
+            	for (Square s: squares) {
+            		s.setMap(map);
+            		sDAO.update(s);
+            	}
+            	map.setSquares(squares);
+                mDao.update(map);
+                
                 return map.getId();
             }else{
                 throw new GameStartException("ERROR: create GameMap returns false");
             }
         } catch (DAOException ex) {
             throw new GameStartException("ERROR: create GameMap", ex);
-        }      
+        }
     }
 
     //Precondition: Map exists + Types exist
