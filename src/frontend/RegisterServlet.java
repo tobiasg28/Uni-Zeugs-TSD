@@ -1,6 +1,8 @@
 package frontend;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,6 +30,9 @@ public class RegisterServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8");
 
+		RequestDispatcher dispatcher = getServletContext()
+				.getRequestDispatcher("/index.jsp");
+
 		HttpSession session = request.getSession(true);
 		request.setAttribute("error", false);
 		User user = (User) session.getAttribute("user");
@@ -36,37 +41,70 @@ public class RegisterServlet extends HttpServlet {
 				&& (Boolean) session.getAttribute("loggedIn")) {
 			session.setAttribute("user", user);
 		} else {
-			String un = request.getParameter("username");
+			String un = request.getParameter("username").trim();
+			String pw = request.getParameter("password").trim();
+			String ln = request.getParameter("lastname").trim();
+			String fn = request.getParameter("firstname").trim();
+			String ad = request.getParameter("adress").trim();
+			request.setAttribute("username", un);
+			request.setAttribute("password", pw);
+			request.setAttribute("lastname", ln);
+			request.setAttribute("firstname", fn);
+			request.setAttribute("adress", ad);
 			try {
-				//if a user doesn't exist, a new one is created
-				if (!userExists(un)) {
+				// check if every field of the form is filled
+				if (un.equals("")){
+					request.setAttribute("error", true);
+					request.setAttribute("errorMsg", "set username!");
+					dispatcher = getServletContext().getRequestDispatcher(
+							"/index.jsp?page=register");
+				} else if (pw.equals("")){
+					request.setAttribute("error", true);
+					request.setAttribute("errorMsg", "set password!");
+					dispatcher = getServletContext().getRequestDispatcher(
+							"/index.jsp?page=register");
+				} else if (fn.equals("")){
+					request.setAttribute("error", true);
+					request.setAttribute("errorMsg", "set first name!");
+					dispatcher = getServletContext().getRequestDispatcher(
+							"/index.jsp?page=register");
+				} else if (ln.equals("")){
+					request.setAttribute("error", true);
+					request.setAttribute("errorMsg", "set last name!");
+					dispatcher = getServletContext().getRequestDispatcher(
+							"/index.jsp?page=register");
+				}else if (ad.equals("")){
+					request.setAttribute("error", true);
+					request.setAttribute("errorMsg", "set adress!");
+					dispatcher = getServletContext().getRequestDispatcher(
+							"/index.jsp?page=register");
+				} else if (!userExists(un)) {
 					user = new User();
 					user.setUsername(un);
-					user.setPassword(request.getParameter("password"));
-					user.setAdress(request.getParameter("adress"));
-					user.setFullName(request.getParameter("lastname") + " "
-							+ request.getParameter("firstname"));
+					user.setPassword(pw);
+					user.setAdress(ad);
+					user.setFullName(fn);
 
 					UserDAO dao = new UserDAO();
 					dao.create(user);
-
+					//auto login after user creation
 					session.setAttribute("user", user);
 					session.setAttribute("loggedIn", (Boolean) true);
 				} else {
 					request.setAttribute("error", true);
-					request.setAttribute("errorMsg",
-							"username or password wrong!");
+					request.setAttribute("errorMsg", "username already exists!");
+					dispatcher = getServletContext().getRequestDispatcher(
+							"/index.jsp?page=register");
 				}
 			} catch (DAOException e) {
-				// TODO Auto-generated catch block
+				request.setAttribute("error", true);
+				request.setAttribute("errorMsg", "error");
+				dispatcher = getServletContext().getRequestDispatcher(
+						"/index.jsp?page=register");
 				e.printStackTrace();
 			}
 		}
-
-		RequestDispatcher dispatcher = getServletContext()
-				.getRequestDispatcher("/index.jsp");
 		dispatcher.forward(request, response);
-
 	}
 
 	@Override
@@ -79,11 +117,12 @@ public class RegisterServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-	//checks if user already exists
+	// checks if user already exists
 	private boolean userExists(String username) throws DAOException {
-		UserDAO allUser = new UserDAO();
-		for (User user : allUser.getAll()) {
-			System.out.println(user.getUsername());
+		UserDAO findUser = new UserDAO();
+		Map<String, String> attributes = new HashMap<String, String>();
+		attributes.put("username", username);
+		for (User user : findUser.findByAttributes(attributes)) {
 			if (user.getUsername().equals(username)) {
 				return true;
 			}

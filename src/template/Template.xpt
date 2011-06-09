@@ -125,6 +125,10 @@
    			public List<«name»> getAll() throws DAOException {
    				return dao.getAll(«name».class);
    			}
+   			
+   			public List<«name»> findByAttributes(Map<String, String> attributes){
+   				return dao.findByAttributes(attributes, «name».class);
+   			}
 		}
 	«ENDFILE»
 «ENDDEFINE»

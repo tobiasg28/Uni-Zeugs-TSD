@@ -1,6 +1,8 @@
 package storage;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -8,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 
 public class DAOImpl{
 
@@ -105,5 +109,26 @@ public class DAOImpl{
     
     public EntityManager getEntityManager() {
     	return entityManager;
+    }
+    
+    public <T> List<T> findByAttributes(Map<String, String> attributes, Class<T> c) {
+        List<T> results;
+        //set up the Criteria query
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(c);
+        Root<T> foo = cq.from(c);
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        for(String s : attributes.keySet())
+        {
+            if(foo.get(s) != null){
+                predicates.add(cb.equal(foo.get(s), attributes.get(s)));
+            }
+        }
+        cq.where(predicates.toArray(new Predicate[]{}));
+        TypedQuery<T> q = entityManager.createQuery(cq);
+
+        results = q.getResultList();
+        return results;
     }
 }
