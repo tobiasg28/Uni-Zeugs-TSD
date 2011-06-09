@@ -19,78 +19,84 @@ import entities.Square;
 import entities.User;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
+
 import storage.DAOException;
 
 /**
- *
+ * 
  * @author wi3s3r
  */
 public class GameStart {
     
     //Precondition: Types for Troops, Ressources, Buildings already exist
-    public static Long newGame(String name, int maxPlayer){
-        ResourceDAO rDao = new ResourceDAO();
-        List<Resource> resources = null;
-        try {
-            resources = rDao.getAll();
-        } catch (DAOException ex) {
-            return null;
-        }
-        if(resources == null){
-            //ERROR: No Ressources
-            return null;
-        }
-        
-        GameMapDAO mDao = new GameMapDAO();
-        SquareDAO sDAO = new SquareDAO();
-        
-        GameMap map = new GameMap();
-        map.setMaxUsers(maxPlayer);
-        map.setName(name);
-        List<Square> squares = new ArrayList<Square>();
-        for(int x = 0; x < (maxPlayer * maxPlayer);x++){
-            for(int y = 0; y < (maxPlayer * maxPlayer);y++){
-                Square s = new Square();
-                s.setPositionX(y);
-                s.setPositionY(x);
-                if((x + y == maxPlayer || x == y) && (x/2)*2==x){
-                    if(x > resources.size()){
-                        s.setPrivilegedFor(resources.get(x-resources.size()));
-                    }else{
-                        s.setPrivilegedFor(resources.get(resources.size()-x));
-                    }
-                }
-                if((x == maxPlayer/2 && (y/2)*2!=y) || (y == maxPlayer/2 && (x/2)*2!=x)){
-                    if(x > resources.size()){
-                        s.setPrivilegedFor(resources.get(x-resources.size()));
-                    }else{
-                        s.setPrivilegedFor(resources.get(resources.size()-x));
-                    }
-                }
-                try {
-                    if(sDAO.create(s)){
-                        squares.add(s);
-                    }
-                    else{
-                        return null;
-                    }
-                } catch (DAOException ex) {
-                    return null;
-                }
-            }
-        }
-        map.setSquares(squares);
-        try {
-            if(mDao.create(map) && map.getId()!=null){
-                return map.getId();
-            }
-        } catch (DAOException ex) {
-            return null;
-        }
-        return null;
-    }
+	static Logger logger = Logger.getLogger(GameStart.class);
+
+	// Precondition: Types for Troops, Ressources, Buildings already exist
+	public static Long newGame(String name, int maxPlayer) {
+		ResourceDAO rDao = new ResourceDAO();
+		List<Resource> resources = null;
+		try {
+			resources = rDao.getAll();
+		} catch (DAOException ex) {
+			logger.error("Error with getAll():" + ex);
+			return null;
+		}
+		if (resources == null || resources.size() == 0) {
+			// ERROR: No Ressources
+			System.err.println("Error with resources");
+			return null;
+		}
+
+		GameMapDAO mDao = new GameMapDAO();
+		SquareDAO sDAO = new SquareDAO();
+
+		GameMap map = new GameMap();
+		map.setMaxUsers(maxPlayer);
+		map.setName(name);
+		List<Square> squares = new ArrayList<Square>();
+		for (int x = 0; x < (maxPlayer * maxPlayer); x++) {
+			for (int y = 0; y < (maxPlayer * maxPlayer); y++) {
+				Square s = new Square();
+				s.setPositionX(x);
+				s.setPositionY(y);
+				if ((x + y == maxPlayer || x == y) && (x / 2) * 2 == x) {
+					if (x > resources.size()) {
+						s.setPrivilegedFor(resources.get(0));
+					} else {
+						s.setPrivilegedFor(resources.get(0));
+					}
+				}
+				if ((x == maxPlayer / 2 && (y / 2) * 2 != y)
+						|| (y == maxPlayer / 2 && (x / 2) * 2 != x)) {
+					if (x > resources.size()) {
+						s.setPrivilegedFor(resources.get(0));
+					} else {
+						s.setPrivilegedFor(resources.get(0));
+					}
+				}
+				try {
+					if (sDAO.create(s)) {
+						squares.add(s);
+					} else {
+						return null;
+					}
+				} catch (DAOException ex) {
+					return null;
+				}
+			}
+		}
+		map.setSquares(squares);
+		try {
+			if (mDao.create(map) && map.getId() != null) {
+				return map.getId();
+			}
+		} catch (DAOException ex) {
+			return null;
+		}
+		return null;
+	}
     
     //Precondition: Map exists + Types exist
     public static boolean newPlayer(User user, Long GameMapId){
@@ -172,4 +178,6 @@ public class GameStart {
         return false;
     }
     
+	
+
 }

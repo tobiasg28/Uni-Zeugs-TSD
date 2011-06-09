@@ -12,6 +12,10 @@
 		if (p == null) {
 			p = "";
 		}
+		String id = request.getParameter("id");
+		if (id == null) {
+			id = "";
+		}
 	%>
 	<center>
 		<table width="800" border="1">
@@ -24,16 +28,15 @@
 					<td width="80%">
 						<%
 							if (p.equals("register")) {
-						%> <jsp:include page="register.jsp" />
-						<%
-							} else if (p.equals("maps")) {
-						%> <jsp:include page="maps.jsp" />
-						<%
-							} else if (p.equals("createMap")) {
-						%> <jsp:include page="createMap.jsp" />
-						<%
-							} else {
-						%> <jsp:include page="login.jsp" /> <%
+						%> <jsp:include page="register.jsp" /> <%
+ 	} else if (p.equals("maps")) {
+ %> <jsp:include page="maps.jsp" /> <%
+ 	} else if (p.equals("createMap")) {
+ %> <jsp:include page="createMap.jsp" /> <%
+ 	} else if (p.equals("map") && !id.equals("")) {
+ %> <jsp:include page="map.jsp" /> <%
+ 	} else {
+ %> <jsp:include page="login.jsp" /> <%
  	}
  %>
 					</td>

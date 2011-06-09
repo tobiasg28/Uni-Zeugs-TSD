@@ -68,11 +68,15 @@ public class DAOImpl{
     public <T> List<T> getAll(Class<T> c) throws DAOException {
         logger.debug("Request: GetAll");
         try {
+        	// zB fuer Resource sollte das so ausschauen:
+        	//       SELECT o FROM Resource o
+        	// oder: SELECT o FROM entities.Resource o
             Query query = entityManager.createQuery("SELECT o FROM " + c.getName() + " o", c);
             List<T> res = query.getResultList();
             return res;
         } catch (Exception e) {
             logger.debug("DAOException during getting of " + c.getName());
+            e.printStackTrace();
             throw new DAOException(e);
         }
     }
