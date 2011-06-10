@@ -31,4 +31,9 @@ public class UserDAO {
 	public List<User> getAll() throws DAOException {
 		return dao.getAll(User.class);
 	}
+
+	public List<User> findByAttributes(java.util.Map<String, String> attributes)
+			throws DAOException {
+		return dao.findByAttributes(attributes, User.class);
+	}
 }

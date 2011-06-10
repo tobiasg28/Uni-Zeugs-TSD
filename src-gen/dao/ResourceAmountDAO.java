@@ -31,4 +31,9 @@ public class ResourceAmountDAO {
 	public List<ResourceAmount> getAll() throws DAOException {
 		return dao.getAll(ResourceAmount.class);
 	}
+
+	public List<ResourceAmount> findByAttributes(
+			java.util.Map<String, String> attributes) throws DAOException {
+		return dao.findByAttributes(attributes, ResourceAmount.class);
+	}
 }

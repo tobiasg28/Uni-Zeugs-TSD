@@ -31,4 +31,9 @@ public class SquareDAO {
 	public List<Square> getAll() throws DAOException {
 		return dao.getAll(Square.class);
 	}
+
+	public List<Square> findByAttributes(
+			java.util.Map<String, String> attributes) throws DAOException {
+		return dao.findByAttributes(attributes, Square.class);
+	}
 }

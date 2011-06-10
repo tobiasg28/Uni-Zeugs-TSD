@@ -31,4 +31,9 @@ public class ParticipationDAO {
 	public List<Participation> getAll() throws DAOException {
 		return dao.getAll(Participation.class);
 	}
+
+	public List<Participation> findByAttributes(
+			java.util.Map<String, String> attributes) throws DAOException {
+		return dao.findByAttributes(attributes, Participation.class);
+	}
 }

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import storage.DAOException;
+
 import dao.GameMapDAO;
 import entities.GameMap;
 import entities.User;
@@ -63,6 +65,9 @@ public class CreateMapServlet extends HttpServlet {
 			} catch (GameStartException e) {
 				logger.error("Got a GameStartError: " + e);
 				e.printStackTrace();
+			} catch (DAOException e) {
+				logger.error("Got a DAOError: " + e);
+				e.printStackTrace();
 			}
 		}
 		
@@ -81,7 +86,7 @@ public class CreateMapServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-	private boolean mapExists(String name) {
+	private boolean mapExists(String name) throws DAOException {
 		GameMapDAO findMap = new GameMapDAO();
 		Map<String, String> attributes = new HashMap<String, String>();
 		attributes.put("name", name);

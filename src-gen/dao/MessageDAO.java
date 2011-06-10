@@ -31,4 +31,9 @@ public class MessageDAO {
 	public List<Message> getAll() throws DAOException {
 		return dao.getAll(Message.class);
 	}
+
+	public List<Message> findByAttributes(
+			java.util.Map<String, String> attributes) throws DAOException {
+		return dao.findByAttributes(attributes, Message.class);
+	}
 }

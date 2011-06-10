@@ -31,4 +31,9 @@ public class GameStepDAO {
 	public List<GameStep> getAll() throws DAOException {
 		return dao.getAll(GameStep.class);
 	}
+
+	public List<GameStep> findByAttributes(
+			java.util.Map<String, String> attributes) throws DAOException {
+		return dao.findByAttributes(attributes, GameStep.class);
+	}
 }

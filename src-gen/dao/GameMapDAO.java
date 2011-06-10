@@ -31,4 +31,9 @@ public class GameMapDAO {
 	public List<GameMap> getAll() throws DAOException {
 		return dao.getAll(GameMap.class);
 	}
+
+	public List<GameMap> findByAttributes(
+			java.util.Map<String, String> attributes) throws DAOException {
+		return dao.findByAttributes(attributes, GameMap.class);
+	}
 }

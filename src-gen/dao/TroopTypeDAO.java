@@ -31,4 +31,9 @@ public class TroopTypeDAO {
 	public List<TroopType> getAll() throws DAOException {
 		return dao.getAll(TroopType.class);
 	}
+
+	public List<TroopType> findByAttributes(
+			java.util.Map<String, String> attributes) throws DAOException {
+		return dao.findByAttributes(attributes, TroopType.class);
+	}
 }
