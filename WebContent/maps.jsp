@@ -9,6 +9,16 @@
 		<p>to create a new map click <a href="?page=createMap">here</a>!</p>
 	</div>
 	<div>
+		<h2>participating maps</h2>
+		<%
+		/**ParticipationDAO pdao = new ParticipationDAO();
+		for(Participation participation : pdao.getAll()){
+			if (participation.getParticipant().getUsername().equals()
+		}*/
+		
+		%>
+	</div>
+	<div>
 		<h2>existing maps:</h2>
 		<ul>
 		<%

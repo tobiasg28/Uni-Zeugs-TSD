@@ -31,4 +31,10 @@ public class BaseDAO {
 	public List<Base> getAll() throws DAOException {
 		return dao.getAll(Base.class);
 	}
+
+	public List<Base> findByAttributes(java.util.Map<String, String> attributes)
+			throws DAOException {
+		return dao.findByAttributes(attributes, Base.class);
+	}
+
 }

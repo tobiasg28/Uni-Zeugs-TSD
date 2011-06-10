@@ -31,4 +31,10 @@ public class ItemTypeDAO {
 	public List<ItemType> getAll() throws DAOException {
 		return dao.getAll(ItemType.class);
 	}
+
+	public List<ItemType> findByAttributes(
+			java.util.Map<String, String> attributes) throws DAOException {
+		return dao.findByAttributes(attributes, ItemType.class);
+	}
+
 }

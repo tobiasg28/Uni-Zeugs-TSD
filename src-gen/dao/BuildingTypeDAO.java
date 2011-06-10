@@ -31,4 +31,10 @@ public class BuildingTypeDAO {
 	public List<BuildingType> getAll() throws DAOException {
 		return dao.getAll(BuildingType.class);
 	}
+
+	public List<BuildingType> findByAttributes(
+			java.util.Map<String, String> attributes) throws DAOException {
+		return dao.findByAttributes(attributes, BuildingType.class);
+	}
+
 }

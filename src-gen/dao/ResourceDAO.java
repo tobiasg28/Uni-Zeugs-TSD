@@ -31,4 +31,10 @@ public class ResourceDAO {
 	public List<Resource> getAll() throws DAOException {
 		return dao.getAll(Resource.class);
 	}
+
+	public List<Resource> findByAttributes(
+			java.util.Map<String, String> attributes) throws DAOException {
+		return dao.findByAttributes(attributes, Resource.class);
+	}
+
 }
