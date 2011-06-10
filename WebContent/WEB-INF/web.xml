@@ -44,4 +44,14 @@
     <servlet-name>CreateMapServlet</servlet-name>
     <url-pattern>/CreateMapServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ParticipateServlet</display-name>
+    <servlet-name>ParticipateServlet</servlet-name>
+    <servlet-class>frontend.ParticipateServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ParticipateServlet</servlet-name>
+    <url-pattern>/ParticipateServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

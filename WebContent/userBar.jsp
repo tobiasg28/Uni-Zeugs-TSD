@@ -12,7 +12,7 @@
 		</ul>
 	</div>
 	<div>
-		<a href="?page=maps">maps</a>
+		<a href="index.jsp?page=maps">maps</a>
 		<ul><li><em><strong>FIXME:</strong> hier nur maps zeigen, in der man eine participation hat</em></li>
 		<%
 		
@@ -20,7 +20,7 @@
 		for (GameMap map : dao.getAll()) {
 			%>
 			
-			<li><a href="?page=map&amp;id=<%= map.getId() %>"><%= map.getName() %></a></li>
+			<li><a href="index.jsp?page=map&amp;id=<%= map.getId() %>"><%= map.getName() %></a></li>
 			
 			<%
 		}
@@ -31,8 +31,8 @@
 		} else {
 	%>
 	<ul>
-		<li><a href="?page=login">login</a></li>
-		<li><a href="?page=register">register</a></li>
+		<li><a href="index.jsp?page=login">login</a></li>
+		<li><a href="index.jsp?page=register">register</a></li>
 	</ul>
 	<%
 		}

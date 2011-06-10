@@ -6,7 +6,7 @@
 	%>
 	<div>
 		<h2>create map</h2>
-		<p>to create a new map click <a href="?page=createMap">here</a>!</p>
+		<p>to create a new map click <a href="index.jsp?page=createMap">here</a>!</p>
 	</div>
 	<div>
 		<h2>participating maps</h2>
@@ -27,7 +27,7 @@
 		for (GameMap map : dao.getAll()) {
 			%>
 			
-			<li><a href="?page=map&amp;id=<%= map.getId() %>"><%= map.getName() %></a></li>
+			<li><a href="index.jsp?page=map&amp;id=<%= map.getId() %>"><%= map.getName() %></a></li>
 			
 			<%
 		}
@@ -38,7 +38,7 @@
 	<%
 		} else {
 	%>
-	<p><a href="?page=login">login</a> first!</p>
+	<p><a href="index.jsp?page=login">login</a> first!</p>
 	<%
 		}
 	%>

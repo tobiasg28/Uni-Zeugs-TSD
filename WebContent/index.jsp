@@ -7,6 +7,7 @@
 <title>SWAG</title>
 </head>
 <body>
+<jsp:useBean id="backend" class="frontend.BackendConnection" scope="session" />
 	<%
 		String p = request.getParameter("page");
 		if (p == null) {

@@ -15,9 +15,10 @@ public class BackendConnection {
 	static Logger logger = Logger.getLogger(BackendConnection.class);
 	static {
 		try {
-			backend = BackendLocator.getBackendByHost(null);
 			frontend = new FrontendImpl();
+			backend = BackendLocator.getBackendByHost(null);
 			backend.registerClient(frontend);
+			System.out.println("RMI registred");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

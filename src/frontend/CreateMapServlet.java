@@ -28,16 +28,12 @@ public class CreateMapServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession(true);
-		// an error-attribute is set
-		request.setAttribute("loginError", false);
-
-		User user = (User) session.getAttribute("user");
 		RequestDispatcher dispatcher = getServletContext()
 				.getRequestDispatcher("/index.jsp?page=createMap");
+		
 		// to check if the user is already logged in
 		if (session.getAttribute("loggedIn") != null
 				&& (Boolean) session.getAttribute("loggedIn")) {
-			session.setAttribute("user", user);
 			String mapName = request.getParameter("mapname").trim();
 			String mp = request.getParameter("maxplayers").trim();
 			request.setAttribute("mapname", mapName);
