@@ -32,4 +32,10 @@ public class CachedInvalidationEntryDAO {
 	public List<CachedInvalidationEntry> getAll() throws DAOException {
 		return dao.getAll(CachedInvalidationEntry.class);
 	}
+
+	public List<CachedInvalidationEntry> findByAttributes(
+			java.util.Map<String, String> attributes) throws DAOException {
+		return dao.findByAttributes(attributes, CachedInvalidationEntry.class);
+	}
+
 }
