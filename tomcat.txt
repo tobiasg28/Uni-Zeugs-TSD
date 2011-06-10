@@ -1,5 +1,0 @@
-verwendete tomcat version:
-http://apache.webersiedlung.at/tomcat/tomcat-7/v7.0.14/bin/
-
-einrichten des eclipse plugins:
-http://www.mulesoft.com/tomcat-eclipse
