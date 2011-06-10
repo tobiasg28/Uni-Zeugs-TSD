@@ -1,5 +1,6 @@
 package backend.test;
 
+import java.rmi.NoSuchObjectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -84,6 +85,12 @@ public class NotificationAPITest extends UnicastRemoteObject implements Frontend
 				try {
 					backend.unregisterClient(frontend);
 				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					UnicastRemoteObject.unexportObject(frontend, false);
+				} catch (NoSuchObjectException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
