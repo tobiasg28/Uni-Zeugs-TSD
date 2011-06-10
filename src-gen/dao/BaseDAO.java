@@ -3,6 +3,7 @@ package dao;
 import storage.*;
 import entities.Base;
 import java.util.List;
+import java.util.Map;
 
 public class BaseDAO {
 
@@ -30,5 +31,9 @@ public class BaseDAO {
 
 	public List<Base> getAll() throws DAOException {
 		return dao.getAll(Base.class);
+	}
+
+	public List<Base> findByAttributes(Map<String, String> attributes) {
+		return dao.findByAttributes(attributes, Base.class);
 	}
 }

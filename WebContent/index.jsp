@@ -34,7 +34,9 @@
  	} else if (p.equals("createMap")) {
  %> <jsp:include page="createMap.jsp" /> <%
  	} else if (p.equals("map") && !id.equals("")) {
- %> <jsp:include page="map.jsp" /> <%
+ 		 %> <jsp:include page="map.jsp" /> <%
+ 	} else if (p.equals("square") && !id.equals("")) {
+ 		 %> <jsp:include page="square.jsp" /> <%
  	} else {
  %> <jsp:include page="login.jsp" /> <%
  	}

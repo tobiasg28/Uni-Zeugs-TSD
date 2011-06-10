@@ -24,6 +24,7 @@ class SingleGameStepUpdate implements Runnable{
     private GameStep currentGameStep;
 
     public SingleGameStepUpdate(NotificationServer notificationServer, long gameMapId, GameStep currentGameStep) {
+    	this.notificationServer = notificationServer;
         this.gameMapId = gameMapId;
         this.currentGameStep = currentGameStep;
         

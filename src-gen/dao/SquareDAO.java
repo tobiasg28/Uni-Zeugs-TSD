@@ -2,7 +2,9 @@ package dao;
 
 import storage.*;
 import entities.Square;
+
 import java.util.List;
+import java.util.Map;
 
 public class SquareDAO {
 
@@ -30,5 +32,9 @@ public class SquareDAO {
 
 	public List<Square> getAll() throws DAOException {
 		return dao.getAll(Square.class);
+	}
+
+	public List<Square> findByAttributes(Map<String, String> attributes) {
+		return dao.findByAttributes(attributes, Square.class);
 	}
 }

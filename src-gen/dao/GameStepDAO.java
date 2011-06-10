@@ -3,6 +3,7 @@ package dao;
 import storage.*;
 import entities.GameStep;
 import java.util.List;
+import java.util.Map;
 
 public class GameStepDAO {
 
@@ -30,5 +31,9 @@ public class GameStepDAO {
 
 	public List<GameStep> getAll() throws DAOException {
 		return dao.getAll(GameStep.class);
+	}
+
+	public List<GameStep> findByAttributes(Map<String, String> attributes) {
+		return dao.findByAttributes(attributes, GameStep.class);
 	}
 }

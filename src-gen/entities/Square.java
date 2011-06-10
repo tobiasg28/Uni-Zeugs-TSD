@@ -67,7 +67,7 @@ public class Square implements Serializable {
 		return privilegedFor;
 	}
 
-	@OneToOne(mappedBy = "square")
+	@OneToOne(mappedBy = "square", cascade = CascadeType.ALL)
 	private Building building;
 
 	public void setBuilding(Building building) {

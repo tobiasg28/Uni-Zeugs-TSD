@@ -3,6 +3,7 @@ package dao;
 import storage.*;
 import entities.CachedInvalidationEntry;
 import java.util.List;
+import java.util.Map;
 
 public class CachedInvalidationEntryDAO {
 
@@ -31,5 +32,9 @@ public class CachedInvalidationEntryDAO {
 
 	public List<CachedInvalidationEntry> getAll() throws DAOException {
 		return dao.getAll(CachedInvalidationEntry.class);
+	}
+
+	public List<CachedInvalidationEntry> findByAttributes(Map<String, String> attributes) {
+		return dao.findByAttributes(attributes, CachedInvalidationEntry.class);
 	}
 }

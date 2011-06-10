@@ -2,7 +2,6 @@ package dao;
 
 import storage.*;
 import entities.GameMap;
-import entities.User;
 
 import java.util.List;
 import java.util.Map;

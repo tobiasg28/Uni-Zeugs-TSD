@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+  <persistence-unit name="dao" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>entities.User</class>
+	<class>entities.Message</class>
+	<class>entities.GameMap</class>
+	<class>entities.Resource</class>
+	<class>entities.Participation</class>
+	<class>entities.GameStep</class>
+	<class>entities.Troop</class>
+	<class>entities.TroopType</class>
+	<class>entities.Square</class>
+	<class>entities.ItemType</class>
+	<class>entities.CachedInvalidationEntry</class>
+	<class>entities.BuildingType</class>
+	<class>entities.Building</class>
+	<class>entities.Base</class>
+	<class>entities.ResourceAmount</class>
+	
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="hibernate.connection.username" value="swa"/>
+      <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+      <property name="hibernate.connection.password" value="swa11"/>
+      <property name="hibernate.connection.url" value="jdbc:postgresql://localhost/swa"/>
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+      <!-- http://stackoverflow.com/questions/438146/hibernate-question-hbm2ddl-auto-possible-values-and-what-they-do -->
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+    </properties>
+  </persistence-unit>
+</persistence>
+	

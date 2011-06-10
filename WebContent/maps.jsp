@@ -1,3 +1,4 @@
+<%@ page import="dao.*,entities.*" %>
 <div>
 	<%
 		if (session.getAttribute("loggedIn") != null
@@ -10,8 +11,18 @@
 	<div>
 		<h2>existing maps:</h2>
 		<ul>
-			<li>map1</li>
-			<li>map2</li>
+		<%
+		
+		GameMapDAO dao = new GameMapDAO();
+		for (GameMap map : dao.getAll()) {
+			%>
+			
+			<li><a href="?page=map&amp;id=<%= map.getId() %>"><%= map.getName() %></a></li>
+			
+			<%
+		}
+		
+		%>
 		</ul>
 	</div>
 	<%

@@ -1,3 +1,4 @@
+<%@ page import="dao.*,entities.*" %>
 <jsp:useBean id="user" class="entities.User" scope="session" />
 <div>
 	<%
@@ -12,10 +13,19 @@
 	</div>
 	<div>
 		<a href="?page=maps">maps</a>
-		<ul>
-			<li><a href="#">map1</a>
-			</li>
-		</ul>
+		<ul><li><em><strong>FIXME:</strong> hier nur maps zeigen, in der man eine participation hat</em></li>
+		<%
+		
+		GameMapDAO dao = new GameMapDAO();
+		for (GameMap map : dao.getAll()) {
+			%>
+			
+			<li><a href="?page=map&amp;id=<%= map.getId() %>"><%= map.getName() %></a></li>
+			
+			<%
+		}
+		
+		%>		</ul>
 	</div>
 	<%
 		} else {

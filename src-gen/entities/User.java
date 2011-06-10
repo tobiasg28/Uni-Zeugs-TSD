@@ -76,7 +76,7 @@ public class User implements Serializable {
 		return timezone;
 	}
 
-	@OneToMany(mappedBy = "fromUser")
+	@OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL)
 	private List<Message> outMessages;
 
 	public void setOutMessages(List<Message> outMessages) {
@@ -87,7 +87,7 @@ public class User implements Serializable {
 		return outMessages;
 	}
 
-	@OneToMany(mappedBy = "toUser")
+	@OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL)
 	private List<Message> inMessages;
 
 	public void setInMessages(List<Message> inMessages) {
@@ -98,7 +98,7 @@ public class User implements Serializable {
 		return inMessages;
 	}
 
-	@OneToMany(mappedBy = "participant")
+	@OneToMany(mappedBy = "participant", cascade = CascadeType.ALL)
 	private List<Participation> participations;
 
 	public void setParticipations(List<Participation> participations) {

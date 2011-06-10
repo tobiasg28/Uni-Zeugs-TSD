@@ -3,6 +3,7 @@ package dao;
 import storage.*;
 import entities.BuildingType;
 import java.util.List;
+import java.util.Map;
 
 public class BuildingTypeDAO {
 
@@ -30,5 +31,9 @@ public class BuildingTypeDAO {
 
 	public List<BuildingType> getAll() throws DAOException {
 		return dao.getAll(BuildingType.class);
+	}
+
+	public List<BuildingType> findByAttributes(Map<String, String> attributes) {
+		return dao.findByAttributes(attributes, BuildingType.class);
 	}
 }

@@ -64,3 +64,13 @@ Danach kann man die Tests mit
 ausführen - das erstellt beim ersten Benutzen die Tabellen.
 
 
+==================================================
+Tomcat-Server unter Eclipse for Java EE einrichten
+==================================================
+
+verwendete tomcat version:
+http://apache.webersiedlung.at/tomcat/tomcat-7/v7.0.14/bin/
+
+einrichten des eclipse plugins:
+http://www.mulesoft.com/tomcat-eclipse
+

@@ -2,7 +2,9 @@ package dao;
 
 import storage.*;
 import entities.Message;
+
 import java.util.List;
+import java.util.Map;
 
 public class MessageDAO {
 
@@ -30,5 +32,9 @@ public class MessageDAO {
 
 	public List<Message> getAll() throws DAOException {
 		return dao.getAll(Message.class);
+	}
+
+	public List<Message> findByAttributes(Map<String, String> attributes) {
+		return dao.findByAttributes(attributes, Message.class);
 	}
 }
