@@ -56,6 +56,8 @@ public class GameStart {
 		GameMap map = new GameMap();
 		map.setMaxUsers(maxPlayer);
 		map.setName(name);
+		map.setParticipations(new ArrayList<Participation>());
+		
 		List<Square> squares = new ArrayList<Square>();
 		for (int x = 0; x < (2 * maxPlayer); x++) {
 			for (int y = 0; y < (2 * maxPlayer); y++) {
@@ -203,6 +205,8 @@ public class GameStart {
 				bDao.update(start);
 				t.setParticipation(player);
 				tDao.update(t);
+				map.getParticipations().add(player);
+				mDao.update(map);
 				return true;
 			} else {
 				throw new GameStartException(
