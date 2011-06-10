@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "swag_user")
@@ -77,7 +78,7 @@ public class User implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "fromUser", cascade = CascadeType.ALL)
-	private List<Message> outMessages;
+	private List<Message> outMessages = new ArrayList<Message>();
 
 	public void setOutMessages(List<Message> outMessages) {
 		this.outMessages = outMessages;
@@ -88,7 +89,7 @@ public class User implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "toUser", cascade = CascadeType.ALL)
-	private List<Message> inMessages;
+	private List<Message> inMessages = new ArrayList<Message>();
 
 	public void setInMessages(List<Message> inMessages) {
 		this.inMessages = inMessages;
@@ -99,7 +100,7 @@ public class User implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "participant", cascade = CascadeType.ALL)
-	private List<Participation> participations;
+	private List<Participation> participations = new ArrayList<Participation>();
 
 	public void setParticipations(List<Participation> participations) {
 		this.participations = participations;

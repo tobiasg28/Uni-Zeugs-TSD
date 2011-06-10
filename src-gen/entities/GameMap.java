@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "swag_gamemap")
@@ -46,7 +47,7 @@ public class GameMap implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "map", cascade = CascadeType.ALL)
-	private List<Participation> participations;
+	private List<Participation> participations = new ArrayList<Participation>();
 
 	public void setParticipations(List<Participation> participations) {
 		this.participations = participations;
@@ -57,7 +58,7 @@ public class GameMap implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "map", cascade = CascadeType.ALL)
-	private List<Square> squares;
+	private List<Square> squares = new ArrayList<Square>();
 
 	public void setSquares(List<Square> squares) {
 		this.squares = squares;

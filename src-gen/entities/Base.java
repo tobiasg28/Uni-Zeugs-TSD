@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "swag_base")
@@ -91,7 +92,7 @@ public class Base implements Serializable {
 	}
 
 	@OneToMany(mappedBy = "base", cascade = CascadeType.ALL)
-	private List<Building> buildings;
+	private List<Building> buildings = new ArrayList<Building>();
 
 	public void setBuildings(List<Building> buildings) {
 		this.buildings = buildings;

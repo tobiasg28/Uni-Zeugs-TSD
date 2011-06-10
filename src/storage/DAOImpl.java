@@ -106,6 +106,7 @@ public class DAOImpl{
             logger.debug(object.toString() + " deleted.");
             return true;
         } catch (Exception e) {
+        	e.printStackTrace();
             logger.debug("DAOException during deleting of " + object.toString());
             throw new DAOException(e);
         }

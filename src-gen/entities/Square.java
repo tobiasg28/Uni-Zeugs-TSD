@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "swag_square")
@@ -67,7 +68,7 @@ public class Square implements Serializable {
 		return privilegedFor;
 	}
 
-	@OneToOne()
+	@OneToOne(cascade = CascadeType.ALL)
 	private Base base;
 
 	public void setBase(Base base) {
