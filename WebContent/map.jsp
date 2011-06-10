@@ -54,6 +54,7 @@
 		int free = 0;
 		boolean already = false;
 		List<Participation> p = map.getParticipations();
+		
 		if (p != null) {
 			for (Participation pa : p){
 				if (user.getUsername().equals(pa.getParticipant().getUsername())){
@@ -65,8 +66,10 @@
 			free = map.getMaxUsers();
 		}
 
-		
-		if (free > 0) {
+		if (already){
+			out.print("already participating");
+		}
+		else if (free > 0) {
 	%>
 	<p><%= free %> free game slots. do you want to participate?</p>
 	<form method="post" action="ParticipateServlet">

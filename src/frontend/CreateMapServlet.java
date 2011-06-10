@@ -46,7 +46,7 @@ public class CreateMapServlet extends HttpServlet {
 				} else if (mapExists(mapName)) {
 					request.setAttribute("errorMsg", "map already exists!");
 				} else if ((maxPlayers = Integer.parseInt(mp)) <= 1) {
-					request.setAttribute("errorMsg", "there should be more tahn one player!");
+					request.setAttribute("errorMsg", "there should be more than one player!");
 				} else {
 					request.setAttribute("error", false);
 					long id = GameStart.newGame(mapName, maxPlayers);
