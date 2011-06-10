@@ -10,7 +10,13 @@ package frontend;
  */
 public class AcceptanceException  extends Exception{
     
-    public AcceptanceException(String msg) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -91217314666080462L;
+
+
+	public AcceptanceException(String msg) {
         super(msg); 
     }
     

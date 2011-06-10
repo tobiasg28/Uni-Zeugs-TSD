@@ -15,8 +15,6 @@ import entities.Troop;
 import entities.TroopType;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import storage.DAOException;
 
 /**
@@ -83,16 +81,17 @@ public class Acceptance {
     }
 
     public static Square getSquareForBase(GameMap map) {
-        boolean bmap[][] = new boolean[map.getMaxUsers()][map.getMaxUsers()];
-        for (int y = 0; y < map.getMaxUsers(); y++) {
-            for (int x = 0; x < map.getMaxUsers(); x++) {
+        boolean bmap[][] = new boolean[2*map.getMaxUsers()][2*map.getMaxUsers()];
+        for (int y = 0; y < 2*map.getMaxUsers(); y++) {
+            for (int x = 0; x < 2*map.getMaxUsers(); x++) {
                 bmap[y][x] = true;
             }
         }
-        int baseCount = 0;
         for (Participation p : map.getParticipations()) {
+        	if(p.getBases() == null){
+        		continue;
+        	}
             for (Base b : p.getBases()) {
-                baseCount++;
                 int yBegin = b.getSquare().getPositionY() - 2;
                 int xBegin = b.getSquare().getPositionX() - 2;
                 int yEnd = b.getSquare().getPositionY() + 2;
@@ -103,20 +102,51 @@ public class Acceptance {
                 if(xBegin < 0){
                     xBegin = 0;
                 }
-                if(yEnd > map.getMaxUsers() - 1){
-                    yEnd = map.getMaxUsers() - 1;
+                if(yEnd > 2*map.getMaxUsers() - 1){
+                    yEnd = 2*map.getMaxUsers() - 1;
                 }
-                if(xEnd > map.getMaxUsers() - 1){
-                    xEnd = map.getMaxUsers() - 1;
+                if(xEnd > 2*map.getMaxUsers() - 1){
+                    xEnd = 2*map.getMaxUsers() - 1;
                 }
-                for (int y = yBegin; y < yEnd; y++) {
-                    for (int x = xBegin; x < xEnd; x++) {
+                for (int y = yBegin; y <= yEnd; y++) {
+                    for (int x = xBegin; x <= xEnd; x++) {
                         bmap[y][x] = false;
                     }
                 }
             }
         }
-        //TODO FINISH
-        return null;
+        int count = 0;
+        for (int y = 0; y < 2*map.getMaxUsers(); y++) {
+            for (int x = 0; x < 2*map.getMaxUsers(); x++) {
+            	//System.out.print(bmap[y][x]);
+                if(bmap[y][x]){
+                	count++;
+                }
+            }
+            System.out.println();
+        }
+        if(count == 0){
+        	//No free squares
+        	return null;
+        }
+        int joice = (2*map.getMaxUsers()) % count;
+        count = -1;
+        Square result = null;
+        for (int y = 0; y < 2*map.getMaxUsers(); y++) {
+            for (int x = 0; x < 2*map.getMaxUsers(); x++) {
+                if(bmap[y][x]){
+                	count++;
+                	if(count == joice){
+                		for(Square s : map.getSquares()){
+                			if(s.getPositionY() == y && s.getPositionX() == x){
+                				result=s;
+                			}
+                		}
+                		break;
+                	}
+                }
+            }
+        }
+        return result;
     }
 }

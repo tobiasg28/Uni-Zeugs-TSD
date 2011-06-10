@@ -4,7 +4,6 @@
  */
 package frontend;
 
-import storage.DAOException;
 
 /**
  *
@@ -12,7 +11,13 @@ import storage.DAOException;
  */
 public class GameStartException extends Exception{
     
-    public GameStartException(String msg) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3677764933102266726L;
+
+
+	public GameStartException(String msg) {
         super(msg); 
     }
     

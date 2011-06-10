@@ -22,7 +22,6 @@ import entities.Troop;
 import entities.User;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 
@@ -62,11 +61,11 @@ public class GameStart {
                 Square s = new Square();
                 s.setPositionX(x);
                 s.setPositionY(y);
-                if ((x + y == maxPlayer || x == y) && (x / 2) * 2 == x) {
+                if ((x + y == maxPlayer || x == y) && x % 2 == 0) {
                     s.setPrivilegedFor(resources.get(x % resources.size()));
                 }
-                if ((x == maxPlayer / 2 && (y / 2) * 2 != y)
-                        || (y == maxPlayer / 2 && (x / 2) * 2 != x)) {
+                if ((x == maxPlayer / 2 && y % 2 != 0)
+                        || (y == maxPlayer / 2 && x % 2 != 0)) {
                     s.setPrivilegedFor(resources.get(x % resources.size()));
                 }
                 try {
