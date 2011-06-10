@@ -51,6 +51,8 @@ public class TroopTypeTest {
 		DAOImpl.getInstance().create(nextLevel);
 		entity.setNextLevel(nextLevel);
 
+		entity.setName("BLA");
+
 		Assert.assertTrue(dao.create(entity));
 		Assert.assertNotNull(entity.getId());
 	}
@@ -74,6 +76,8 @@ public class TroopTypeTest {
 		TroopType nextLevel = s.getNextLevel();
 		Assert.assertNotNull(nextLevel);
 
+		Assert.assertEquals("BLA", s.getName());
+
 	}
 
 	@Test
@@ -90,6 +94,8 @@ public class TroopTypeTest {
 
 		s.setNextLevel(null);
 
+		s.setName("BLA");
+
 		Assert.assertTrue(dao.create(s));
 
 		// Create Copy of s
@@ -105,6 +111,8 @@ public class TroopTypeTest {
 
 		sCopy.setNextLevel(s.getNextLevel());
 
+		sCopy.setName(s.getName());
+
 		// Change Values of s
 
 		s.setStrength(1);
@@ -116,6 +124,8 @@ public class TroopTypeTest {
 		s.setUpgradeCost(null);
 
 		s.setNextLevel(null);
+
+		s.setName("changed");
 
 		s = dao.update(s);
 		// check if Update successful
@@ -130,6 +140,8 @@ public class TroopTypeTest {
 		Assert.assertTrue(s.getUpgradeCost() == sCopy.getUpgradeCost());
 
 		Assert.assertTrue(s.getNextLevel() == sCopy.getNextLevel());
+
+		Assert.assertTrue(s.getName() != sCopy.getName());
 
 	}
 

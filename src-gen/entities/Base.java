@@ -58,7 +58,7 @@ public class Base implements Serializable {
 		return participation;
 	}
 
-	@OneToOne()
+	@OneToOne(mappedBy = "base")
 	private Square square;
 
 	public void setSquare(Square square) {

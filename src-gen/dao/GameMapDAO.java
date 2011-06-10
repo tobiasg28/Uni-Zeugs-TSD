@@ -2,10 +2,7 @@ package dao;
 
 import storage.*;
 import entities.GameMap;
-import entities.User;
-
 import java.util.List;
-import java.util.Map;
 
 public class GameMapDAO {
 
@@ -33,9 +30,5 @@ public class GameMapDAO {
 
 	public List<GameMap> getAll() throws DAOException {
 		return dao.getAll(GameMap.class);
-	}
-	
-	public List<GameMap> findByAttributes(Map<String, String> attributes){
-		return dao.findByAttributes(attributes, GameMap.class);
 	}
 }

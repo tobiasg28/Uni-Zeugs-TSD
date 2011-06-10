@@ -49,6 +49,8 @@ public class BuildingTypeTest {
 		DAOImpl.getInstance().create(productionType);
 		entity.setProductionType(productionType);
 
+		entity.setName("BLA");
+
 		Assert.assertTrue(dao.create(entity));
 		Assert.assertNotNull(entity.getId());
 	}
@@ -70,6 +72,8 @@ public class BuildingTypeTest {
 		Resource productionType = s.getProductionType();
 		Assert.assertNotNull(productionType);
 
+		Assert.assertEquals("BLA", s.getName());
+
 	}
 
 	@Test
@@ -84,6 +88,8 @@ public class BuildingTypeTest {
 
 		s.setProductionType(null);
 
+		s.setName("BLA");
+
 		Assert.assertTrue(dao.create(s));
 
 		// Create Copy of s
@@ -97,6 +103,8 @@ public class BuildingTypeTest {
 
 		sCopy.setProductionType(s.getProductionType());
 
+		sCopy.setName(s.getName());
+
 		// Change Values of s
 
 		s.setInitialCost(null);
@@ -106,6 +114,8 @@ public class BuildingTypeTest {
 		s.setProductionRate(1);
 
 		s.setProductionType(null);
+
+		s.setName("changed");
 
 		s = dao.update(s);
 		// check if Update successful
@@ -118,6 +128,8 @@ public class BuildingTypeTest {
 		Assert.assertTrue(s.getProductionRate() != sCopy.getProductionRate());
 
 		Assert.assertTrue(s.getProductionType() == sCopy.getProductionType());
+
+		Assert.assertTrue(s.getName() != sCopy.getName());
 
 	}
 

@@ -78,4 +78,14 @@ public class TroopType implements Serializable {
 		return nextLevel;
 	}
 
+	private String name;
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 }
