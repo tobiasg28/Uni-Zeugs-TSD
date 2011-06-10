@@ -51,8 +51,9 @@ public class CreateMapServlet extends HttpServlet {
 				} else {
 					maxPlayers = Integer.parseInt(mp);
 					request.setAttribute("error", false);
-					Long id = GameStart.newGame(mapName, maxPlayers);
-					System.out.println("id thp cool: " + id);
+					long id = GameStart.newGame(mapName, maxPlayers);
+					BackendConnection.getBackend().onMapCreated(id);
+					
 					dispatcher = getServletContext().getRequestDispatcher(
 							"/index.jsp?page=maps");
 				}
