@@ -7,9 +7,11 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import storage.DAOException;
+import dao.BuildingTypeDAO;
 import dao.ResourceAmountDAO;
 import dao.ResourceDAO;
 import dao.TroopTypeDAO;
+import entities.BuildingType;
 import entities.Resource;
 import entities.ResourceAmount;
 import entities.TroopType;
@@ -19,6 +21,7 @@ public class DatabaseInitializer {
 	static TroopTypeDAO troopTypeDAO = new TroopTypeDAO();
 	static ResourceDAO resourceDAO = new ResourceDAO();
 	static ResourceAmountDAO resourceAmountDAO = new ResourceAmountDAO();
+	static BuildingTypeDAO buildingTypeDAO = new BuildingTypeDAO();
 	
 	public static Resource createResource(String name) throws DAOException {
 		Resource r = new Resource();
@@ -49,6 +52,17 @@ public class DatabaseInitializer {
 		return t;
 	}
 	
+	public static BuildingType createBuildingType(Resource resource, int rate,
+			ResourceAmount initial, ResourceAmount upgrade) throws DAOException {
+		BuildingType b = new BuildingType();
+		b.setProductionRate(rate);
+		b.setProductionType(resource);
+		b.setInitialCost(initial);
+		b.setUpgradeCost(upgrade);
+		buildingTypeDAO.create(b);
+		return b;
+	}
+	
 	public static void initializeDB() throws DatabaseInitializerException {
 		logger.info("Initializing database...");
 		
@@ -58,6 +72,10 @@ public class DatabaseInitializer {
 		
 		if (!initializeTroopTypes()) {
 			throw new DatabaseInitializerException("Troop Types");
+		}
+		
+		if (!initializeBuildingTypes()) {
+			throw new DatabaseInitializerException("Building Types");
 		}
 		
 		logger.info("Database successfully initialized.");
@@ -97,6 +115,61 @@ public class DatabaseInitializer {
 			t = createTroopType(2, 1, createResourceAmount(resources.get("Food"), 2), createResourceAmount(resources.get("Wood"), 4), t);
 		} catch (DAOException e) {
 			logger.error("Error while trying to create Troop Types.");
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	private static boolean initializeBuildingTypes() {		
+		try {
+			if (buildingTypeDAO.getAll().size() > 0) {
+				logger.info("Building Types already initialized. Good!");
+				return true;
+			}
+		} catch (DAOException e) {
+			logger.error("Error while trying to read Building Types from the DB.");
+			e.printStackTrace();
+			return false;
+		}
+		
+		List<Resource> l;
+		try {
+			l = resourceDAO.getAll();
+		} catch (DAOException e) {
+			logger.error("Error while trying to read Resources from the DB.");
+			e.printStackTrace();
+			return false;
+		}
+		Map<String,Resource> resources = new HashMap<String,Resource>();
+		for (Resource r: l) {
+			resources.put(r.getName(), r);
+		}
+				
+		try {
+			/* Building Types */
+			
+			/* Hunter */
+			createBuildingType(resources.get("Food"), 10,
+					createResourceAmount(resources.get("Wood"), 10),
+					createResourceAmount(resources.get("Stone"), 2));
+			
+			/* Forester */
+			createBuildingType(resources.get("Wood"), 15,
+					createResourceAmount(resources.get("Wood"), 15),
+					createResourceAmount(resources.get("Stone"), 5));
+			
+			/* Quarry */
+			createBuildingType(resources.get("Stone"), 5,
+					createResourceAmount(resources.get("Wood"), 5),
+					createResourceAmount(resources.get("Stone"), 20));
+			
+			/* Gold Mine */
+			createBuildingType(resources.get("Gold"), 2,
+					createResourceAmount(resources.get("Stone"), 7),
+					createResourceAmount(resources.get("Wood"), 20));
+			
+		} catch (DAOException e) {
+			logger.error("Error while trying to create Building Types.");
 			e.printStackTrace();
 		}
 		
