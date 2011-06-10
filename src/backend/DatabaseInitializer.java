@@ -1,45 +1,46 @@
 package backend;
 
+import org.apache.log4j.Logger;
+
 import storage.DAOException;
 import dao.ResourceDAO;
 import entities.Resource;
 
 public class DatabaseInitializer {
+	static Logger logger = Logger.getLogger(DatabaseInitializer.class);
 	
-	public static Resource create(String name) {
+	public static Resource createResource(String name) {
 		Resource r = new Resource();
 		r.setName(name);
 		return r;
 	}
 	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
+	public static void initializeDB() {
+		logger.info("Checking existing data...");
 		ResourceDAO dao = new ResourceDAO();
 		
 		try {
 			if (dao.getAll().size() > 0) {
-				System.out.println("Hey, Rocker - you already got some resources. Good for you!");
+				logger.info("Database already initialized. Good!");
 				return;
 			}
 		} catch (DAOException e1) {
-			System.err.println("What the Fax? Cannot READ from the DB? ORLY?!??!?!");
+			logger.error("Error while trying to read from the Database.");
 			e1.printStackTrace();
 		}
 		
 		try {
-			dao.create(create("Food"));
-			dao.create(create("Wood"));
-			dao.create(create("Stone"));
-			dao.create(create("Gold"));
+			dao.create(createResource("Food"));
+			dao.create(createResource("Wood"));
+			dao.create(createResource("Stone"));
+			dao.create(createResource("Gold"));
 		} catch (DAOException e) {
-			System.err.println("DatabaseInitializer error resource");
+			logger.error("Could not create resources");
 			e.printStackTrace();
 			return;
 		}
 		
-		System.out.println("Domination! We got some resources in the DB!");
+		logger.info("Database successfully initialized.");
 	}
 
 }

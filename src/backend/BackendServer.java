@@ -30,6 +30,9 @@ public class BackendServer {
 	private static Logger logger = Logger.getLogger(NotificationServer.class);
 
 	public static void main(String [] args) {
+		// Make sure we have the basic content put into the DB before beginning
+		DatabaseInitializer.initializeDB();
+		
 		NotificationServer server = new NotificationServer();
 		try {
 			logger.info("Registering NotificationServer as '" + Constants.BACKEND_RMI_NAME + "'...");
