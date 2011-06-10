@@ -2,9 +2,7 @@ package dao;
 
 import storage.*;
 import entities.TroopType;
-
 import java.util.List;
-import java.util.Map;
 
 public class TroopTypeDAO {
 
@@ -32,9 +30,5 @@ public class TroopTypeDAO {
 
 	public List<TroopType> getAll() throws DAOException {
 		return dao.getAll(TroopType.class);
-	}
-
-	public List<TroopType> findByAttributes(Map<String, String> attributes) {
-		return dao.findByAttributes(attributes, TroopType.class);
 	}
 }

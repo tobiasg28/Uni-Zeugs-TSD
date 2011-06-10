@@ -47,17 +47,6 @@ public class Building implements Serializable {
 		return base;
 	}
 
-	@OneToOne()
-	private Square square;
-
-	public void setSquare(Square square) {
-		this.square = square;
-	}
-
-	public Square getSquare() {
-		return square;
-	}
-
 	@ManyToOne()
 	private BuildingType type;
 

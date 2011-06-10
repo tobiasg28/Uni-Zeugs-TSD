@@ -43,10 +43,6 @@ public class BuildingTest {
 		DAOImpl.getInstance().create(base);
 		entity.setBase(base);
 
-		Square square = new Square();
-		DAOImpl.getInstance().create(square);
-		entity.setSquare(square);
-
 		BuildingType type = new BuildingType();
 		DAOImpl.getInstance().create(type);
 		entity.setType(type);
@@ -81,9 +77,6 @@ public class BuildingTest {
 		Base base = s.getBase();
 		Assert.assertNotNull(base);
 
-		Square square = s.getSquare();
-		Assert.assertNotNull(square);
-
 		BuildingType type = s.getType();
 		Assert.assertNotNull(type);
 
@@ -108,8 +101,6 @@ public class BuildingTest {
 
 		s.setBase(null);
 
-		s.setSquare(null);
-
 		s.setType(null);
 
 		s.setUpgradeLevel(0);
@@ -129,8 +120,6 @@ public class BuildingTest {
 
 		sCopy.setBase(s.getBase());
 
-		sCopy.setSquare(s.getSquare());
-
 		sCopy.setType(s.getType());
 
 		sCopy.setUpgradeLevel(s.getUpgradeLevel());
@@ -146,8 +135,6 @@ public class BuildingTest {
 		s.setCreated(null);
 
 		s.setBase(null);
-
-		s.setSquare(null);
 
 		s.setType(null);
 
@@ -166,8 +153,6 @@ public class BuildingTest {
 		Assert.assertTrue(s.getCreated() == sCopy.getCreated());
 
 		Assert.assertTrue(s.getBase() == sCopy.getBase());
-
-		Assert.assertTrue(s.getSquare() == sCopy.getSquare());
 
 		Assert.assertTrue(s.getType() == sCopy.getType());
 

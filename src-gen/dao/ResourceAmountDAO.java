@@ -2,9 +2,7 @@ package dao;
 
 import storage.*;
 import entities.ResourceAmount;
-
 import java.util.List;
-import java.util.Map;
 
 public class ResourceAmountDAO {
 
@@ -32,9 +30,5 @@ public class ResourceAmountDAO {
 
 	public List<ResourceAmount> getAll() throws DAOException {
 		return dao.getAll(ResourceAmount.class);
-	}
-
-	public List<ResourceAmount> findByAttributes(Map<String, String> attributes) {
-		return dao.findByAttributes(attributes, ResourceAmount.class);
 	}
 }

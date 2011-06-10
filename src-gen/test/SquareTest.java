@@ -47,9 +47,9 @@ public class SquareTest {
 		DAOImpl.getInstance().create(privilegedFor);
 		entity.setPrivilegedFor(privilegedFor);
 
-		Building building = new Building();
-		DAOImpl.getInstance().create(building);
-		entity.setBuilding(building);
+		Base base = new Base();
+		DAOImpl.getInstance().create(base);
+		entity.setBase(base);
 
 		Assert.assertTrue(dao.create(entity));
 		Assert.assertNotNull(entity.getId());
@@ -71,8 +71,8 @@ public class SquareTest {
 		Resource privilegedFor = s.getPrivilegedFor();
 		Assert.assertNotNull(privilegedFor);
 
-		Building building = s.getBuilding();
-		Assert.assertNotNull(building);
+		Base base = s.getBase();
+		Assert.assertNotNull(base);
 
 	}
 
@@ -88,7 +88,7 @@ public class SquareTest {
 
 		s.setPrivilegedFor(null);
 
-		s.setBuilding(null);
+		s.setBase(null);
 
 		Assert.assertTrue(dao.create(s));
 
@@ -103,7 +103,7 @@ public class SquareTest {
 
 		sCopy.setPrivilegedFor(s.getPrivilegedFor());
 
-		sCopy.setBuilding(s.getBuilding());
+		sCopy.setBase(s.getBase());
 
 		// Change Values of s
 
@@ -115,7 +115,7 @@ public class SquareTest {
 
 		s.setPrivilegedFor(null);
 
-		s.setBuilding(null);
+		s.setBase(null);
 
 		s = dao.update(s);
 		// check if Update successful
@@ -129,7 +129,7 @@ public class SquareTest {
 
 		Assert.assertTrue(s.getPrivilegedFor() == sCopy.getPrivilegedFor());
 
-		Assert.assertTrue(s.getBuilding() == sCopy.getBuilding());
+		Assert.assertTrue(s.getBase() == sCopy.getBase());
 
 	}
 
