@@ -7,15 +7,16 @@
 %>
 
 <h1>
-	<%=map.getName()%> (id=<%=map.getId()%>)
+	<%=map.getName()%>
+	(id=<%=map.getId()%>)
 </h1>
 
 <style type="text/css">
 .swagsquare {
 	position: absolute;
 	display: block;
-	width: <%=Constants.SQUARE_SIZE%>     px;
-	height: <%=Constants.SQUARE_SIZE%>     px;
+	width: <%=Constants.SQUARE_SIZE%>       px;
+	height: <%=Constants.SQUARE_SIZE%>       px;
 	background-color: #790;
 	border: 1px black solid;
 	text-decoration: none;
@@ -54,10 +55,11 @@
 		int free = 0;
 		boolean already = false;
 		List<Participation> p = map.getParticipations();
-		
+
 		if (p != null) {
-			for (Participation pa : p){
-				if (user.getUsername().equals(pa.getParticipant().getUsername())){
+			for (Participation pa : p) {
+				if (user.getUsername().equals(
+						pa.getParticipant().getUsername())) {
 					already = true;
 				}
 			}
@@ -66,15 +68,20 @@
 			free = map.getMaxUsers();
 		}
 
-		if (already){
-			out.print("already participating");
-		}
-		else if (free > 0) {
+		if (already) {
 	%>
-	<p><%= free %> free game slots. do you want to participate?</p>
+<p>click on a square and choose some action!</p>
+	<%
+		} else if (free > 0) {
+	%>
+	<p><%=free%>
+		free game slots. do you want to participate?
+	</p>
 	<form method="post" action="ParticipateServlet">
-		<input type="hidden" name="id" value="<%= map.getId() %>" />
-		<p><input type="submit" value="participate"></p>
+		<input type="hidden" name="id" value="<%=map.getId()%>" />
+		<p>
+			<input type="submit" value="participate">
+		</p>
 	</form>
 	<%
 		} else {
@@ -95,7 +102,7 @@
 			if (resource != null) {
 				privileged = resource.getName();
 			}
-			out.println("<a href=\"?page=square&amp;id=" + square.getId()
+			out.println("<a href=\"index.jsp?page=square&amp;id=" + square.getId()
 					+ "\" class=\"swagsquare " + privileged
 					+ "\" style=\"left: "
 					+ (100 + square.getPositionX() * Constants.SQUARE_SIZE)

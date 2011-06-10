@@ -7,7 +7,8 @@
 <title>SWAG</title>
 </head>
 <body>
-<jsp:useBean id="backend" class="frontend.BackendConnection" scope="session" />
+	<jsp:useBean id="backend" class="frontend.BackendConnection"
+		scope="session" />
 	<%
 		String p = request.getParameter("page");
 		if (p == null) {
@@ -35,9 +36,11 @@
  	} else if (p.equals("createMap")) {
  %> <jsp:include page="createMap.jsp" /> <%
  	} else if (p.equals("map") && !id.equals("")) {
- 		 %> <jsp:include page="map.jsp" /> <%
+ %> <jsp:include page="map.jsp" /> <%
  	} else if (p.equals("square") && !id.equals("")) {
- 		 %> <jsp:include page="square.jsp" /> <%
+ %> <jsp:include page="square.jsp" /> <%
+ 	} else if (p.equals("userAccount")) {
+ %> <jsp:include page="userAccount.jsp" /> <%
  	} else {
  %> <jsp:include page="login.jsp" /> <%
  	}

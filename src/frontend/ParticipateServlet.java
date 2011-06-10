@@ -35,6 +35,7 @@ public class ParticipateServlet extends HttpServlet {
 				GameStart.newPlayer(user, id);
 			} catch (GameStartException e) {
 				System.err.println(e);
+				e.printStackTrace();
 				logger.error(e);
 			}
 		}

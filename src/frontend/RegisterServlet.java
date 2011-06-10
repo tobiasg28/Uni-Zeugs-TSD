@@ -1,8 +1,10 @@
 package frontend;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import storage.DAOException;
 import dao.UserDAO;
 
+import entities.Participation;
 import entities.User;
 
 /**
@@ -84,6 +87,7 @@ public class RegisterServlet extends HttpServlet {
 					user.setPassword(pw);
 					user.setAdress(ad);
 					user.setFullName(fn);
+					user.setParticipations(new ArrayList<Participation>());
 
 					UserDAO dao = new UserDAO();
 					dao.create(user);

@@ -12,6 +12,7 @@ import dao.ResourceDAO;
 import dao.SquareDAO;
 import dao.TroopDAO;
 import dao.TroopTypeDAO;
+import dao.UserDAO;
 import entities.Base;
 import entities.GameMap;
 import entities.Participation;
@@ -207,6 +208,13 @@ public class GameStart {
 				tDao.update(t);
 				map.getParticipations().add(player);
 				mDao.update(map);
+				
+				UserDAO uDao = new UserDAO();
+				if (user.getParticipations() == null){
+					user.setParticipations(new ArrayList<Participation>());
+				}
+				user.getParticipations().add(player);
+				uDao.update(user);
 				return true;
 			} else {
 				throw new GameStartException(

@@ -14,5 +14,5 @@ drop table swag_buildingtype cascade;
 drop table swag_building cascade;
 drop table swag_base cascade;
 drop table swag_resourceamount cascade;
-drop table swag_participation_swag_resourceamount;
+drop table swag_participation_swag_resourceamount cascade;
 
