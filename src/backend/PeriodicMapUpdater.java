@@ -35,7 +35,9 @@ public class PeriodicMapUpdater extends Thread {
     }
     
     public void run() {
-        Thread updater;
+    	SingleGameStepUpdate ubject = new SingleGameStepUpdate(notificationServer, gameMapId);
+        Thread updater = new Thread(ubject);
+        updater.start();
         
         //A new game is started
         GameStep current = new GameStep();
@@ -55,14 +57,17 @@ public class PeriodicMapUpdater extends Thread {
 					// TODO: Calculate remaining time, sleep again
 				}
 				
-				if (!running) break;
+				if (!running){ 
+					ubject.stopRunning();
+					break;
+				}
                 
                 //Current GameStep
                 current = gameStepDAO.get(current.getId());
                 
                 //Updating of the game states
-                updater = new Thread(new SingleGameStepUpdate(notificationServer, gameMapId, current));
-                updater.start();
+                ubject.setCurrentGameStep(current);
+                
                 
                 //Next GameStep
                 current.setDate(new Date(new Date().getTime() + Constants.GAMESTEP_DURATION_MS));
