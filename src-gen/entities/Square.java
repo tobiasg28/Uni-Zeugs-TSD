@@ -68,7 +68,7 @@ public class Square implements Serializable {
 		return privilegedFor;
 	}
 
-	@OneToOne()
+	@OneToOne(cascade = CascadeType.ALL)
 	private Base base;
 
 	public void setBase(Base base) {
