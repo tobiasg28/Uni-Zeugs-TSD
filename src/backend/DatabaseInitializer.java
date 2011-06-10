@@ -81,6 +81,16 @@ public class DatabaseInitializer {
 		logger.info("Database successfully initialized.");
 	}
 	
+	private static Map<String,Resource> getResources() throws DAOException {
+		List<Resource> l;
+		l = resourceDAO.getAll();
+		Map<String,Resource> resources = new HashMap<String,Resource>();
+		for (Resource r: l) {
+			resources.put(r.getName(), r);
+		}
+		return resources;
+	}
+	
 	private static boolean initializeTroopTypes() {		
 		try {
 			if (troopTypeDAO.getAll().size() > 0) {
@@ -93,19 +103,15 @@ public class DatabaseInitializer {
 			return false;
 		}
 		
-		List<Resource> l;
+		Map<String,Resource> resources;
 		try {
-			l = resourceDAO.getAll();
+			resources = getResources();
 		} catch (DAOException e) {
 			logger.error("Error while trying to read Resources from the DB.");
 			e.printStackTrace();
 			return false;
 		}
-		Map<String,Resource> resources = new HashMap<String,Resource>();
-		for (Resource r: l) {
-			resources.put(r.getName(), r);
-		}
-		
+
 		TroopType t;
 		
 		try {
@@ -120,6 +126,7 @@ public class DatabaseInitializer {
 		
 		return true;
 	}
+	
 	private static boolean initializeBuildingTypes() {		
 		try {
 			if (buildingTypeDAO.getAll().size() > 0) {
@@ -132,17 +139,13 @@ public class DatabaseInitializer {
 			return false;
 		}
 		
-		List<Resource> l;
+		Map<String,Resource> resources;
 		try {
-			l = resourceDAO.getAll();
+			resources = getResources();
 		} catch (DAOException e) {
 			logger.error("Error while trying to read Resources from the DB.");
 			e.printStackTrace();
 			return false;
-		}
-		Map<String,Resource> resources = new HashMap<String,Resource>();
-		for (Resource r: l) {
-			resources.put(r.getName(), r);
 		}
 				
 		try {
