@@ -1,3 +1,4 @@
+<jsp:useBean id="map" class="entities.GameMap" scope="session" />
 <%@ page import="dao.*,entities.*,java.util.*,swag.*" %>
 
 <h1>MAP ID <%= request.getParameter("id") %></h1>

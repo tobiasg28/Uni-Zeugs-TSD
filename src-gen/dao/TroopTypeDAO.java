@@ -36,5 +36,8 @@ public class TroopTypeDAO {
 			java.util.Map<String, String> attributes) throws DAOException {
 		return dao.findByAttributes(attributes, TroopType.class);
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 40e632841b2840cbbb1d17c1ce4b9b71bce70243
 }

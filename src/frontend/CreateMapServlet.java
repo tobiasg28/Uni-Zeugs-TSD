@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,9 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import storage.DAOException;
+
 import dao.GameMapDAO;
-import dao.UserDAO;
-import dao.UserDAOExtended;
 import entities.GameMap;
 import entities.User;
 
@@ -50,13 +49,15 @@ public class CreateMapServlet extends HttpServlet {
 					request.setAttribute("errorMsg", "set map name!");
 				} else if (mapExists(mapName)) {
 					request.setAttribute("errorMsg", "map already exists!");
+				} else if ((maxPlayers = Integer.parseInt(mp)) <= 1) {
+					request.setAttribute("errorMsg", "there should be more tahn one player!");
 				} else {
-					maxPlayers = Integer.parseInt(mp);
 					request.setAttribute("error", false);
 					long id = GameStart.newGame(mapName, maxPlayers);
+					BackendConnection.getBackend().onMapCreated(id);
 					logger.debug("ID for new game created:" + id);
 					dispatcher = getServletContext().getRequestDispatcher(
-							"/index.jsp?page=maps");
+							"/index.jsp?page=map&id=" + id);
 				}
 			} catch (NumberFormatException e) {
 				request.setAttribute("errorMsg",
@@ -64,10 +65,10 @@ public class CreateMapServlet extends HttpServlet {
 			} catch (GameStartException e) {
 				logger.error("Got a GameStartError: " + e);
 				e.printStackTrace();
+			} catch (DAOException e) {
+				logger.error("Got a DAOError: " + e);
+				e.printStackTrace();
 			}
-
-			response.sendRedirect("./?page=maps");
-			return;
 		}
 		
 		response.setContentType("text/html;charset=UTF-8");
@@ -85,7 +86,7 @@ public class CreateMapServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-	private boolean mapExists(String name) {
+	private boolean mapExists(String name) throws DAOException {
 		GameMapDAO findMap = new GameMapDAO();
 		Map<String, String> attributes = new HashMap<String, String>();
 		attributes.put("name", name);
