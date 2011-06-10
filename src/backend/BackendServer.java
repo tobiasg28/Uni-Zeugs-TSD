@@ -31,7 +31,14 @@ public class BackendServer {
 
 	public static void main(String [] args) {
 		// Make sure we have the basic content put into the DB before beginning
-		DatabaseInitializer.initializeDB();
+		try {
+			DatabaseInitializer.initializeDB();
+		} catch (DatabaseInitializerException e1) {
+			logger.error("Could not initialize database!");
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return;
+		}
 		
 		NotificationServer server = new NotificationServer();
 		try {
