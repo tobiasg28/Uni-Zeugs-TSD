@@ -8,15 +8,14 @@
 
 <h1>
 	<%=map.getName()%>
-	(id=<%=map.getId()%>)
 </h1>
 
 <style type="text/css">
 .swagsquare {
 	position: absolute;
 	display: block;
-	width: <%=Constants.SQUARE_SIZE%>       px;
-	height: <%=Constants.SQUARE_SIZE%>       px;
+	width: <%=Constants.SQUARE_SIZE%>         px;
+	height: <%=Constants.SQUARE_SIZE%>         px;
 	background-color: #790;
 	border: 1px black solid;
 	text-decoration: none;
@@ -55,12 +54,14 @@
 		int free = 0;
 		boolean already = false;
 		List<Participation> p = map.getParticipations();
+		Participation player = null;
 
 		if (p != null) {
 			for (Participation pa : p) {
 				if (user.getUsername().equals(
 						pa.getParticipant().getUsername())) {
 					already = true;
+					player = pa;
 				}
 			}
 			free = map.getMaxUsers() - p.size();
@@ -70,7 +71,15 @@
 
 		if (already) {
 	%>
-<p>click on a square and choose some action!</p>
+	<h3>your resources</h3>
+	<%
+		for (ResourceAmount ra : player.getResources()) {
+				out.print(ra.getResource().getName() + "(" + ra.getAmount()
+						+ ")   ");
+			}
+	%>
+
+	<p>click on a square and choose some action!</p>
 	<%
 		} else if (free > 0) {
 	%>
@@ -102,9 +111,9 @@
 			if (resource != null) {
 				privileged = resource.getName();
 			}
-			out.println("<a href=\"index.jsp?page=square&amp;id=" + square.getId()
-					+ "\" class=\"swagsquare " + privileged
-					+ "\" style=\"left: "
+			out.println("<a href=\"index.jsp?page=square&amp;id="
+					+ square.getId() + "\" class=\"swagsquare "
+					+ privileged + "\" style=\"left: "
 					+ (100 + square.getPositionX() * Constants.SQUARE_SIZE)
 					+ "px; top: "
 					+ (50 + square.getPositionY() * Constants.SQUARE_SIZE)
