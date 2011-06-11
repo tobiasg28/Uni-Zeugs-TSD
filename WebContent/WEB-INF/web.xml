@@ -64,7 +64,7 @@
     <servlet-name>AccountServlet</servlet-name>
     <url-pattern>/AccountServlet</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <description></description>
     <display-name>CreateBaseServlet</display-name>
     <servlet-name>CreateBaseServlet</servlet-name>
@@ -73,5 +73,15 @@
   <servlet-mapping>
     <servlet-name>CreateBaseServlet</servlet-name>
     <url-pattern>/CreateBaseServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TroopServlet</display-name>
+    <servlet-name>TroopServlet</servlet-name>
+    <servlet-class>frontend.TroopServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TroopServlet</servlet-name>
+    <url-pattern>/TroopServlet</url-pattern>
   </servlet-mapping>
 </web-app>
