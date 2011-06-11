@@ -10,7 +10,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-import org.apache.log4j.Logger;
 
 import swag.Constants;
 
@@ -27,7 +26,6 @@ import notification.Backend;
  * @author thp
  **/
 public class BackendServer {
-	private static Logger logger = Logger.getLogger(NotificationServer.class);
 
 	public static void main(String [] args) {
 		// Make sure we have the basic content put into the DB before beginning

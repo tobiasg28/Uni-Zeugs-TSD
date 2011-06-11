@@ -77,6 +77,7 @@ public class GamePlay {
 				} catch (DAOException e) {
 					throw new GamePlayException("ERROR: Update DataBase",e);
 				}
+				return;
 			}
 		} catch (AcceptanceException e) {
 			throw new GamePlayException("ERROR: Not enough Resources",e);
@@ -126,6 +127,7 @@ public class GamePlay {
 				} catch (DAOException e) {
 					throw new GamePlayException("ERROR: Update DataBase",e);
 				}
+				return;
 			}
 		} catch (AcceptanceException e) {
 			throw new GamePlayException("ERROR: Not enough Resources",e);
@@ -180,6 +182,7 @@ public class GamePlay {
 				} catch (DAOException e) {
 					throw new GamePlayException("ERROR: Update DataBase",e);
 				}
+				return;
 			}
 		} catch (AcceptanceException e) {
 			throw new GamePlayException("ERROR: Not enough Resources",e);
@@ -187,12 +190,97 @@ public class GamePlay {
 		throw new GamePlayException("ERROR: Not enough Resources or Square isn't free");
 	}
 	
-	public static void upgradeBuilding(){
+	public static void upgradeBuilding(long participationId, long buildingId) throws GamePlayException{
+		BuildingDAO bDao = new BuildingDAO();
+		Building build = null;
+		
+		try {
+			build = bDao.get(buildingId);
+		} catch (DAOException e) {
+			throw new GamePlayException("ERROR: Read Building",e);
+		}
+		
+		if(build.getUpgradeLevel() > 9){
+			throw new GamePlayException("No more Upgrade possible");
+		}
+		
+		ParticipationDAO pDao = new ParticipationDAO();
+		Participation p = null;
+		try {
+			p = pDao.get(participationId);
+		} catch (DAOException e) {
+			throw new GamePlayException("ERROR: Read Participation",e);
+		}
+		
+		List<ResourceAmount> need = new ArrayList<ResourceAmount>();
+		need.add(build.getType().getUpgradeCost());
+		
+		try {
+			if(Acceptance.enoughResource(need, participationId)){
+				for(ResourceAmount ra : p.getResources()){
+					if(ra.getResource().equals(build.getType().getUpgradeCost().getResource())){
+						ra.setAmount(ra.getAmount() - build.getType().getUpgradeCost().getAmount());
+					}
+				}
+				build.setLevelUpgradeFinish(getGameStep());
+				try {
+					bDao.update(build);
+					pDao.update(p);
+				} catch (DAOException e) {
+					throw new GamePlayException("ERROR: Update DataBase",e);
+				}
+				return;
+			}
+		} catch (AcceptanceException e) {
+			throw new GamePlayException("ERROR: Not enough Resources",e);
+		}
+		throw new GamePlayException("ERROR: Not enough Resources");
 		
 	}
 	
-	public static void upgradeTroop(){
+	public static void upgradeTroop(long participationId, long troopId) throws GamePlayException{
+		TroopDAO tDao = new TroopDAO();
+		Troop troop = null;
+		try {
+			troop = tDao.get(troopId);
+		} catch (DAOException e) {
+			throw new GamePlayException("ERROR: Read Troop",e);
+		}
 		
+		if(!Acceptance.existsTroopUpgradeLevel(troop.getUpgradeLevel())){
+			throw new GamePlayException("No more Upgrade possible");
+		}
+		
+		ParticipationDAO pDao = new ParticipationDAO();
+		Participation p = null;
+		try {
+			p = pDao.get(participationId);
+		} catch (DAOException e) {
+			throw new GamePlayException("ERROR: Read Participation",e);
+		}
+		
+		List<ResourceAmount> need = new ArrayList<ResourceAmount>();
+		need.add(troop.getUpgradeLevel().getUpgradeCost());
+		try {
+			if(Acceptance.enoughResource(need, participationId)){
+				for(ResourceAmount ra : p.getResources()){
+					if(ra.getResource().equals(troop.getUpgradeLevel().getUpgradeCost().getResource())){
+						ra.setAmount(ra.getAmount() - troop.getUpgradeLevel().getUpgradeCost().getAmount());
+					}
+				}
+				troop.setLevelUpgradeFinish(getGameStep());
+				try {
+					tDao.update(troop);
+					pDao.update(p);
+				} catch (DAOException e) {
+					throw new GamePlayException("ERROR: Update DataBase",e);
+				}
+				return;
+			}
+		} catch (AcceptanceException e) {
+			throw new GamePlayException("ERROR: Not enough Resources",e);
+		}
+		throw new GamePlayException("ERROR: Not enough Resources");
 	}
 	
 	public static void moveTroop(long troopId, long targetSquareId) throws GamePlayException{
