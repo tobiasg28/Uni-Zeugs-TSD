@@ -1,12 +1,15 @@
+<%@page import="storage.DAOImpl"%>
 <%@ page import="dao.*,entities.*,java.util.*,swag.*"%>
 <jsp:useBean id="user" class="entities.User" scope="session" />
 
 <%
 	SquareDAO dao = new SquareDAO();
 	Square square = dao.get(Long.parseLong(request.getParameter("id")));
-
+	DAOImpl.getInstance().getEntityManager().refresh(square);
+	
 	UserDAO uDao = new UserDAO();
 	user = uDao.get(user.getId());
+	DAOImpl.getInstance().getEntityManager().refresh(user);
 	String resources = "";
 	for (Participation player : user.getParticipations()) {
 		if (player.getMap().getId() == square.getMap().getId()) {
