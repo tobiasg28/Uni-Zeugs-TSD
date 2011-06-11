@@ -53,26 +53,23 @@
 			}
 	%>
 	</li>
-	<li>
-		<%
-			List<Troop> userTroops = new ArrayList<Troop>();
-				for (Troop troop : square.getTroops()) {
-					if (troop.getParticipation().getParticipant().getId() == user
-							.getId()) {
-						userTroops.add(troop);
-					}
-
-					out.println(troop.getParticipation().getParticipant()
-							.getUsername()
-							+ "'s troop: "
-							+ troop.getUpgradeLevel().getName()
-							+ " (speed="
-							+ troop.getUpgradeLevel().getSpeed()
-							+ ", strength="
-							+ troop.getUpgradeLevel().getStrength() + ")");
+	<%
+		List<Troop> userTroops = new ArrayList<Troop>();
+			for (Troop troop : square.getTroops()) {
+				if (troop.getParticipation().getParticipant().getId() == user
+						.getId()) {
+					userTroops.add(troop);
 				}
-		%>
-	</li>
+
+				out.println("<li>"
+						+ troop.getParticipation().getParticipant()
+								.getUsername() + "'s troop: "
+						+ troop.getUpgradeLevel().getName() + " (speed="
+						+ troop.getUpgradeLevel().getSpeed()
+						+ ", strength="
+						+ troop.getUpgradeLevel().getStrength() + ")</li>");
+			}
+	%>
 </ul>
 <h3>actions</h3>
 <ul>
@@ -91,7 +88,15 @@
  %>
 	</li>
 	<li><a href="TroopServlet?action=create&id=<%=square.getId()%>">create
-			troop</a> - costs bla(20)
+			troop</a> <%
+ 	TroopTypeDAO ttDao = new TroopTypeDAO();
+ 		List<TroopType> tts = ttDao.getAll();
+ 		TroopType tt = tts.get(tts.size() - 1);
+ 		out.println("- " + tt.getName() + " (speed=" + tt.getSpeed()
+ 				+ ", strength" + tt.getStrength() + ")" + "- costs: "
+ 				+ tt.getInitialCost().getResource().getName() + " ("
+ 				+ tt.getInitialCost().getAmount() + ")");
+ %>
 	</li>
 	<%
 		for (Troop troop : userTroops) {
@@ -99,23 +104,29 @@
 						+ " (speed=" + troop.getUpgradeLevel().getSpeed()
 						+ ", strength="
 						+ troop.getUpgradeLevel().getStrength() + ")</li>");
-				out.println("<li>upgrade "
-						+ troop.getUpgradeLevel().getName()
-						+ " (speed="
-						+ troop.getUpgradeLevel().getSpeed()
-						+ ", strength="
-						+ troop.getUpgradeLevel().getStrength()
-						+ ") to "
-						+ troop.getUpgradeLevel().getNextLevel().getName()
-						+ " (speed="
-						+ troop.getUpgradeLevel().getNextLevel().getSpeed()
-						+ ", strength="
-						+ troop.getUpgradeLevel().getNextLevel()
-								.getStrength()
-						+ ") - costs: "
-						+ troop.getUpgradeLevel().getUpgradeCost()
-								.getResource().getName() + " (" + troop.getUpgradeLevel().getUpgradeCost()
-								.getAmount() + ")</li>");
+				if (troop.getUpgradeLevel().getNextLevel() != null) {
+					out.println("<li>upgrade "
+							+ troop.getUpgradeLevel().getName()
+							+ " (speed="
+							+ troop.getUpgradeLevel().getSpeed()
+							+ ", strength="
+							+ troop.getUpgradeLevel().getStrength()
+							+ ") to "
+							+ troop.getUpgradeLevel().getNextLevel()
+									.getName()
+							+ " (speed="
+							+ troop.getUpgradeLevel().getNextLevel()
+									.getSpeed()
+							+ ", strength="
+							+ troop.getUpgradeLevel().getNextLevel()
+									.getStrength()
+							+ ") - costs: "
+							+ troop.getUpgradeLevel().getUpgradeCost()
+									.getResource().getName()
+							+ " ("
+							+ troop.getUpgradeLevel().getUpgradeCost()
+									.getAmount() + ")</li>");
+				}
 			}
 	%>
 
