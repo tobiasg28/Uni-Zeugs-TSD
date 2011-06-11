@@ -53,10 +53,33 @@
 	%>
 	</li>
 	<%
-		int amountP = square.getMap().getParticipations().size() - 1;
-		//Map<Troop, Integer> troops = new 
 		List<Troop> userTroops = new ArrayList<Troop>();
+			Map<Long, Map<Long, Integer>> uTroops = new HashMap<Long, Map<Long, Integer>>();
 			for (Troop troop : square.getTroops()) {
+				if (uTroops.get(troop.getParticipation().getParticipant()) != null) {
+					Map<Long, Integer> troops = uTroops.get(troop
+							.getParticipation().getParticipant());
+					if (troops.get(troop.getUpgradeLevel().getId()) != null) {
+						int i = troops.get(troop.getUpgradeLevel().getId()) + 1;
+						uTroops.remove(troops);
+						troops.remove(troops.get(troop.getUpgradeLevel()
+								.getId()));
+						troops.put(troop.getUpgradeLevel().getId(), i);
+						uTroops.put(troop.getParticipation()
+								.getParticipant().getId(), troops);
+					} else {
+						uTroops.remove(troops);
+						troops.put(troop.getUpgradeLevel().getId(), 1);
+						uTroops.put(troop.getParticipation()
+								.getParticipant().getId(), troops);
+					}
+				} else {
+					Map<Long, Integer> troops = new HashMap<Long, Integer>();
+					troops.put(troop.getUpgradeLevel().getId(), 1);
+					uTroops.put(troop.getParticipation().getParticipant()
+							.getId(), troops);
+				}
+
 				if (troop.getParticipation().getParticipant().getId() == user
 						.getId()) {
 					userTroops.add(troop);
@@ -107,7 +130,10 @@
 						+ troop.getUpgradeLevel().getStrength() + "):</li>");
 				String movement = "";
 				if (troop.getTargetSquare() != null) {
-					movement += " (moving to x=" + troop.getTargetSquare().getPositionX() + "/y=" + troop.getTargetSquare().getPositionY() + ")";
+					movement += " (moving to x="
+							+ troop.getTargetSquare().getPositionX()
+							+ "/y="
+							+ troop.getTargetSquare().getPositionY() + ")";
 				}
 				out.println("<ul><li><a href=\"TroopServlet?action=move&id="
 						+ square.getId()

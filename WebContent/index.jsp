@@ -5,8 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>SWAG</title>
-<meta http-equiv="refresh" content="<%= Constants.GAMESTEP_DURATION_MS / 2%>"> 
+<title>SWAG</title> 
 </head>
 <body>
 	<jsp:useBean id="backend" class="frontend.BackendConnection"
