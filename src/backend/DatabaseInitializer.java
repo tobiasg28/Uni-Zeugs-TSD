@@ -53,12 +53,13 @@ public class DatabaseInitializer {
 	}
 	
 	public static BuildingType createBuildingType(Resource resource, int rate,
-			ResourceAmount initial, ResourceAmount upgrade) throws DAOException {
+			ResourceAmount initial, ResourceAmount upgrade, String name) throws DAOException {
 		BuildingType b = new BuildingType();
 		b.setProductionRate(rate);
 		b.setProductionType(resource);
 		b.setInitialCost(initial);
 		b.setUpgradeCost(upgrade);
+		b.setName(name);
 		buildingTypeDAO.create(b);
 		return b;
 	}
@@ -154,22 +155,22 @@ public class DatabaseInitializer {
 			/* Hunter */
 			createBuildingType(resources.get("Food"), 10,
 					createResourceAmount(resources.get("Wood"), 10),
-					createResourceAmount(resources.get("Stone"), 2));
+					createResourceAmount(resources.get("Stone"), 2), "Farm");
 			
 			/* Forester */
 			createBuildingType(resources.get("Wood"), 15,
 					createResourceAmount(resources.get("Wood"), 15),
-					createResourceAmount(resources.get("Stone"), 5));
+					createResourceAmount(resources.get("Stone"), 5), "Lumber Camp");
 			
 			/* Quarry */
 			createBuildingType(resources.get("Stone"), 5,
 					createResourceAmount(resources.get("Wood"), 5),
-					createResourceAmount(resources.get("Stone"), 20));
+					createResourceAmount(resources.get("Stone"), 20), "Quarry");
 			
 			/* Gold Mine */
 			createBuildingType(resources.get("Gold"), 2,
 					createResourceAmount(resources.get("Stone"), 7),
-					createResourceAmount(resources.get("Wood"), 20));
+					createResourceAmount(resources.get("Wood"), 20), "Gold Mine");
 			
 		} catch (DAOException e) {
 			logger.error("Error while trying to create Building Types.");
