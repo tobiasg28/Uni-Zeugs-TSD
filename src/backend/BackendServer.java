@@ -34,7 +34,7 @@ public class BackendServer {
 		try {
 			DatabaseInitializer.initializeDB();
 		} catch (DatabaseInitializerException e1) {
-			logger.error("Could not initialize database!");
+			System.out.println("Could not initialize database!");
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			return;
@@ -42,30 +42,30 @@ public class BackendServer {
 		
 		NotificationServer server = new NotificationServer();
 		try {
-			logger.info("Registering NotificationServer as '" + Constants.BACKEND_RMI_NAME + "'...");
+			System.out.println("Registering NotificationServer as '" + Constants.BACKEND_RMI_NAME + "'...");
 			Backend backend = (Backend)UnicastRemoteObject.exportObject(server, 0);
 			Registry registry = LocateRegistry.createRegistry(Constants.BACKEND_RMI_PORT);
 			registry.bind(Constants.BACKEND_RMI_NAME, backend);
-			logger.info("Backend server up and running. Press Enter to shutdown.");
+			System.out.println("Backend server up and running. Press Enter to shutdown.");
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			br.readLine();
 			
-			logger.info("Shutting down, please wait...");
+			System.out.println("Shutting down, please wait...");
 			UnicastRemoteObject.unexportObject(server, false);
 			registry.unbind(Constants.BACKEND_RMI_NAME);
-			logger.info("Shutdown complete.");
+			System.out.println("Shutdown complete.");
 		} catch (RemoteException e) {
-			logger.error("There was a problem exporting this object.");
+			System.out.println("There was a problem exporting this object.");
 			e.printStackTrace();
 		} catch (AlreadyBoundException e) {
-			logger.error("A backend is already running on this machine!");
+			System.out.println("A backend is already running on this machine!");
 			e.printStackTrace();
 		} catch (IOException e) {
-			logger.error("Error reading from standard input (EOF?)");
+			System.out.println("Error reading from standard input (EOF?)");
 			e.printStackTrace();
 		} catch (NotBoundException e) {
-			logger.error("Backend wasn't bound; couldn't unbind.");
+			System.out.println("Backend wasn't bound; couldn't unbind.");
 			e.printStackTrace();
 		}
 	}
