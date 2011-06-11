@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import entities.GameStep;
 
+
 public class FrontendImpl implements notification.Frontend, Serializable {
 
 	/**

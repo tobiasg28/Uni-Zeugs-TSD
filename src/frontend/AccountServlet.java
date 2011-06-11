@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import storage.DAOException;
+import storage.DAOImpl;
 
 import dao.UserDAO;
 
@@ -46,12 +47,15 @@ public class AccountServlet extends HttpServlet {
 				if (request.getParameter("action").equals("delete")) {
 					UserDAO uDao = new UserDAO();
 					try {
+						user = uDao.get(user.getId());
+						DAOImpl.getInstance().getEntityManager().refresh(user);
 						uDao.delete(user.getId());
+						session.invalidate();
 					} catch (DAOException e) {
-						System.err.println("delete user daoexception");
+						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					session.invalidate();
+					
 				}
 			}
 		}

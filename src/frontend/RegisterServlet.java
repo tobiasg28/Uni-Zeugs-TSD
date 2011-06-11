@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import storage.DAOException;
+import storage.DAOImpl;
 import dao.UserDAO;
 
 import entities.Participation;
@@ -101,6 +102,7 @@ public class RegisterServlet extends HttpServlet {
 
 					UserDAO dao = new UserDAO();
 					dao.create(user);
+					
 					//auto login after user creation
 					session.setAttribute("user", user);
 					session.setAttribute("loggedIn", (Boolean) true);
