@@ -20,6 +20,7 @@ import entities.Resource;
 import entities.ResourceAmount;
 import entities.Square;
 import entities.Troop;
+import entities.TroopType;
 import entities.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -183,7 +184,8 @@ public class GameStart {
 		Troop t = new Troop();
 		TroopTypeDAO ttDao = new TroopTypeDAO();
 		try {
-			t.setUpgradeLevel(ttDao.getAll().get(0));
+			List<TroopType> ttroops =ttDao.getAll();
+			t.setUpgradeLevel(ttroops.get(ttroops.size()-1));
 		} catch (DAOException ex) {
 			throw new GameStartException("ERROR: No TroopTypes", ex);
 		} catch (Exception ex) {

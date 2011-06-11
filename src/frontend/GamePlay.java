@@ -153,19 +153,19 @@ public class GamePlay {
 		}
 		List<TroopType> troopTypes = getTroopTypes();
 		List<ResourceAmount> need = new ArrayList<ResourceAmount>();
-		need.add(troopTypes.get(0).getInitialCost());
+		need.add(troopTypes.get(troopTypes.size()-1).getInitialCost());
 		try {
 			if(Acceptance.enoughResource(need, participationId)){
 				for(ResourceAmount ra : p.getResources()){
-					if(ra.getResource().equals(troopTypes.get(0).getInitialCost().getResource())){
-						ra.setAmount(ra.getAmount() - troopTypes.get(0).getInitialCost().getAmount());
+					if(ra.getResource().equals(troopTypes.get(troopTypes.size()-1).getInitialCost().getResource())){
+						ra.setAmount(ra.getAmount() - troopTypes.get(troopTypes.size()-1).getInitialCost().getAmount());
 					}
 				}
 				Troop t = new Troop();
 				t.setCurrentSquare(square);
 				t.setCreated(getGameStep());
 				t.setParticipation(p);
-				t.setUpgradeLevel(troopTypes.get(0));
+				t.setUpgradeLevel(troopTypes.get(troopTypes.size()-1));
 				try {
 					TroopDAO tDao = new TroopDAO();
 					tDao.create(t);

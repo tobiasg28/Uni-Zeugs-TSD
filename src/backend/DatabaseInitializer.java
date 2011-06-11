@@ -41,9 +41,10 @@ public class DatabaseInitializer {
 	
 	public static TroopType createTroopType(int strength, int speed,
 			ResourceAmount initial, ResourceAmount upgrade,
-			TroopType nextLevel) throws DAOException {
+			TroopType nextLevel, String name) throws DAOException {
 		TroopType t = new TroopType();
 		t.setInitialCost(initial);
+		t.setName(name);
 		t.setUpgradeCost(upgrade);
 		t.setStrength(strength);
 		t.setSpeed(speed);
@@ -117,9 +118,9 @@ public class DatabaseInitializer {
 		
 		try {
 			/* Troop types */
-			t = createTroopType(10, 3, createResourceAmount(resources.get("Wood"), 5), createResourceAmount(resources.get("Food"), 10), null);
-			t = createTroopType(5, 2, createResourceAmount(resources.get("Stone"), 5), createResourceAmount(resources.get("Gold"), 3), t);
-			t = createTroopType(2, 1, createResourceAmount(resources.get("Food"), 2), createResourceAmount(resources.get("Wood"), 4), t);
+			t = createTroopType(10, 3, createResourceAmount(resources.get("Wood"), 5), createResourceAmount(resources.get("Food"), 10), null, "Spacecowboys");
+			t = createTroopType(5, 2, createResourceAmount(resources.get("Stone"), 5), createResourceAmount(resources.get("Gold"), 3), t, "Horse");
+			t = createTroopType(2, 1, createResourceAmount(resources.get("Food"), 2), createResourceAmount(resources.get("Wood"), 4), t, "Crossbow");
 		} catch (DAOException e) {
 			logger.error("Error while trying to create Troop Types.");
 			e.printStackTrace();
