@@ -24,6 +24,7 @@ public class TroopServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(TroopServlet.class);
+	private Square square;
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -70,10 +71,19 @@ public class TroopServlet extends HttpServlet {
 					if (action.equals("create")) {
 						GamePlay.createTroop(participationId, squareId);
 					} else if (action.equals("move")) {
-						
-						//GamePlay.moveTroop(troopId, targetSquareId);
+						long tid = Long.parseLong((String) request
+								.getParameter("tid"));
+						if (request.getParameter("to") == null) {
+							request.setAttribute("tid", tid);
+							request.setAttribute("action", action);
+							dispatcher = getServletContext()
+							.getRequestDispatcher("/index.jsp?page=map&id=" + square.getMap().getId());
+						} else {
+							GamePlay.moveTroop(tid, squareId);
+						}
 					} else if (action.equals("upgrade")) {
-						long tid = Long.parseLong((String) request.getParameter("tid"));
+						long tid = Long.parseLong((String) request
+								.getParameter("tid"));
 						GamePlay.upgradeTroop(participationId, tid);
 					} else {
 						System.err.println("TroopServlet: unknown action="
@@ -94,7 +104,7 @@ public class TroopServlet extends HttpServlet {
 			HttpSession session) throws DAOException {
 		SquareDAO sDao = new SquareDAO();
 		UserDAO uDao = new UserDAO();
-		Square square = sDao.get(squareId);
+		square = sDao.get(squareId);
 		user = uDao.get(user.getId());
 		session.setAttribute("user", user);
 

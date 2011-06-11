@@ -14,8 +14,8 @@
 .swagsquare {
 	position: absolute;
 	display: block;
-	width: <%=Constants.SQUARE_SIZE%>         px;
-	height: <%=Constants.SQUARE_SIZE%>         px;
+	width: <%=Constants.SQUARE_SIZE%>             px;
+	height: <%=Constants.SQUARE_SIZE%>             px;
 	background-color: #790;
 	border: 1px black solid;
 	text-decoration: none;
@@ -78,8 +78,17 @@
 						+ ")   ");
 			}
 	%>
-
+	<%
+		if (request.getAttribute("action") == null) {
+	%>
 	<p>click on a square and choose some action!</p>
+	<%
+		} else if (request.getAttribute("action").equals("move")) {
+	%>
+	<p><big>click on a square on which you want to move your troop</big></p>
+	<%
+		}
+	%>
 	<%
 		} else if (free > 0) {
 	%>
@@ -108,12 +117,20 @@
 		for (Square square : map.getSquares()) {
 			String privileged = "";
 			Resource resource = square.getPrivilegedFor();
+			String url = "index.jsp?page=square&amp;id=";
 			if (resource != null) {
 				privileged = resource.getName();
 			}
-			out.println("<a href=\"index.jsp?page=square&amp;id="
-					+ square.getId() + "\" class=\"swagsquare "
-					+ privileged + "\" style=\"left: "
+
+			if (request.getAttribute("action") != null
+					&& request.getAttribute("action").equals("move")) {
+				url = "TroopServlet?action=move&to=0&tid="
+						+ (Long) request.getAttribute("tid") + "&id=";
+			}
+
+			out.println("<a href=\"" + url + square.getId()
+					+ "\" class=\"swagsquare " + privileged
+					+ "\" style=\"left: "
 					+ (100 + square.getPositionX() * Constants.SQUARE_SIZE)
 					+ "px; top: "
 					+ (50 + square.getPositionY() * Constants.SQUARE_SIZE)

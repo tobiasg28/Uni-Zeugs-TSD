@@ -39,8 +39,7 @@
 %>
 <h3>characteristics</h3>
 <ul>
-	<li>Position X: <%=square.getPositionX()%></li>
-	<li>Position Y: <%=square.getPositionY()%></li>
+	<li>Position x=<%=square.getPositionX()%>/y=<%=square.getPositionY()%></li>
 	<li>Privileged for: <%
 		if (square.getPrivilegedFor() != null) {
 				String name = square.getPrivilegedFor().getName()
@@ -104,9 +103,22 @@
 						+ " (speed=" + troop.getUpgradeLevel().getSpeed()
 						+ ", strength="
 						+ troop.getUpgradeLevel().getStrength() + "):</li>");
-				out.println("<ul><li>move</li>");
+				String movement = "";
+				if (troop.getTargetSquare() != null) {
+					movement += " (moving to x=" + troop.getTargetSquare().getPositionX() + "/y=" + troop.getTargetSquare().getPositionY() + ")";
+				}
+				out.println("<ul><li><a href=\"TroopServlet?action=move&id="
+						+ square.getId()
+						+ "&tid="
+						+ troop.getId()
+						+ "\">move</a>" + movement + "</li>");
+
 				if (troop.getUpgradeLevel().getNextLevel() != null) {
-					out.println("<li><a href=\"TroopServlet?action=upgrade&id=" + square.getId() + "&tid=" + troop.getId() + "\">upgrade</a> "
+					out.println("<li><a href=\"TroopServlet?action=upgrade&id="
+							+ square.getId()
+							+ "&tid="
+							+ troop.getId()
+							+ "\">upgrade</a> "
 							+ " to "
 							+ troop.getUpgradeLevel().getNextLevel()
 									.getName()
