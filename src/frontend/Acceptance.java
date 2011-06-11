@@ -36,13 +36,12 @@ public class Acceptance {
 			throw new AcceptanceException("ERROR: Participation is null");
 		}
 		for (ResourceAmount r : request) {
-			if (p.getResources().contains(r)) {
-				if (r.getAmount() > p.getResources()
-						.get(p.getResources().indexOf(r)).getAmount()) {
-					return false;
+			for(ResourceAmount pr : p.getResources()){
+				if (r.getResource().equals(pr.getResource())){
+					if(r.getAmount() > pr.getAmount()){
+						return false;
+					}
 				}
-			} else {
-				return false;
 			}
 		}
 
