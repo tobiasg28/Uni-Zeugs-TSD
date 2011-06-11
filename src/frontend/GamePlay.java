@@ -148,7 +148,7 @@ public class GamePlay {
 		try {
 			square = sDao.get(squareId);
 		} catch (DAOException e) {
-			throw new GamePlayException("ERROR: Read Sqaure",e);
+			throw new GamePlayException("ERROR: Read Square",e);
 		}
 		List<TroopType> troopTypes = getTroopTypes();
 		List<ResourceAmount> need = new ArrayList<ResourceAmount>();
@@ -193,10 +193,43 @@ public class GamePlay {
 		
 	}
 	
-	public static void moveTroop(){
+	public static void moveTroop(long troopId, long targetSquareId) throws GamePlayException{
+		TroopDAO tDao = new TroopDAO();
+		Troop troop = null;
+		try {
+			troop = tDao.get(troopId);
+		} catch (DAOException e) {
+			throw new GamePlayException("ERROR: Read Troop",e);
+		}
 		
+		SquareDAO sDao = new SquareDAO();
+		Square tsquare = null;
+		try {
+			tsquare = sDao.get(targetSquareId);
+		} catch (DAOException e) {
+			throw new GamePlayException("ERROR: Read Square",e);
+		}
+		
+		try {
+			GameStepDAO gDao = new GameStepDAO();
+			GameStep current = new GameStep();
+			current.setDate(new Date(new Date().getTime() + getDistanceFactor(troop.getCurrentSquare(), tsquare)*Constants.GAMESTEP_DURATION_MS));
+			try {
+				gDao.create(current);
+			} catch (DAOException e) {
+				throw new GamePlayException("ERROR: new GameStep",e);
+			}
+			troop.setMovementFinish(current);
+			tDao.update(troop);
+		} catch (DAOException e) {
+			throw new GamePlayException("ERROR: Update Troop",e);
+		}
 	}
 	
+	private static int getDistanceFactor(Square c, Square t) {
+		return (int) Math.sqrt(Math.pow(c.getPositionX()-t.getPositionX(),2) + Math.pow(c.getPositionY()-t.getPositionY(),2));
+	}
+
 	private static GameStep getGameStep() throws GamePlayException{
 		GameStepDAO gDao = new GameStepDAO();
 		GameStep current = new GameStep();
