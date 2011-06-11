@@ -53,6 +53,8 @@
 	%>
 	</li>
 	<%
+		int amountP = square.getMap().getParticipations().size() - 1;
+		
 		List<Troop> userTroops = new ArrayList<Troop>();
 			for (Troop troop : square.getTroops()) {
 				if (troop.getParticipation().getParticipant().getId() == user
