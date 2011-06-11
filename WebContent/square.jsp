@@ -1,30 +1,46 @@
-<%@ page import="dao.*,entities.*,java.util.*,swag.*" %>
+<%@ page import="dao.*,entities.*,java.util.*,swag.*"%>
 
 <%
+	SquareDAO dao = new SquareDAO();
 
-SquareDAO dao = new SquareDAO();
-
-Square square = dao.get(Long.parseLong(request.getParameter("id")));
-
+	Square square = dao.get(Long.parseLong(request.getParameter("id")));
 %>
 
-<h1>SQUARE details for: <%= square.getId() %></h1>
+<h1>SQUARE details for: <%=square.getId()%></h1>
 
 <ul>
-<li>Position X: <%= square.getPositionX() %></li>
-<li>Position Y: <%= square.getPositionY() %></li>
-<li>Privileged for: <%
-
-if (square.getPrivilegedFor() != null) {
-	String name = square.getPrivilegedFor().getName().toLowerCase();
-	if (name.equals("food")) name = "meat"; // Yep, DIRTY HACK!
-	out.println("<img src=\"images/big/" + name + ".png\"");
-} else {
-	out.println("<em>nothing</em>");
-}
-
-%></li>
+	<li>Position X: <%=square.getPositionX()%></li>
+	<li>Position Y: <%=square.getPositionY()%></li>
+	<li>Privileged for: <%
+		if (square.getPrivilegedFor() != null) {
+			String name = square.getPrivilegedFor().getName().toLowerCase();
+			if (name.equals("food"))
+				name = "meat"; // Yep, DIRTY HACK!
+			out.println("<img src=\"images/big/" + name + ".png\"");
+		} else {
+			out.println("<em>nothing</em>");
+		}
+	%>
+	</li>
 
 </ul>
 
-This is a square on <a href="?page=map&amp;id=<%= square.getMap().getId() %>">map <%=square.getMap().getId() %></a>
+This is a square on
+<a href="?page=map&amp;id=<%=square.getMap().getId()%>">map <%=square.getMap().getId()%></a>
+<br/>
+<%
+	if (square.getBase() == null) {
+%>
+<a href="CreateBaseServlet?id=<%=square.getId()%>">Create Base</a>
+<%
+	} else {
+%>
+Base of User: <% out.println(square.getBase().getParticipation().getParticipant().getUsername()); %>
+<% } %>
+<%
+	if (request.getAttribute("errorMsg") != null) {
+%>
+<%=request.getAttribute("errorMsg")%>
+<%
+	}
+%>

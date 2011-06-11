@@ -64,4 +64,14 @@
     <servlet-name>AccountServlet</servlet-name>
     <url-pattern>/AccountServlet</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>CreateBaseServlet</display-name>
+    <servlet-name>CreateBaseServlet</servlet-name>
+    <servlet-class>frontend.CreateBaseServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreateBaseServlet</servlet-name>
+    <url-pattern>/CreateBaseServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
