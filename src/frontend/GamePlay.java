@@ -173,8 +173,11 @@ public class GamePlay {
 					}
 					p.getTroops().add(t);
 					pDao.update(p);
-					//square.setTroop(t);
-					//sDao.update(square);
+					if(square.getTroops() == null){
+						square.setTroops(new ArrayList<Troop>());
+					}
+					square.getTroops().add(t);
+					sDao.update(square);
 				} catch (DAOException e) {
 					throw new GamePlayException("ERROR: Update DataBase",e);
 				}
