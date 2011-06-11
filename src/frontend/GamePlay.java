@@ -309,6 +309,7 @@ public class GamePlay {
 			} catch (DAOException e) {
 				throw new GamePlayException("ERROR: new GameStep",e);
 			}
+			troop.setTargetSquare(tsquare);
 			troop.setMovementFinish(current);
 			tDao.update(troop);
 		} catch (DAOException e) {

@@ -29,7 +29,7 @@ public class GameStateUpdater {
     public static GameMap nextState(GameMap currentGameMap, GameStep cGameStep) {
         currentGameStep = cGameStep;
         GameMap nextGameMap = currentGameMap;
-
+        
         //Changes for single User
         for (Participation p : nextGameMap.getParticipations()) {
 
@@ -215,10 +215,13 @@ public class GameStateUpdater {
      */
     private static List<Troop> upgradeTroops(List<Troop> troops) {
         List<Troop> nextTroops = troops;
-
+        System.out.println("Current GameStep: "+currentGameStep.getDate().getTime());
+        System.out.println("Troops Size: "+troops.size());
         for (Troop t : nextTroops) {
+        	if(t.getLevelUpgradeFinish()!=null)
+        		System.out.println("Troop"+t.getId() +" Upgrade: "+t.getLevelUpgradeFinish().getDate().getTime());
             if (t.getLevelUpgradeFinish() != null && t.getLevelUpgradeFinish().getDate().getTime() <= currentGameStep.getDate().getTime()) {
-                t.setUpgradeLevel(t.getUpgradeLevel().getNextLevel());
+            	t.setUpgradeLevel(t.getUpgradeLevel().getNextLevel());
                 t.setLevelUpgradeFinish(null);
             }
         }
@@ -233,8 +236,10 @@ public class GameStateUpdater {
      */
     private static List<Troop> moveTroops(List<Troop> troops) {
         List<Troop> nextTroops = troops;
-
+        
         for (Troop t : nextTroops) {
+        	if(t.getMovementFinish()!=null)
+        		System.out.println("Troop"+t.getId() +" Movement: "+t.getMovementFinish().getDate().getTime());
             if (t.getMovementFinish() != null && t.getMovementFinish().getDate().getTime() <= currentGameStep.getDate().getTime()) {
             	t.getCurrentSquare().getTroops().remove(t);
                 t.setCurrentSquare(t.getTargetSquare());
