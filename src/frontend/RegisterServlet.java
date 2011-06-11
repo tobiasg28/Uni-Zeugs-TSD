@@ -1,6 +1,8 @@
 package frontend;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,6 +86,15 @@ public class RegisterServlet extends HttpServlet {
 				} else if (!userExists(un)) {
 					user = new User();
 					user.setUsername(un);
+					try {
+						byte[] byteofPassword = pw.getBytes("UTF-8");
+						MessageDigest md = MessageDigest.getInstance("MD5");
+						byte[] digest = md.digest(byteofPassword);
+						pw = new String(digest);
+					} catch (NoSuchAlgorithmException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					user.setPassword(pw);
 					user.setAdress(ad);
 					user.setFullName(fn);
