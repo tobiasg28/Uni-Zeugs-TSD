@@ -22,25 +22,22 @@
 		}
 	%>
 	</li>
+	<li>Base: <%
+		if (square.getBase() == null) {
+	%> <a href="CreateBaseServlet?id=<%=square.getId()%>">Create Base</a> <%
+ 	} else {
+ 		out.println(square.getBase().getParticipation()
+ 				.getParticipant().getUsername());
+ %> <%
+ 	}
+ %> <%
+ 	if (request.getAttribute("errorMsg") != null) {
+ %> <%=request.getAttribute("errorMsg")%> <%
+ 	}
+ %>
+	</li>
 
 </ul>
 
 This is a square on
-<a href="?page=map&amp;id=<%=square.getMap().getId()%>">map <%=square.getMap().getId()%></a>
-<br/>
-<%
-	if (square.getBase() == null) {
-%>
-<a href="CreateBaseServlet?id=<%=square.getId()%>">Create Base</a>
-<%
-	} else {
-%>
-Base of User: <% out.println(square.getBase().getParticipation().getParticipant().getUsername()); %>
-<% } %>
-<%
-	if (request.getAttribute("errorMsg") != null) {
-%>
-<%=request.getAttribute("errorMsg")%>
-<%
-	}
-%>
+<a href="index.jsp?page=map&amp;id=<%=square.getMap().getId()%>">map <%=square.getMap().getId()%></a>

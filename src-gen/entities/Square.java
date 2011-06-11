@@ -79,4 +79,15 @@ public class Square implements Serializable {
 		return base;
 	}
 
+	@OneToMany(mappedBy = "currentSquare", cascade = CascadeType.ALL)
+	private List<Troop> troops = new ArrayList<Troop>();
+
+	public void setTroops(List<Troop> troops) {
+		this.troops = troops;
+	}
+
+	public List<Troop> getTroops() {
+		return troops;
+	}
+
 }

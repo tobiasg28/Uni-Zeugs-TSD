@@ -51,6 +51,8 @@ public class SquareTest {
 		DAOImpl.getInstance().create(base);
 		entity.setBase(base);
 
+		entity.setTroops(new ArrayList<Troop>());
+
 		Assert.assertTrue(dao.create(entity));
 		Assert.assertNotNull(entity.getId());
 	}
@@ -90,6 +92,8 @@ public class SquareTest {
 
 		s.setBase(null);
 
+		s.setTroops(null);
+
 		Assert.assertTrue(dao.create(s));
 
 		// Create Copy of s
@@ -105,6 +109,8 @@ public class SquareTest {
 
 		sCopy.setBase(s.getBase());
 
+		sCopy.setTroops(s.getTroops());
+
 		// Change Values of s
 
 		s.setMap(null);
@@ -116,6 +122,8 @@ public class SquareTest {
 		s.setPrivilegedFor(null);
 
 		s.setBase(null);
+
+		s.setTroops(null);
 
 		s = dao.update(s);
 		// check if Update successful
@@ -130,6 +138,8 @@ public class SquareTest {
 		Assert.assertTrue(s.getPrivilegedFor() == sCopy.getPrivilegedFor());
 
 		Assert.assertTrue(s.getBase() == sCopy.getBase());
+
+		Assert.assertTrue(s.getTroops() == sCopy.getTroops());
 
 	}
 
