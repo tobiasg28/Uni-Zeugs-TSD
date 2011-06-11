@@ -100,18 +100,14 @@
 	</li>
 	<%
 		for (Troop troop : userTroops) {
-				out.println("<li>move " + troop.getUpgradeLevel().getName()
+				out.println("<li>" + troop.getUpgradeLevel().getName()
 						+ " (speed=" + troop.getUpgradeLevel().getSpeed()
 						+ ", strength="
-						+ troop.getUpgradeLevel().getStrength() + ")</li>");
+						+ troop.getUpgradeLevel().getStrength() + "):</li>");
+				out.println("<ul><li>move</li>");
 				if (troop.getUpgradeLevel().getNextLevel() != null) {
-					out.println("<li>upgrade "
-							+ troop.getUpgradeLevel().getName()
-							+ " (speed="
-							+ troop.getUpgradeLevel().getSpeed()
-							+ ", strength="
-							+ troop.getUpgradeLevel().getStrength()
-							+ ") to "
+					out.println("<li><a href=\"TroopServlet?action=upgrade&id=" + square.getId() + "&tid=" + troop.getId() + "\">upgrade</a> "
+							+ " to "
 							+ troop.getUpgradeLevel().getNextLevel()
 									.getName()
 							+ " (speed="
@@ -127,6 +123,7 @@
 							+ troop.getUpgradeLevel().getUpgradeCost()
 									.getAmount() + ")</li>");
 				}
+				out.println("</ul>");
 			}
 	%>
 
