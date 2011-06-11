@@ -58,7 +58,7 @@ public class GameStart {
 		map.setMaxUsers(maxPlayer);
 		map.setName(name);
 		map.setParticipations(new ArrayList<Participation>());
-		
+
 		List<Square> squares = new ArrayList<Square>();
 		for (int x = 0; x < (2 * maxPlayer); x++) {
 			for (int y = 0; y < (2 * maxPlayer); y++) {
@@ -160,6 +160,7 @@ public class GameStart {
 		Base start = new Base();
 		start.setStarterBase(true);
 		Square s = null;
+		SquareDAO sDao = new SquareDAO();
 		s = Acceptance.getSquareForBase(map);
 		if (s == null) {
 			throw new GameStartException("ERROR: No free Square for a Base");
@@ -167,6 +168,8 @@ public class GameStart {
 		start.setSquare(s);
 		try {
 			if (bDao.create(start)) {
+				s.setBase(start);
+				sDao.update(s);
 				bases.add(start);
 			} else {
 				throw new GameStartException(
@@ -190,6 +193,11 @@ public class GameStart {
 		TroopDAO tDao = new TroopDAO();
 		try {
 			if (tDao.create(t)) {
+				if(s.getTroops() == null){
+					s.setTroops(new ArrayList<Troop>());
+				}
+				s.getTroops().add(t);
+				sDao.update(s);
 				troops.add(t);
 			} else {
 				throw new GameStartException(
@@ -208,9 +216,9 @@ public class GameStart {
 				tDao.update(t);
 				map.getParticipations().add(player);
 				mDao.update(map);
-				
+
 				UserDAO uDao = new UserDAO();
-				if (user.getParticipations() == null){
+				if (user.getParticipations() == null) {
 					user.setParticipations(new ArrayList<Participation>());
 				}
 				user.getParticipations().add(player);
