@@ -182,7 +182,7 @@ public class GamePlay {
 		} catch (AcceptanceException e) {
 			throw new GamePlayException("ERROR: Not enough Resources",e);
 		}
-		throw new GamePlayException("ERROR: Not enough Resources or Base isn't free");
+		throw new GamePlayException("ERROR: Not enough Resources or Square isn't free");
 	}
 	
 	public static void upgradeBuilding(){
