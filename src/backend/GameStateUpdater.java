@@ -319,11 +319,34 @@ public class GameStateUpdater {
             //p.setTroops(createTroops(p.getTroops())); there is nothing to calculate
             //because the fontend shows everything that has an lower gamestep than the current gamestep
             p.setResources(createRessources(p.getResources(), p.getBases()));
-
+            try {
+				p = pDao.get(p.getId());
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             /*Upgrade*/
             p.setBases(upgradeBuildings(p.getBases()));
+            
+            try {
+				pDao.update(p);
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				p = pDao.get(p.getId());
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             p.setTroops(upgradeTroops(p.getTroops()));
-
+            try {
+				pDao.update(p);
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             /*Move*/
             p.setTroops(moveTroops(p.getTroops()));
             
