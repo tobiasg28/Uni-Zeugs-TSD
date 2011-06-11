@@ -8,7 +8,6 @@ import storage.DAOException;
 import swag.Constants;
 import dao.BaseDAO;
 import dao.BuildingDAO;
-import dao.BuildingTypeDAO;
 import dao.GameStepDAO;
 import dao.ParticipationDAO;
 import dao.ResourceDAO;
@@ -154,7 +153,7 @@ public class GamePlay {
 		List<ResourceAmount> need = new ArrayList<ResourceAmount>();
 		need.add(troopTypes.get(0).getInitialCost());
 		try {
-			if(Acceptance.enoughResource(need, participationId) && Acceptance.isSquareFree(square, square.getMap().getId())){
+			if(Acceptance.enoughResource(need, participationId)){
 				for(ResourceAmount ra : p.getResources()){
 					if(ra.getResource().equals(troopTypes.get(0).getInitialCost().getResource())){
 						ra.setAmount(ra.getAmount() - troopTypes.get(0).getInitialCost().getAmount());
@@ -273,17 +272,4 @@ public class GamePlay {
 		return resources;
 	}
 	
-	private static List<BuildingType> getBuildingTypes() throws GamePlayException{
-		BuildingTypeDAO rDao = new BuildingTypeDAO();
-		List<BuildingType> resources = null;
-		try {
-			resources = rDao.getAll();
-		} catch (DAOException ex) {
-			throw new GamePlayException("ERROR: getAll BuildingType", ex);
-		}
-		if (resources == null || resources.isEmpty()) {
-			throw new GamePlayException("ERROR: No BuildingType defined");
-		}
-		return resources;
-	}
 }

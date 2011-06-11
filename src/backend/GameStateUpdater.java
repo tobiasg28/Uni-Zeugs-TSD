@@ -81,6 +81,7 @@ public class GameStateUpdater {
                     if (myStrength >= opponentStrength) {
                         while (!attack.isEmpty()) {
                             Participation op = attack.get(0).getParticipation();
+                            attack.get(0).getCurrentSquare().getTroops().remove(attack.get(0));
                             op.getTroops().remove(attack.get(0));
                             troops.remove(attack.get(0));
                             attack.remove(0);
@@ -88,6 +89,7 @@ public class GameStateUpdater {
                     } else {
                         while (!defense.isEmpty()) {
                             p.getTroops().remove(defense.get(0));
+                            defense.get(0).getCurrentSquare().getTroops().remove(defense.get(0));
                             troops.remove(defense.get(0));
                             defense.remove(0);
                         }
@@ -135,6 +137,7 @@ public class GameStateUpdater {
                     if (!t.getParticipation().equals(winner)) {
                         Participation p = t.getParticipation();
                         p.getTroops().remove(t);
+                        t.getCurrentSquare().getTroops().remove(t);
                     }
                 }
             } else {
@@ -142,6 +145,7 @@ public class GameStateUpdater {
                 for (Troop t : fights.get(s)) {
                     Participation p = t.getParticipation();
                     p.getTroops().remove(t);
+                    t.getCurrentSquare().getTroops().remove(t);
                 }
             }
         }
@@ -232,7 +236,12 @@ public class GameStateUpdater {
 
         for (Troop t : nextTroops) {
             if (t.getMovementFinish() != null && t.getMovementFinish().getDate().getTime() <= currentGameStep.getDate().getTime()) {
+            	t.getCurrentSquare().getTroops().remove(t);
                 t.setCurrentSquare(t.getTargetSquare());
+                if(t.getCurrentSquare().getTroops() == null){
+                	t.getCurrentSquare().setTroops(new ArrayList<Troop>());
+                }
+                t.getCurrentSquare().getTroops().add(t);
                 t.setMovementFinish(null);
             }
         }
@@ -244,7 +253,8 @@ public class GameStateUpdater {
         List<Base> nextBases = bases;
         for (int i = 0; i < nextBases.size(); i++) {
             if (nextBases.get(i).getDestroyed() != null && nextBases.get(i).getDestroyed().getDate().getTime() <= currentGameStep.getDate().getTime()) {
-                nextBases.remove(i);
+            	nextBases.get(i).getSquare().setBase(null);
+            	nextBases.remove(i);
             }
         }
 
