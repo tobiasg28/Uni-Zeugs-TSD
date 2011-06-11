@@ -48,12 +48,14 @@ class SingleGameStepUpdate implements Runnable {
 			if (currentGameStep != null
 					&& currentGameStep.getDate().getTime()!=calculatedGameStep) {
 				try {
-					GameMap currentGameMap = gameMapDAO.get(gameMapId);
+					/*GameMap currentGameMap = gameMapDAO.get(gameMapId);
 					GameMap nextGameMap = GameStateUpdater.nextState(
 							currentGameMap, currentGameStep);
-					gameMapDAO.update(nextGameMap);
+					gameMapDAO.update(nextGameMap);*/
+					GameStateUpdater.nextState(
+							gameMapId, currentGameStep);
 					calculatedGameStep=currentGameStep.getDate().getTime();
-				} catch (DAOException ex) {
+				} catch (Exception ex) {
 					Logger.getLogger(SingleGameStepUpdate.class.getName()).log(
 							Level.SEVERE, null, ex);
 				}
