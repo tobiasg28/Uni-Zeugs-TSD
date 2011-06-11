@@ -295,7 +295,7 @@ public class GameStateUpdater {
         return null;
     }
 
-	public static void nextState(Long gameMapId, GameStep c) {
+	/*public static void nextState(Long gameMapId, GameStep c) {
 		currentGameStep = c;
 		GameMapDAO mDao = new GameMapDAO();
 		GameMap nextGameMap = null;
@@ -314,7 +314,7 @@ public class GameStateUpdater {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            /*Creation*/
+            //Creation
             //p.setBases(createBasesAndBuildings(p.getBases())); there is nothing to calculate
             //p.setTroops(createTroops(p.getTroops())); there is nothing to calculate
             //because the fontend shows everything that has an lower gamestep than the current gamestep
@@ -325,7 +325,7 @@ public class GameStateUpdater {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            /*Upgrade*/
+            //Upgrade
             p.setBases(upgradeBuildings(p.getBases()));
             
             try {
@@ -347,7 +347,7 @@ public class GameStateUpdater {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            /*Move*/
+            //Move
             p.setTroops(moveTroops(p.getTroops()));
             
             try {
@@ -481,5 +481,5 @@ public class GameStateUpdater {
                 }
             }
         }
-	}
+	}*/
 }

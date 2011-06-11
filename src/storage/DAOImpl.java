@@ -6,6 +6,9 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import backend.GameStateUpdater;
+import entities.GameMap;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -136,4 +139,5 @@ public class DAOImpl{
         results = q.getResultList();
         return results;
     }
+    
 }

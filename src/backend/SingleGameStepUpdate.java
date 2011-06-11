@@ -10,12 +10,13 @@ import entities.GameStep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import storage.DAOException;
+import storage.DAOImpl;
 
 /**
  * 
  * @author wi3s3r
  */
-class SingleGameStepUpdate implements Runnable {
+class SingleGameStepUpdate implements Runnable{
 
 	private GameMapDAO gameMapDAO;
 	private NotificationServer notificationServer;
@@ -44,16 +45,20 @@ class SingleGameStepUpdate implements Runnable {
 
 	@Override
 	public void run() {
+		GameMap currentGameMap=null;
 		while (running) {
 			if (currentGameStep != null
 					&& currentGameStep.getDate().getTime()!=calculatedGameStep) {
 				try {
-					/*GameMap currentGameMap = gameMapDAO.get(gameMapId);
-					GameMap nextGameMap = GameStateUpdater.nextState(
+					DAOImpl.getInstance().getEntityManager().getTransaction().begin();
+					if(currentGameMap==null){
+						currentGameMap = DAOImpl.getInstance().getEntityManager().find(GameMap.class, this.gameMapId);
+					}else{
+						DAOImpl.getInstance().getEntityManager().refresh(currentGameMap);
+					}GameMap nextGameMap = GameStateUpdater.nextState(
 							currentGameMap, currentGameStep);
-					gameMapDAO.update(nextGameMap);*/
-					GameStateUpdater.nextState(
-							gameMapId, currentGameStep);
+					DAOImpl.getInstance().getEntityManager().merge(nextGameMap);
+					DAOImpl.getInstance().getEntityManager().getTransaction().commit();
 					calculatedGameStep=currentGameStep.getDate().getTime();
 				} catch (Exception ex) {
 					Logger.getLogger(SingleGameStepUpdate.class.getName()).log(
