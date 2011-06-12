@@ -14,8 +14,11 @@ import org.apache.log4j.Logger;
 import storage.DAOException;
 import storage.DAOImpl;
 
+import dao.BaseDAO;
 import dao.UserDAO;
 
+import entities.Base;
+import entities.Participation;
 import entities.User;
 
 public class AccountServlet extends HttpServlet {
@@ -46,9 +49,11 @@ public class AccountServlet extends HttpServlet {
 			if (request.getParameter("action") != null) {
 				if (request.getParameter("action").equals("delete")) {
 					UserDAO uDao = new UserDAO();
+					BaseDAO bDao = new BaseDAO();
 					try {
 						user = uDao.get(user.getId());
-						DAOImpl.getInstance().getEntityManager().refresh(user);
+						//DAOImpl.getInstance().getEntityManager().refresh(user);
+
 						uDao.delete(user.getId());
 						session.invalidate();
 					} catch (DAOException e) {
