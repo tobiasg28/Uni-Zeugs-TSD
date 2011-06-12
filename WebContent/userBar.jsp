@@ -9,8 +9,6 @@
 	<div>
 		logged in as <a href="index.jsp?page=userAccount"><%= user.getUsername() %></a>
 		<ul>
-			<li><a href="#">messages</a>
-			</li>
 			<li><a href="LogoutServlet">logout</a>
 			</li>
 		</ul>
