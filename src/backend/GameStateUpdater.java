@@ -65,7 +65,7 @@ public class GameStateUpdater {
 
             //Attack Base
             for (Base b : p.getBases()) {
-                myStrength = 100;
+                myStrength = 1;
                 opponentStrength = 0;
                 for (Troop t : troops) {
                     if (b.getSquare().equals(t.getCurrentSquare())) {

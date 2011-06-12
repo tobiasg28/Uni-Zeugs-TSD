@@ -4,12 +4,10 @@
  */
 package backend;
 
-import dao.GameMapDAO;
 import entities.GameMap;
 import entities.GameStep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import storage.DAOException;
 import storage.DAOImpl;
 
 /**
@@ -18,7 +16,6 @@ import storage.DAOImpl;
  */
 class SingleGameStepUpdate implements Runnable{
 
-	private GameMapDAO gameMapDAO;
 	private NotificationServer notificationServer;
 
 	private Long gameMapId;
@@ -32,7 +29,6 @@ class SingleGameStepUpdate implements Runnable{
 		this.notificationServer = notificationServer;
 		this.gameMapId = gameMapId;
 		this.running = true;
-		this.gameMapDAO = new GameMapDAO();
 	}
 
 	public void setCurrentGameStep(GameStep currentGameStep) {

@@ -9,7 +9,8 @@
 	BuildingTypeDAO btdao = new BuildingTypeDAO();
 %>
 
-<h1><%=user.getUsername()%>'s Base</h1>
+<h1><%=user.getUsername()%>'s Base
+</h1>
 
 Location:
 <%=square.getMap().getName()%>
@@ -42,16 +43,16 @@ Resource Count:
 	}
 %>
 <br />
+<%
+	if (request.getAttribute("errorMsg") != null)
+			out.print(request.getAttribute("errorMsg"));
+%>
 <br />
 Building Count: (<%= square.getBase().getBuildings().size() %> / 4) <br/>
 <%
 	if (square.getBase().getBuildings().size() < 4) {
 %>
 Buildings Available for Building:
-<%
-	if (request.getAttribute("errorMsg") != null)
-			out.print(request.getAttribute("errorMsg"));
-%>
 <br />
 <table border="1">
 	<%
@@ -67,8 +68,7 @@ Buildings Available for Building:
 			}
 			for (BuildingType bt : btdao.getAll()) {
 				out.print("<tr>");
-				out.print("<td>" + buildingCount.get(bt.getName()) + "x"
-						+ bt.getName() + "</td)>");
+				out.print("<td>" + bt.getName() + "</td)>");
 				out.print("<td><a href=\"BuildingServlet?id="
 						+ square.getId() + "&amp;action=add&amp;bt="
 						+ bt.getId() + "\">Add</a> ("
@@ -105,6 +105,7 @@ Buildings in Base:
 	%>
 </table>
 
-<div>go back to <a
-	href="index.jsp?page=map&amp;id=<%=square.getMap().getId()%>"><%=square.getMap().getName()%></a>
+<div>
+	go back to <a
+		href="index.jsp?page=map&amp;id=<%=square.getMap().getId()%>"><%=square.getMap().getName()%></a>
 </div>
