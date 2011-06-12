@@ -1,0 +1,18 @@
+<project name="SwAG" default="build" basedir=".">
+  <description>SWAG</description>
+  <target name="build">
+      <exec executable="cat">
+          <arg value="HOW_TO_RUN.txt"/>
+      </exec>
+  </target>
+  <target name="clean">
+      <exec executable="cat">
+          <arg value="HOW_TO_RUN.txt"/>
+      </exec>
+  </target>
+  <target name="run">
+      <exec executable="cat">
+          <arg value="HOW_TO_RUN.txt"/>
+      </exec>
+  </target>
+</project>
