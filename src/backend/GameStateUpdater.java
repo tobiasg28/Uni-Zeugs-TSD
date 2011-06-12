@@ -20,8 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import storage.DAOException;
-import storage.DAOImpl;
 
 /**
  *
@@ -89,7 +87,7 @@ public class GameStateUpdater {
                             attack.get(0).getCurrentSquare().getTroops().remove(attack.get(0));
                             op.getTroops().remove(attack.get(0));
                             troops.remove(attack.get(0));
-                            DAOImpl.getInstance().getEntityManager().remove(attack.get(0));
+                            attack.get(0).setCreated(null);
                             attack.remove(0);
                         }
                     } else {
@@ -97,7 +95,7 @@ public class GameStateUpdater {
                             p.getTroops().remove(defense.get(0));
                             defense.get(0).getCurrentSquare().getTroops().remove(defense.get(0));
                             troops.remove(defense.get(0));
-                            DAOImpl.getInstance().getEntityManager().remove(defense.get(0));
+                            defense.get(0).setCreated(null);
                             defense.remove(0);
                         }
                         if (!b.getStarterBase()) {
@@ -147,7 +145,7 @@ public class GameStateUpdater {
                         Participation p = t.getParticipation();
                         p.getTroops().remove(t);
                         t.getCurrentSquare().getTroops().remove(t);
-                        DAOImpl.getInstance().getEntityManager().remove(t);
+                        t.setCreated(null);
                     }
                 }
             } else {
@@ -156,7 +154,7 @@ public class GameStateUpdater {
                     Participation p = t.getParticipation();
                     p.getTroops().remove(t);
                     t.getCurrentSquare().getTroops().remove(t);
-                    DAOImpl.getInstance().getEntityManager().remove(t);
+                    t.setCreated(null);
                 }
             }
         }
@@ -270,7 +268,7 @@ public class GameStateUpdater {
         for (int i = 0; i < nextBases.size(); i++) {
             if (nextBases.get(i).getDestroyed() != null && nextBases.get(i).getDestroyed().getDate().getTime() <= currentGameStep.getDate().getTime()) {
             	nextBases.get(i).getSquare().setBase(null);
-            	DAOImpl.getInstance().getEntityManager().remove(nextBases.get(i));
+            	nextBases.get(i).setCreated(null);
             	nextBases.remove(i);
             }
         }
