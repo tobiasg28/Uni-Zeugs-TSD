@@ -36,9 +36,9 @@ public class Acceptance {
 			throw new AcceptanceException("ERROR: Participation is null");
 		}
 		for (ResourceAmount r : request) {
-			for(ResourceAmount pr : p.getResources()){
-				if (r.getResource().equals(pr.getResource())){
-					if(r.getAmount() > pr.getAmount()){
+			for (ResourceAmount pr : p.getResources()) {
+				if (r.getResource().equals(pr.getResource())) {
+					if (r.getAmount() > pr.getAmount()) {
 						return false;
 					}
 				}
@@ -69,8 +69,10 @@ public class Acceptance {
 		}
 		for (Participation p : map.getParticipations()) {
 			for (Base b : p.getBases()) {
-				if (b.getSquare().equals(square)) {
-					return false;
+				if (b.getSquare() != null) {
+					if (b.getSquare().equals(square)) {
+						return false;
+					}
 				}
 			}
 			for (Troop t : p.getTroops()) {

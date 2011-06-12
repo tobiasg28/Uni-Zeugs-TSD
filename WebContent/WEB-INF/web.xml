@@ -84,4 +84,14 @@
     <servlet-name>TroopServlet</servlet-name>
     <url-pattern>/TroopServlet</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <description></description>
+    <display-name>BuildingServlet</display-name>
+    <servlet-name>BuildingServlet</servlet-name>
+    <servlet-class>frontend.BuildingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BuildingServlet</servlet-name>
+    <url-pattern>/BuildingServlet</url-pattern>
+  </servlet-mapping> 
 </web-app>

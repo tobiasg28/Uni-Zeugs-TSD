@@ -57,10 +57,10 @@
 	</li>
 	<%
 		if (square.getBase() != null) {
-				out.println("<li>"
+				out.println("<li><a href=\"index.jsp?page=basedetail&id=" + square.getId() + "\">"
 						+ square.getBase().getParticipation()
 								.getParticipant().getUsername()
-						+ "'s base</li>");
+						+ "'s base</a></li>");
 			}
 
 			List<Troop> userTroops = new ArrayList<Troop>();
