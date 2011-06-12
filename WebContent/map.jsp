@@ -157,12 +157,13 @@ img {
 
 			String base = "";
 			if (square.getBase() != null && square.getBase().getDestroyed() == null) {
+				boolean own = (square.getBase().getParticipation().getParticipant().getId() == user.getId());
 				String username = square.getBase().getParticipation().getParticipant().getUsername();
 				if (square.getBase().getStarterBase()) {
-					base = "<img src='map/starterbase.png' title='"+username+"'>";
+					base = "<img src='map/"+(own?"your":"")+"starterbase.png' title='"+username+"'>";
 					tooltip.add("Starter base of " + username);
 				} else {
-					base = "<img src='map/base.png' title='"+username+"'>";
+					base = "<img src='map/"+(own?"your":"")+"base.png' title='"+username+"'>";
 					tooltip.add("Base of " + username);
 				}
 			}
@@ -170,11 +171,13 @@ img {
 			String troops = "";
 			int alivecount = 0;
 			for (Troop troop : square.getTroops()) {
+				boolean own = (troop.getParticipation().getParticipant().getId() == user.getId());
+
 				if (troop.getCreated() != null) {
 					String username = troop.getParticipation().getParticipant()
 								.getUsername();
 					
-					troops = "<img src='map/troop.png' title='"+username+"'>";
+					troops = "<img src='map/"+(own?"your":"")+"troop.png' title='"+username+"'>";
 					tooltip.add("Troop of " + username);
 					break;
 				}
