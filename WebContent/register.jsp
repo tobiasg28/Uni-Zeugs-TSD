@@ -8,6 +8,10 @@
 	You are already logged in as
 	<%=session.getAttribute("loggedIn")%>!
 </p>
+<script language="JavaScript">
+	sURL = "index.jsp";
+	doRefresh();
+</script>
 <%
 	} else {
 %>

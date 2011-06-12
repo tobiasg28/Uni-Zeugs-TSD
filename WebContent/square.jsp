@@ -1,7 +1,6 @@
 <%@page import="storage.DAOImpl"%>
 <%@ page import="dao.*,entities.*,java.util.*,swag.*"%>
 <jsp:useBean id="user" class="entities.User" scope="session" />
-
 <%
 	SquareDAO dao = new SquareDAO();
 	Square square = dao.get(Long.parseLong(request.getParameter("id")));
@@ -59,15 +58,15 @@
 	<%
 		if (square.getBase() != null) {
 				String starterBase = "";
-				if (square.getBase().getStarterBase()){
+				if (square.getBase().getStarterBase()) {
 					starterBase = "starter ";
 				}
 				out.println("<li><a href=\"index.jsp?page=basedetail&id="
 						+ square.getId()
 						+ "\">"
 						+ square.getBase().getParticipation()
-								.getParticipant().getUsername()
-						+ "'s " + starterBase + "base</a></li>");
+								.getParticipant().getUsername() + "'s "
+						+ starterBase + "base</a></li>");
 			}
 
 			List<Troop> userTroops = new ArrayList<Troop>();
@@ -162,25 +161,30 @@
 						+ " (speed=" + troop.getUpgradeLevel().getSpeed()
 						+ ", strength="
 						+ troop.getUpgradeLevel().getStrength() + "):</li>");
-				String movement = "";
+				String movement = "<a href=\"TroopServlet?action=move&id="
+						+ square.getId() + "&tid=" + troop.getId()
+						+ "\">move</a>";
 				if (troop.getTargetSquare() != null) {
-					movement += " (moving to x="
+					movement = "moving to x="
 							+ troop.getTargetSquare().getPositionX()
 							+ "/y="
-							+ troop.getTargetSquare().getPositionY() + ")";
+							+ troop.getTargetSquare().getPositionY();
 				}
-				out.println("<ul><li><a href=\"TroopServlet?action=move&id="
-						+ square.getId()
-						+ "&tid="
-						+ troop.getId()
-						+ "\">move</a>" + movement + "</li>");
+				out.println("<ul><li>" + movement + "</li>");
 
 				if (troop.getUpgradeLevel().getNextLevel() != null) {
-					out.println("<li><a href=\"TroopServlet?action=upgrade&id="
+					String upgrade = "<a href=\"TroopServlet?action=upgrade&id="
 							+ square.getId()
 							+ "&tid="
 							+ troop.getId()
-							+ "\">upgrade</a> "
+							+ "\">upgrade</a> ";
+
+					if (troop.getLevelUpgradeFinish() != null) {
+						upgrade = "upgrading";
+					}
+
+					out.println("<li>"
+							+ upgrade
 							+ " to "
 							+ troop.getUpgradeLevel().getNextLevel()
 									.getName()

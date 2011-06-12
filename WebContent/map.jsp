@@ -1,7 +1,6 @@
 <%@page import="storage.DAOImpl"%>
 <jsp:useBean id="user" class="entities.User" scope="session" />
 <%@ page import="dao.*,entities.*,java.util.*,swag.*"%>
-
 <%
 	GameMapDAO dao = new GameMapDAO();
 	GameMap map = dao.get(Long.parseLong(request.getParameter("id")));

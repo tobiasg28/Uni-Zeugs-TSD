@@ -6,6 +6,10 @@
 <h2>
 	welcome <a href=""><%=user.getUsername()%></a>
 </h2>
+<script language="JavaScript">
+	sURL = "index.jsp";
+	doRefresh();
+</script> 
 <%
 	} else {
 %>

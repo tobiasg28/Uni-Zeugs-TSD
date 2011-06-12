@@ -29,20 +29,7 @@ public class TroopServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setContentType("text/html;charset=UTF-8");
-
-		RequestDispatcher dispatcher = getServletContext()
-				.getRequestDispatcher("/index.jsp");
-
-		HttpSession session = request.getSession(true);
-		request.setAttribute("error", false);
-		User user = (User) session.getAttribute("user");
-
-		if (session.getAttribute("loggedIn") != null
-				&& (Boolean) session.getAttribute("loggedIn")) {
-
-		}
-		dispatcher.forward(request, response);
+		doGet(request, response);
 	}
 
 	@Override
