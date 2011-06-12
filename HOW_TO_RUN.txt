@@ -1,0 +1,24 @@
+
+How to run:
+
+  1. Set up the DB server as described in README.txt
+  2. Load the project in Eclipse
+  3. Build the project from Eclipse
+
+  4. Clear the database:
+
+     sh run_sql.sh drop_tables.sql
+
+  5. Start the Backend server:
+
+     sh start_backend.sh
+
+  6. Run the Frontend server in Tomcat:
+
+     Eclipse -> Run As -> Run on Server
+
+  7. Open the following URL in a web browser:
+
+     http://localhost:8080/Uni-Zeugs-TSD/
+
+
