@@ -6,6 +6,7 @@ package frontend;
 
 import dao.BaseDAO;
 import dao.GameMapDAO;
+import dao.GameStepDAO;
 import dao.ParticipationDAO;
 import dao.ResourceAmountDAO;
 import dao.ResourceDAO;
@@ -15,6 +16,7 @@ import dao.TroopTypeDAO;
 import dao.UserDAO;
 import entities.Base;
 import entities.GameMap;
+import entities.GameStep;
 import entities.Participation;
 import entities.Resource;
 import entities.ResourceAmount;
@@ -23,6 +25,7 @@ import entities.Troop;
 import entities.TroopType;
 import entities.User;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -160,6 +163,7 @@ public class GameStart {
 		BaseDAO bDao = new BaseDAO();
 		Base start = new Base();
 		start.setStarterBase(true);
+		start.setCreated(getGameStep());
 		Square s = null;
 		SquareDAO sDao = new SquareDAO();
 		s = Acceptance.getSquareForBase(map);
@@ -182,6 +186,7 @@ public class GameStart {
 		player.setBases(bases);
 		List<Troop> troops = new ArrayList<Troop>();
 		Troop t = new Troop();
+		t.setCreated(getGameStep());
 		TroopTypeDAO ttDao = new TroopTypeDAO();
 		try {
 			List<TroopType> ttroops =ttDao.getAll();
@@ -234,5 +239,17 @@ public class GameStart {
 			throw new GameStartException(
 					"ERROR: create Participation or update", ex);
 		}
+	}
+	
+	private static GameStep getGameStep() throws GameStartException{
+		GameStepDAO gDao = new GameStepDAO();
+		GameStep current = new GameStep();
+		current.setDate(new Date(new Date().getTime()));
+		try {
+			gDao.create(current);
+		} catch (DAOException e) {
+			throw new GameStartException("ERROR: new GameStep",e);
+		}
+		return current;
 	}
 }
