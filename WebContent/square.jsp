@@ -56,7 +56,7 @@
 	%>
 	</li>
 	<%
-		if (square.getBase() != null) {
+		if (square.getBase() != null && square.getBase().getDestroyed() == null) {
 				String starterBase = "";
 				if (square.getBase().getStarterBase()) {
 					starterBase = "starter ";
@@ -124,7 +124,7 @@
 <h3>actions</h3>
 <ul>
 	<%
-		if (square.getBase() == null) {
+		if (square.getBase() == null || square.getBase().getDestroyed() != null) {
 	%>
 	<li><a href="CreateBaseServlet?id=<%=square.getId()%>">Create
 			Base</a>
@@ -139,7 +139,7 @@
 		}
 			if (square.getBase() != null
 					&& square.getBase().getParticipation().getParticipant()
-							.getId() == user.getId()) {
+							.getId() == user.getId() && square.getBase().getDestroyed() == null) {
 	%>
 	</li>
 	<li><a href="TroopServlet?action=create&id=<%=square.getId()%>">create

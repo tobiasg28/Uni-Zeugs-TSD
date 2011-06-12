@@ -40,16 +40,15 @@ public class TroopServlet extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		request.setAttribute("error", false);
 		User user = (User) session.getAttribute("user");
+		String url = "/index.jsp";
 
-		String action = (String) request.getParameter("action");
-		long squareId = Long.parseLong((String) request.getParameter("id"));
+		try {
+			String action = (String) request.getParameter("action");
+			long squareId = Long.parseLong((String) request.getParameter("id"));
+			url = "/index.jsp?page=square&id=" + squareId;
 
-		RequestDispatcher dispatcher = getServletContext()
-				.getRequestDispatcher("/index.jsp?page=square&id=" + squareId);
-
-		if (session.getAttribute("loggedIn") != null
-				&& (Boolean) session.getAttribute("loggedIn")) {
-			try {
+			if (session.getAttribute("loggedIn") != null
+					&& (Boolean) session.getAttribute("loggedIn")) {
 				long participationId = getParticipationId(squareId, user,
 						session);
 				if (participationId == -1) {
@@ -63,8 +62,8 @@ public class TroopServlet extends HttpServlet {
 						if (request.getParameter("to") == null) {
 							request.setAttribute("tid", tid);
 							request.setAttribute("action", action);
-							dispatcher = getServletContext()
-							.getRequestDispatcher("/index.jsp?page=map&id=" + square.getMap().getId());
+							url = "/index.jsp?page=map&id="
+									+ square.getMap().getId();
 						} else {
 							GamePlay.moveTroop(tid, squareId);
 						}
@@ -73,17 +72,23 @@ public class TroopServlet extends HttpServlet {
 								.getParameter("tid"));
 						GamePlay.upgradeTroop(participationId, tid);
 					} else {
-						System.err.println("TroopServlet: unknown action="
-								+ action);
+						logger.error("TroopServlet: unknown action=" + action);
 					}
 				}
-			} catch (DAOException e) {
-				e.printStackTrace();
-			} catch (GamePlayException e) {
-				System.err.println("TroopServlet: " + e);
-				e.printStackTrace();
 			}
+		} catch (DAOException e) {
+			request.setAttribute("error", true);
+			request.setAttribute("errorMsg", "connection problem, please retry");
+			e.printStackTrace();
+		} catch (GamePlayException e) {
+			request.setAttribute("error", true);
+			request.setAttribute("errorMsg", e);
+			e.printStackTrace();
+		} catch (NumberFormatException e){
+			e.printStackTrace();
 		}
+		RequestDispatcher dispatcher = getServletContext()
+				.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
 	}
 
