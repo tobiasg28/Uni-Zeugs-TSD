@@ -9,7 +9,12 @@
 	BuildingTypeDAO btdao = new BuildingTypeDAO();
 %>
 
+<<<<<<< HEAD
 <h1><%=user.getUsername()%>'s Base</h1>
+=======
+<h1><%=user.getUsername()%>'s Base
+</h1>
+>>>>>>> troop war fixed
 
 Location:
 <%=square.getMap().getName()%>
@@ -105,6 +110,7 @@ Buildings in Base:
 	%>
 </table>
 
-<div>go back to <a
-	href="index.jsp?page=map&amp;id=<%=square.getMap().getId()%>"><%=square.getMap().getName()%></a>
+<div>
+	go back to <a
+		href="index.jsp?page=map&amp;id=<%=square.getMap().getId()%>"><%=square.getMap().getName()%></a>
 </div>

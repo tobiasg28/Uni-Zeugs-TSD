@@ -9,7 +9,8 @@
 
 	UserDAO uDao = new UserDAO();
 	user = uDao.get(user.getId());
-	
+	DAOImpl.getInstance().getEntityManager().refresh(user); // error when troops are deleted
+
 	String resources = "";
 	for (Participation player : user.getParticipations()) {
 		if (player.getMap().getId() == square.getMap().getId()) {
@@ -57,52 +58,66 @@
 	</li>
 	<%
 		if (square.getBase() != null) {
-				out.println("<li><a href=\"index.jsp?page=basedetail&id=" + square.getId() + "\">"
+				String starterBase = "";
+				if (square.getBase().getStarterBase()){
+					starterBase = "starter ";
+				}
+				out.println("<li><a href=\"index.jsp?page=basedetail&id="
+						+ square.getId()
+						+ "\">"
 						+ square.getBase().getParticipation()
 								.getParticipant().getUsername()
-						+ "'s base</a></li>");
+						+ "'s " + starterBase + "base</a></li>");
 			}
 
 			List<Troop> userTroops = new ArrayList<Troop>();
 			Map<User, Map<TroopType, Integer>> uTroops = new HashMap<User, Map<TroopType, Integer>>();
 			for (Troop troop : square.getTroops()) {
-				if (uTroops.get(troop.getParticipation().getParticipant()) != null) {
-					Map<TroopType, Integer> troops = uTroops.get(troop
-							.getParticipation().getParticipant());
-					if (troops.get(troop.getUpgradeLevel()) != null) {
-						int i = troops.get(troop.getUpgradeLevel()) + 1;
-						uTroops.remove(troops);
-						troops.remove(troops.get(troop.getUpgradeLevel()));
-						troops.put(troop.getUpgradeLevel(), i);
-						uTroops.put(troop.getParticipation()
-								.getParticipant(), troops);
+				if (troop.getCreated() != null) {
+					if (uTroops.get(troop.getParticipation()
+							.getParticipant()) != null) {
+						Map<TroopType, Integer> troops = uTroops.get(troop
+								.getParticipation().getParticipant());
+						if (troops.get(troop.getUpgradeLevel()) != null) {
+							int i = troops.get(troop.getUpgradeLevel()) + 1;
+							uTroops.remove(troops);
+							troops.remove(troops.get(troop
+									.getUpgradeLevel()));
+							troops.put(troop.getUpgradeLevel(), i);
+							uTroops.put(troop.getParticipation()
+									.getParticipant(), troops);
+						} else {
+							uTroops.remove(troops);
+							troops.put(troop.getUpgradeLevel(), 1);
+							uTroops.put(troop.getParticipation()
+									.getParticipant(), troops);
+						}
 					} else {
-						uTroops.remove(troops);
+						Map<TroopType, Integer> troops = new HashMap<TroopType, Integer>();
 						troops.put(troop.getUpgradeLevel(), 1);
 						uTroops.put(troop.getParticipation()
 								.getParticipant(), troops);
 					}
-				} else {
-					Map<TroopType, Integer> troops = new HashMap<TroopType, Integer>();
-					troops.put(troop.getUpgradeLevel(), 1);
-					uTroops.put(troop.getParticipation().getParticipant(), troops);
-				}
 
-				if (troop.getParticipation().getParticipant().getId() == user
-						.getId()) {
-					userTroops.add(troop);
+					if (troop.getParticipation().getParticipant().getId() == user
+							.getId()) {
+						userTroops.add(troop);
+					}
 				}
 			}
-			
+
 			Iterator<User> i = uTroops.keySet().iterator();
-			while(i.hasNext()){
+			while (i.hasNext()) {
 				User u = (User) i.next();
 				Map<TroopType, Integer> troops = uTroops.get(u);
 				Iterator<TroopType> j = troops.keySet().iterator();
-				while(j.hasNext()){
+				while (j.hasNext()) {
 					TroopType tt = (TroopType) j.next();
 					int value = troops.get(tt);
-					out.println("<li>" + u.getUsername() + "'s troop: " + value + "x " + tt.getName() + "(s) (speed=" + tt.getSpeed() +", strength=" + tt.getStrength() + ")</li>");
+					out.println("<li>" + u.getUsername() + "'s troop: "
+							+ value + "x " + tt.getName() + "(s) (speed="
+							+ tt.getSpeed() + ", strength="
+							+ tt.getStrength() + ")</li>");
 				}
 			}
 	%>
@@ -113,7 +128,8 @@
 		if (square.getBase() == null) {
 	%>
 	<li><a href="CreateBaseServlet?id=<%=square.getId()%>">Create
-			Base</a></li>
+			Base</a>
+	</li>
 
 	<%
 		}
@@ -122,7 +138,9 @@
 	<%=request.getAttribute("errorMsg")%>
 	<%
 		}
-			if (square.getBase() != null && square.getBase().getParticipation().getParticipant().getId() == user.getId()) {
+			if (square.getBase() != null
+					&& square.getBase().getParticipation().getParticipant()
+							.getId() == user.getId()) {
 	%>
 	</li>
 	<li><a href="TroopServlet?action=create&id=<%=square.getId()%>">create
