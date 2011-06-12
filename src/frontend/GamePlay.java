@@ -303,7 +303,7 @@ public class GamePlay {
 		try {
 			GameStepDAO gDao = new GameStepDAO();
 			GameStep current = new GameStep();
-			current.setDate(new Date(new Date().getTime() + getDistanceFactor(troop.getCurrentSquare(), tsquare)*Constants.GAMESTEP_DURATION_MS));
+			current.setDate(new Date(new Date().getTime() + (getDistanceFactor(troop.getCurrentSquare(), tsquare)*Constants.GAMESTEP_DURATION_MS) / troop.getUpgradeLevel().getSpeed()));
 			try {
 				gDao.create(current);
 			} catch (DAOException e) {
