@@ -5,14 +5,16 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
+import entities.GameStep;
+
 import backend.BackendLocator;
 import notification.Backend;
 import notification.Frontend;
 
 public class BackendConnection {
-	static Backend backend= null;
-	static Frontend frontend = null;
-	static Logger logger = Logger.getLogger(BackendConnection.class);
+	static private Backend backend= null;
+	static private Frontend frontend = null;
+	static private Logger logger = Logger.getLogger(BackendConnection.class);
 	static {
 		try {
 			frontend = new FrontendImpl();
@@ -28,7 +30,8 @@ public class BackendConnection {
 		}
 	}
 	
-	static Backend getBackend(){
+	static public Backend getBackend(){
 		return backend;
 	}
+	
 }

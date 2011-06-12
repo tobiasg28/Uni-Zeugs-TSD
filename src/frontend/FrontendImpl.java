@@ -18,6 +18,8 @@ public class FrontendImpl implements notification.Frontend, Serializable {
 	@Override
 	public void onGameStepCreated(GameStep gameStep) throws RemoteException {
 		logger.debug("Frontend: Gamestep " + gameStep.getId() + " recieved");
+		ActualGameStep.setGameStep(gameStep);
+		System.out.println("gamestep set");
 	}
 
 }

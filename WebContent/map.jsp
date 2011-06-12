@@ -1,3 +1,6 @@
+<%@page import="backend.Util"%>
+<%@page import="frontend.ActualGameStep"%>
+<%@page import="frontend.BackendConnection"%>
 <%@page import="storage.DAOImpl"%>
 <jsp:useBean id="user" class="entities.User" scope="session" />
 <%@ page import="dao.*,entities.*,java.util.*,swag.*"%>
@@ -15,8 +18,8 @@
 .swagsquare {
 	position: absolute;
 	display: block;
-	width: <%=Constants.SQUARE_SIZE%>             px;
-	height: <%=Constants.SQUARE_SIZE%>             px;
+	width: <%=Constants.SQUARE_SIZE%>                             px;
+	height: <%=Constants.SQUARE_SIZE%>                             px;
 	background-color: #790;
 	border: 1px black solid;
 	text-decoration: none;
@@ -86,7 +89,9 @@
 	<%
 		} else if (request.getAttribute("action").equals("move")) {
 	%>
-	<p><big>click on a square on which you want to move your troop</big></p>
+	<p>
+		<big>click on a square on which you want to move your troop</big>
+	</p>
 	<%
 		}
 	%>
@@ -129,13 +134,37 @@
 						+ (Long) request.getAttribute("tid") + "&id=";
 			}
 
+			String base = "";
+			if (square.getBase() != null && square.getBase().getDestroyed() == null) {
+				String tmp = "B";
+				if (square.getBase().getStarterBase()) {
+					tmp = "SB";
+				}
+				base = "<br/>"
+						+ square.getBase().getParticipation()
+								.getParticipant().getUsername() + "'s "
+						+ tmp;
+			}
+
+			String troops = "";
+			int alivecount = 0;
+			for (Troop troop : square.getTroops()) {
+				if (troop.getCreated() != null) {
+					troops = "<br/>"
+							+ troop.getParticipation().getParticipant()
+									.getUsername() + "'s T";
+					break;
+				}
+			}
+
 			out.println("<a href=\"" + url + square.getId()
 					+ "\" class=\"swagsquare " + privileged
 					+ "\" style=\"left: "
 					+ (100 + square.getPositionX() * Constants.SQUARE_SIZE)
 					+ "px; top: "
 					+ (50 + square.getPositionY() * Constants.SQUARE_SIZE)
-					+ "px;\"><span>" + square.getId() + "</span></a>");
+					+ "px;\"><span>" + square.getId() + base + troops
+					+ "</span></a>");
 			if (square.getPositionY() > maxY) {
 				maxY = square.getPositionY();
 			}
@@ -152,3 +181,72 @@
 			+ (Constants.SQUARE_SIZE * maxY + 200) + "px; width: "
 			+ (Constants.SQUARE_SIZE * maxX + 100) + "px;\"> </div>");
 %>
+<div class="map_actions">
+	<%
+	GameStepDAO gDao = new GameStepDAO();
+	List<GameStep> steps = gDao.getAll();
+	if (steps != null && steps.size() > 0) {
+		List<GameStep> lastSteps = new ArrayList<GameStep>();
+		int tmp = 20;
+		if (steps.size() < tmp) {
+			tmp = steps.size();
+		}
+		for (int j=steps.size() - 1; j>steps.size()-tmp; j--) {
+			lastSteps.add(steps.get(j));
+		}
+
+		Map<String, Date> msgs = new HashMap<String, Date>();
+		for (Square s : map.getSquares()) {
+			for (Troop troop : s.getTroops()) {
+				if (troop.getMovementStart() != null) {
+					if (isActualGameStep(troop.getMovementStart(),
+							lastSteps)) {
+						String msg = troop.getMovementStart().getDate()
+								+ ": "
+								+ troop.getParticipation()
+										.getParticipant().getUsername()
+								+ "'s "
+								+ troop.getUpgradeLevel().getName()
+								+ " on "
+								+ troop.getCurrentSquare()
+										.getPositionX()
+								+ "/"
+								+ troop.getCurrentSquare()
+										.getPositionY()
+								+ " has been killed";
+						msgs.put(msg, troop.getMovementStart()
+								.getDate());
+					}
+				}
+			}
+			Base base = s.getBase();
+			if (base != null && base.getDestroyed() != null) {
+				if (isActualGameStep(base.getDestroyed(), lastSteps)) {
+					String msg = base.getDestroyed().getDate()
+							+ ": "
+							+ base.getParticipation().getParticipant()
+									.getUsername() + "'s base on "
+							+ s.getPositionX() + "/"
+							+ s.getPositionY()
+							+ " has been destroyed";
+					msgs.put(msg, base.getDestroyed().getDate());
+				}
+			}
+		}
+
+		msgs = Util.sortMapByValue(msgs);
+		Iterator<String> msgi = msgs.keySet().iterator();
+		while (msgi.hasNext()) {
+			out.println(msgi.next() + "<br/>");
+		}
+	}
+%>
+<%!private boolean isActualGameStep(GameStep g, List<GameStep> lastSteps) {
+	for (GameStep step : lastSteps) {
+		if (step.getId() == g.getId()) {
+			return true;
+		}
+	}
+	return false;
+}%>
+</div>
