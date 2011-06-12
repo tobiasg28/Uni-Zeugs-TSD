@@ -57,6 +57,8 @@ class SingleGameStepUpdate implements Runnable{
 					DAOImpl.getInstance().getEntityManager().getTransaction().commit();
 					calculatedGameStep=currentGameStep.getDate().getTime();
 				} catch (Exception ex) {
+					DAOImpl.getInstance().getEntityManager().getTransaction().rollback();
+					currentGameMap = null;
 					Logger.getLogger(SingleGameStepUpdate.class.getName()).log(
 							Level.SEVERE, null, ex);
 				}

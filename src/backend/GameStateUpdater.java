@@ -106,9 +106,13 @@ public class GameStateUpdater {
                                 }
                             }
                             for (ResourceAmount r : p.getResources()) {
-                                r.setAmount(r.getAmount() / plist.size() + 1);
+                                r.setAmount(r.getAmount() / (plist.size() + 1));
                                 for (Participation o : plist) {
-                                    o.getResources().get(o.getResources().indexOf(r)).setAmount(o.getResources().get(o.getResources().indexOf(r)).getAmount() + r.getAmount());
+                                	for(ResourceAmount or : o.getResources()){
+                                		if(or.getResource().equals(r.getResource())){
+                                			or.setAmount(or.getAmount() + r.getAmount());
+                                		}
+                                	}
                                 }
                             }
                         }
@@ -255,6 +259,7 @@ public class GameStateUpdater {
                 }
                 t.getCurrentSquare().getTroops().add(t);
                 t.setMovementFinish(null);
+                t.setTargetSquare(null);
             }
         }
 
