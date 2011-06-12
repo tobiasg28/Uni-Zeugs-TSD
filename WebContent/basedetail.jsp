@@ -104,8 +104,10 @@ Buildings in Base:
 		}
 	%>
 </table>
-
+<jsp:include page="notification.jsp" />
 <div>
-	go back to <a
-		href="index.jsp?page=map&amp;id=<%=square.getMap().getId()%>"><%=square.getMap().getName()%></a>
+	go back to the <a
+		href="index.jsp?page=square&id=<%=square.getId()%>">square</a> of 
+		<a
+		href="index.jsp?page=map&id=<%=square.getMap().getId()%>"><%=square.getMap().getName()%>
 </div>
