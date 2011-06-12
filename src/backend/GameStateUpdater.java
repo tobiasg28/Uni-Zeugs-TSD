@@ -124,7 +124,7 @@ public class GameStateUpdater {
         //Attack Troops vs Troops
         Map<Square, List<Troop>> fights = new HashMap<Square, List<Troop>>();
         for (Troop t : troops) {
-        	System.out.println(t.getCurrentSquare().getId());
+        	//System.out.println(t.getCurrentSquare().getId());
             if (fights.containsKey(t.getCurrentSquare())) {
                 fights.get(t.getCurrentSquare()).add(t);
             } else {
@@ -133,7 +133,7 @@ public class GameStateUpdater {
                 fights.put(t.getCurrentSquare(), list);
             }
         }
-        System.out.println(fights.size());
+        //System.out.println(fights.size());
         for (Square s : fights.keySet()) {
             Participation winner = getWinner(fights.get(s));
             if (winner != null) {
@@ -223,7 +223,7 @@ public class GameStateUpdater {
     private static List<Troop> upgradeTroops(List<Troop> troops) {
         List<Troop> nextTroops = troops;
         System.out.println("Current GameStep: "+currentGameStep.getDate().getTime());
-        System.out.println("Troops Size: "+troops.size());
+        //System.out.println("Troops Size: "+troops.size());
         for (Troop t : nextTroops) {
         	if(t.getLevelUpgradeFinish()!=null)
         		System.out.println("Troop"+t.getId() +" Upgrade: "+t.getLevelUpgradeFinish().getDate().getTime());

@@ -206,8 +206,8 @@ public class UtilityTest {
 
         resources = GameStateUpdater.createRessources(resources, bases);
 
-        Assert.assertEquals(100, resources.get(0).getAmount());
-        Assert.assertEquals(160, resources.get(1).getAmount());
-        Assert.assertEquals(240, resources.get(2).getAmount());
+        Assert.assertEquals(1, resources.get(0).getAmount());
+        Assert.assertEquals(16, resources.get(1).getAmount());
+        Assert.assertEquals(141, resources.get(2).getAmount());
     }
 }

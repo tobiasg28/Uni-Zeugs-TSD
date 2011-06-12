@@ -270,8 +270,8 @@ public class GameStateTest {
         
         Assert.assertEquals(4, map.getParticipations().get(0).getBases().get(0).getBuildings().get(0).getUpgradeLevel());
         
-        Assert.assertEquals(150, map.getParticipations().get(0).getResources().get(0).getAmount());
-        Assert.assertEquals(170, map.getParticipations().get(0).getResources().get(1).getAmount());
+        Assert.assertEquals(6, map.getParticipations().get(0).getResources().get(0).getAmount());
+        Assert.assertEquals(71, map.getParticipations().get(0).getResources().get(1).getAmount());
     }
     
     @Test
@@ -346,8 +346,8 @@ public class GameStateTest {
         
         Assert.assertEquals(4, map.getParticipations().get(0).getBases().get(0).getBuildings().get(0).getUpgradeLevel());
         
-        Assert.assertEquals(150, map.getParticipations().get(0).getResources().get(0).getAmount());
-        Assert.assertEquals(170, map.getParticipations().get(0).getResources().get(1).getAmount());
+        Assert.assertEquals(6, map.getParticipations().get(0).getResources().get(0).getAmount());
+        Assert.assertEquals(71, map.getParticipations().get(0).getResources().get(1).getAmount());
         
         Assert.assertEquals(tt, map.getParticipations().get(1).getTroops().get(0).getUpgradeLevel());
         Assert.assertEquals(tt, map.getParticipations().get(1).getTroops().get(1).getUpgradeLevel());
@@ -355,8 +355,8 @@ public class GameStateTest {
         
         Assert.assertEquals(4, map.getParticipations().get(1).getBases().get(0).getBuildings().get(0).getUpgradeLevel());
         
-        Assert.assertEquals(100, map.getParticipations().get(1).getResources().get(0).getAmount());
-        Assert.assertEquals(220, map.getParticipations().get(1).getResources().get(1).getAmount());
+        Assert.assertEquals(1, map.getParticipations().get(1).getResources().get(0).getAmount());
+        Assert.assertEquals(76, map.getParticipations().get(1).getResources().get(1).getAmount());
         
         
         //After the war
