@@ -59,4 +59,14 @@ public class Util {
 		}
 		return result;
 	}
+    
+   public static String join(List<String> l) {
+	   StringBuffer result = new StringBuffer();
+	   for (int i=0; i<l.size(); i++) {
+		   if (i > 0) result.append(", ");
+		   result.append(l.get(i));
+	   }
+	   return result.toString();
+   }
+
 }

@@ -5,6 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style type="text/css">
+  @import url(style.css);
+</style>
 <title>SWAG</title>
 <script language="JavaScript">
 	function doRefresh(){
@@ -29,14 +32,11 @@
 	}
 %>
 <center>
-<table width="800" border="1">
-	<thead>
-		<h1>SWAG</h1>
-	</thead>
+<table width="800" id="mainTable">
 	<tbody>
 		<tr>
-			<td width="20%"><%@ include file="userBar.jsp"%></td>
-			<td width="80%">
+			<td width="20%" style="vertical-align: top;"><%@ include file="userBar.jsp"%></td>
+			<td width="80%" style="vertical-align: top;" id="content">
 			<%
 				if (p.equals("register")) {
 			%> <jsp:include page="register.jsp" /> 

@@ -11,17 +11,15 @@
 	user = uDao.get(user.getId());
 	DAOImpl.getInstance().getEntityManager().refresh(user); // error when troops are deleted
 
-	String resources = "";
-	for (Participation player : user.getParticipations()) {
-		if (player.getMap().getId() == square.getMap().getId()) {
-			for (ResourceAmount ra : player.getResources()) {
-				resources += ra.getResource().getName() + "("
-						+ ra.getAmount() + ")   ";
-			}
+	Participation player = null;
+	for (Participation p : user.getParticipations()) {
+		if (p.getMap().getId() == square.getMap().getId()) {
+			player = p;
+			break;
 		}
 	}
 
-	if (resources.equals("")) {
+	if (player == null) {
 %>
 <div>
 	you are not participating on map <a
@@ -31,13 +29,27 @@
 	} else {
 %>
 
-<h1>
-	SQUARE from <a
-		href="index.jsp?page=map&amp;id=<%=square.getMap().getId()%>"> <%=square.getMap().getName()%></a>
-</h1>
+<h3>
+	<a href="index.jsp?page=map&amp;id=<%=square.getMap().getId()%>"><%=square.getMap().getName()%></a>
+	&rarr; Square <%= square.getId() %>
+</h3>
 
-<h3>your resources</h3>
-<%=resources%>
+
+ 	<!--  begin resources table  -->
+    <% List<ResourceAmount> availableRes = player.getResources(); %>		
+	<table class="resources"><tr class="names">
+	<th rowspan="2">Resources &raquo;</th>
+	<% for (ResourceAmount ra : availableRes) { %>
+	<td><%= ra.getResource().getName() %></td>
+	<% } %>
+	</tr><tr class="values">
+	<% for (ResourceAmount ra : availableRes) { %>
+	<td><%= ra.getAmount() %></td>
+	<% } %>
+	</tr></table>
+	<!-- end resources table -->
+
+
 <%
 	
 %>

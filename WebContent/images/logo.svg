@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="356.61584"
+   height="48.663502"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="/home/thp/Desktop/logo.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient3763">
+      <stop
+         style="stop-color:#5f9bda;stop-opacity:1;"
+         offset="0"
+         id="stop3765" />
+      <stop
+         style="stop-color:#5f9bda;stop-opacity:0;"
+         offset="1"
+         id="stop3767" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3763"
+       id="linearGradient3769"
+       x1="127"
+       y1="166.1635"
+       x2="391"
+       y2="166.1635"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.2121212,0,0,1,-132.41093,-151.06583)" />
+    <filter
+       inkscape:collect="always"
+       id="filter3795">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.9236946"
+         id="feGaussianBlur3797" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1"
+     inkscape:cx="26.108362"
+     inkscape:cy="-96.193079"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1266"
+     inkscape:window-height="677"
+     inkscape:window-x="66"
+     inkscape:window-y="24"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-0.52845642,-0.93417264)">
+    <text
+       transform="matrix(1.1492276,0,-0.52095295,0.61870737,3.5663824,9.0330598)"
+       sodipodi:linespacing="125%"
+       id="text3783"
+       y="56.655556"
+       x="24.374029"
+       style="font-size:56.51278687px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;opacity:0.32692309;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter3795);font-family:Sans"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Impact;-inkscape-font-specification:Impact Bold"
+         y="56.655556"
+         x="24.374029"
+         id="tspan3785"
+         sodipodi:role="line">SWAG</tspan></text>
+    <rect
+       style="color:#000000;fill:url(#linearGradient3769);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect2993"
+       width="320"
+       height="11"
+       x="21.528456"
+       y="9.5976706" />
+    <text
+       xml:space="preserve"
+       style="font-size:59.07697295999999909px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000080;fill-opacity:1;stroke:none;font-family:Sans"
+       x="21.597969"
+       y="48.616905"
+       id="text2985"
+       sodipodi:linespacing="125%"
+       transform="matrix(1,0,-0.45330704,1,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan2987"
+         x="21.597969"
+         y="48.616905"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Impact;-inkscape-font-specification:Impact Bold;fill:#000080">SWAG</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12.97007847px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="136.60135"
+       y="48.213623"
+       id="text2989"
+       sodipodi:linespacing="125%"
+       transform="matrix(1,0,0.19381703,1,0,0)"><tspan
+         sodipodi:role="line"
+         id="tspan2991"
+         x="136.60135"
+         y="48.213623">The Software Architecture Game</tspan></text>
+  </g>
+</svg>

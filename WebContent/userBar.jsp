@@ -1,7 +1,7 @@
 <%@page import="java.util.List"%>
 <%@ page import="dao.*,entities.*"%>
 <jsp:useBean id="user" class="entities.User" scope="session" />
-<div>
+<div id="userBar">
 	<%
 		if (session.getAttribute("loggedIn") != null
 				&& (Boolean) session.getAttribute("loggedIn")) {

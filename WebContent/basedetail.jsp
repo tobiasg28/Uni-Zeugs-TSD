@@ -6,11 +6,21 @@
 
 	Square square = dao.get(Long.parseLong(request.getParameter("id")));
 
-	BuildingTypeDAO btdao = new BuildingTypeDAO();
 %>
 
-<h1><%=user.getUsername()%>'s Base
-</h1>
+<h3>
+	<a href="index.jsp?page=map&amp;id=<%=square.getMap().getId()%>"><%=square.getMap().getName()%></a>
+	&rarr; <a href="index.jsp?page=square&amp;id=<%=square.getId() %>">Square <%= square.getId() %></a>
+	&rarr; Base of <%=user.getUsername() %>
+</h3>
+	
+<%
+	BuildingTypeDAO btdao = new BuildingTypeDAO();
+	
+	if (square.getBase().getParticipation().getParticipant().getId() != user.getId()) {
+		out.println("<h3>You can't look into this base...</h3> <!--");
+	}
+%>
 
 Location:
 <%=square.getMap().getName()%>
@@ -104,6 +114,11 @@ Buildings in Base:
 		}
 	%>
 </table>
+<%
+	if (square.getBase().getParticipation().getParticipant().getId() != user.getId()) {
+		out.println("-->");
+	}
+%>
 <jsp:include page="notification.jsp" />
 <div>
 	go back to the <a

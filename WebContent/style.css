@@ -1,0 +1,71 @@
+@CHARSET "UTF-8";
+
+body {
+	font-family: sans-serif;
+	background-color: #333;
+}
+
+h3 a {
+	color: #039;
+	text-decoration: none;
+}
+
+h3 a:hover {
+	text-decoration: underline;
+}
+
+#userBar a:link, #userBar a:visited {
+	color: blue;
+	text-decoration: none;
+}
+
+#userBar a:active {
+	color: red;
+}
+
+#userBar a:hover {
+	text-decoration: underline;
+}
+
+#mainTable {
+	background-color: #aaa;
+	border-spacing: 10px;
+}
+
+#mainTable td {
+	background-color: white;
+	padding: 5px;
+}
+
+#mainTable td#content {
+	background-image: url(images/logo.png);
+	background-repeat: no-repeat;
+	background-position: top right;
+	padding-top: 50px;
+}
+
+table.resources {
+    background-color: #eee;
+   	border-spacing: 3px; 
+   	border: 1px #666 solid;
+}
+
+table.resources td {
+	background-color: white;
+}
+
+table.resources tr.values td {
+	text-align: right;
+}
+
+table.resources tr.names td {
+	color: navy;
+	font-weight: bold;
+	font-size: small;
+	background-color: #aaa;
+}
+
+table.resources th {
+	color: #666;
+	font-weight: normal;
+}
