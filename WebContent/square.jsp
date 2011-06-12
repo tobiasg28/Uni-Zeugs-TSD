@@ -184,8 +184,8 @@
 	%>
 	
 	<tr>
-		<td><%= troopType %></td>
-		<td><span title="speed <%=speed%>"><%= speed %></span>/<span title="strength <%=strength%>"><%= strength %></span></td>
+		<td class="troopType"><%= troopType %></td>
+		<td class="rating"><span title="speed <%=speed%>"><%= speed %></span>/<span title="strength <%=strength%>"><%= strength %></span></td>
 		<td>
 		<% if (moving) { %>
 		    &rarr; <%= movementTarget %>

@@ -81,8 +81,12 @@ table.troopList td {
 	background-color: white;
 }
 
-table.troopList tr.values td {
-	text-align: right;
+table.troopList td.troopType {
+	font-weight: bold;
+}
+
+table.troopList td.rating {
+	text-align: center;
 }
 
 table.troopList th {
