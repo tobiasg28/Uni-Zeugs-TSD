@@ -1,6 +1,7 @@
 <%@page import="backend.Util"%>
 <%@page import="storage.DAOImpl"%>
 <%@ page import="dao.*,entities.*,java.util.*,swag.*"%>
+<hr>
 <div class="map_actions">
 	<%
 		String pname = (String) request.getParameter("page");

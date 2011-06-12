@@ -69,3 +69,32 @@ table.resources th {
 	color: #666;
 	font-weight: normal;
 }
+
+
+table.troopList {
+    background-color: #eee;
+   	border-spacing: 3px; 
+   	border: 1px #666 solid;
+}
+
+table.troopList td {
+	background-color: white;
+}
+
+table.troopList tr.values td {
+	text-align: right;
+}
+
+table.troopList th {
+	color: navy;
+	font-size: small;
+}
+
+table.troopList a {
+	color: blue;
+	text-decoration: none;
+}
+
+table.troopList em {
+	color: #aaa;
+}

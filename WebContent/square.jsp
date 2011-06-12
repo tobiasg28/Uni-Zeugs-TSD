@@ -134,15 +134,16 @@
 			}
 	%>
 </ul>
-<h3>actions</h3>
-<ul>
+
 	<%
 		if (square.getBase() == null || square.getBase().getDestroyed() != null) {
 	%>
+	<h4>No base here. Create one?</h4>
+	<ul>
 	<li><a href="CreateBaseServlet?id=<%=square.getId()%>">Create
 			Base</a>
 	</li>
-
+	</ul>
 	<%
 		}
 			if (request.getAttribute("errorMsg") != null) {
@@ -150,80 +151,120 @@
 	<%=request.getAttribute("errorMsg")%>
 	<%
 		}
-			if (square.getBase() != null
-					&& square.getBase().getParticipation().getParticipant()
-							.getId() == user.getId() && square.getBase().getDestroyed() == null) {
 	%>
-	</li>
-	<li><a href="TroopServlet?action=create&id=<%=square.getId()%>">create
-			troop</a> <%
- 	TroopTypeDAO ttDao = new TroopTypeDAO();
- 			List<TroopType> tts = ttDao.getAll();
- 			TroopType tt = tts.get(tts.size() - 1);
- 			out.println("- " + tt.getName() + " (speed="
- 					+ tt.getSpeed() + ", strength" + tt.getStrength()
- 					+ ")" + "- costs: "
- 					+ tt.getInitialCost().getResource().getName()
- 					+ " (" + tt.getInitialCost().getAmount() + ")");
- %>
-	</li>
+	
+	<h4>Your troops on this square</h4>
+	
+	<% if (userTroops.size() == 0) { %>
+	<p>You don't have any troops here.</p>
+	<% } else { %>
+	<table class="troopList">
+	<tr>
+		<th>Type</th>
+		<th>Rating</th>
+		<th>Movement</th>
+		<th>Level Upgrade</th>
+	</tr>
+	
+	<% for (Troop troop : userTroops) { %>
+	
 	<%
-		}
-			for (Troop troop : userTroops) {
-				out.println("<li>" + troop.getUpgradeLevel().getName()
-						+ " (speed=" + troop.getUpgradeLevel().getSpeed()
-						+ ", strength="
-						+ troop.getUpgradeLevel().getStrength() + "):</li>");
-				String movement = "<a href=\"TroopServlet?action=move&id="
-						+ square.getId() + "&tid=" + troop.getId()
-						+ "\">move</a>";
-				if (troop.getTargetSquare() != null) {
-					movement = "moving to x="
-							+ troop.getTargetSquare().getPositionX()
-							+ "/y="
-							+ troop.getTargetSquare().getPositionY();
-				}
-				out.println("<ul><li>" + movement + "</li>");
-
-				if (troop.getUpgradeLevel().getNextLevel() != null) {
-					String upgrade = "<a href=\"TroopServlet?action=upgrade&id="
-							+ square.getId()
-							+ "&tid="
-							+ troop.getId()
-							+ "\">upgrade</a> ";
-
-					if (troop.getLevelUpgradeFinish() != null) {
-						upgrade = "upgrading";
-					}
-
-					out.println("<li>"
-							+ upgrade
-							+ " to "
-							+ troop.getUpgradeLevel().getNextLevel()
-									.getName()
-							+ " (speed="
-							+ troop.getUpgradeLevel().getNextLevel()
-									.getSpeed()
-							+ ", strength="
-							+ troop.getUpgradeLevel().getNextLevel()
-									.getStrength()
-							+ ") - costs: "
-							+ troop.getUpgradeLevel().getUpgradeCost()
-									.getResource().getName()
-							+ " ("
-							+ troop.getUpgradeLevel().getUpgradeCost()
-									.getAmount() + ")</li>");
-				}
-				out.println("</ul>");
-			}
+	       String troopType = troop.getUpgradeLevel().getName();
+	       String speed = ""+troop.getUpgradeLevel().getSpeed();
+	       String strength = ""+troop.getUpgradeLevel().getStrength();
+	       
+	       boolean moving = (troop.getTargetSquare() != null);
+	       String movementTarget = moving?("square "+troop.getTargetSquare().getId()):"";
+	       
+	       boolean canUpgrade = (troop.getUpgradeLevel().getNextLevel() != null);
+	       boolean upgradingNow = (troop.getLevelUpgradeFinish() != null);
+	       String upgradeTarget = canUpgrade?(troop.getUpgradeLevel().getNextLevel().getName()):"";
+	       String upgradeCosts = canUpgrade?("" + troop.getUpgradeLevel().getUpgradeCost().getAmount() +
+                                 " " + troop.getUpgradeLevel().getUpgradeCost().getResource().getName() ):"";
 	%>
+	
+	<tr>
+		<td><%= troopType %></td>
+		<td><span title="speed <%=speed%>"><%= speed %></span>/<span title="strength <%=strength%>"><%= strength %></span></td>
+		<td>
+		<% if (moving) { %>
+		    &rarr; <%= movementTarget %>
+	    <% } else { %>
+	        <a href="TroopServlet?action=move&amp;id=<%=square.getId()%>&amp;tid=<%=troop.getId()%>">select target</a>
+        <% } %>
+        </td>
+        <td>
+        <% if (canUpgrade && !upgradingNow) { %>
+	        <a href="TroopServlet?action=upgrade&amp;id=<%=square.getId()%>&amp;tid=<%=troop.getId()%>">&rarr; <%= upgradeTarget %></a>
+	        (costs: <%=upgradeCosts %>)
+	    <% } else if (upgradingNow) { %>
+	        &rarr; <%= upgradeTarget %> (in progress)
+	    <% } else { %>
+	        <em>fully upgraded</em>
+        <% } %>
+        
+        </td>
+	</tr>
+	<% } %>
+	<!-- 
 
-</ul>
-<jsp:include page="notification.jsp" />
-<div>
-	<p>go back to <a
-		href="index.jsp?page=map&amp;id=<%=square.getMap().getId()%>"><%=square.getMap().getName()%></a></p>
-</div>
+	if (troop.getUpgradeLevel().getNextLevel() != null) {
+		String upgrade = "<a href=\"TroopServlet?action=upgrade&id="
+				+ square.getId()
+				+ "&tid="
+				+ troop.getId()
+				+ "\">upgrade</a> ";
+
+		if (troop.getLevelUpgradeFinish() != null) {
+			upgrade = "upgrading";
+		}
+
+		out.println("<li>"
+				+ upgrade
+				+ " to "
+				+ troop.getUpgradeLevel().getNextLevel()
+						.getName()
+				+ " (speed="
+				+ troop.getUpgradeLevel().getNextLevel()
+						.getSpeed()
+				+ ", strength="
+				+ troop.getUpgradeLevel().getNextLevel()
+						.getStrength()
+				+ ") - costs: "
+				+ troop.getUpgradeLevel().getUpgradeCost()
+						.getResource().getName()
+				+ " ("
+				+ troop.getUpgradeLevel().getUpgradeCost()
+						.getAmount() + ")</li>");
+	}
+	out.println("</ul>");
+			}
+			-->
+    </table>
+    <% } /* end else-block for "if (userTroops.size() == 0)" */ %>
+    
+    <%
+        /* user can only create a base if (s)he has a base on it */
+		if (square.getBase() != null
+				&& square.getBase().getParticipation().getParticipant()
+						.getId() == user.getId() && square.getBase().getDestroyed() == null) {
+	%>
+	
+	<p>You can create a
+  <%
+ 	TroopTypeDAO ttDao = new TroopTypeDAO();
+	List<TroopType> tts = ttDao.getAll();
+	TroopType tt = tts.get(tts.size() - 1);
+  %>
+  	<a href="TroopServlet?action=create&id=<%=square.getId()%>">new
+    <strong><%= tt.getName() %></strong> troop</a>
+    
+    (costs: <%= tt.getInitialCost().getAmount() %>
+            <%= tt.getInitialCost().getResource().getName() %>)
+	</p>
+	<% } %>
+
+    <jsp:include page="notification.jsp" />
 <%
 	}
 %>
