@@ -2,6 +2,7 @@ package backend;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,4 +35,21 @@ public class Util {
         }
         return result;
     }
+    
+    public static <K,V> Map<K,V> sortMapByValueInvers(Map<K,V> map) {
+    	List<Map.Entry<K,V>> list = new LinkedList<Map.Entry<K,V>>(map.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<K,V>>() {
+            @SuppressWarnings("unchecked") // Suppress "Unchecked cast" for Comparable<V>
+            public int compare(Map.Entry<K,V> o1, Map.Entry<K,V> o2) {
+                return ((Comparable<V>) (o1.getValue())).compareTo(o2.getValue());
+            }
+        });
+
+        Map<K,V> result = new LinkedHashMap<K,V>();
+        for (int i = 0; i < list.size(); i++) {
+            Map.Entry<K,V> entry = list.get(i);
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+   }
 }
