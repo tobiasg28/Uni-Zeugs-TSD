@@ -49,11 +49,23 @@
 	</tr></table>
 	<!-- end resources table -->
 
-
+<% if (square.getBase() != null && square.getBase().getDestroyed() == null) { %>
+<h4>Base</h4>
 <%
-	
+    String baseType = square.getBase().getStarterBase()?"Starter base":"Base";
+	String baseOwner = square.getBase().getParticipation().getParticipant().getUsername();
 %>
-<h3>characteristics</h3>
+
+<p>There is a <strong><%=baseType%></strong>
+   owned by <strong><%=baseOwner%></strong>
+   on this square.
+</p>
+<ul>
+    <li><a href="index.jsp?page=basedetail&amp;id=<%=square.getId()%>">Base details</a></li>
+</ul>
+<% } %>
+
+<h3>Characteristics</h3>
 <ul>
 	<li>Position x=<%=square.getPositionX()%>/y=<%=square.getPositionY()%></li>
 	<li>Privileged for: <%
@@ -69,18 +81,6 @@
 	%>
 	</li>
 	<%
-		if (square.getBase() != null && square.getBase().getDestroyed() == null) {
-				String starterBase = "";
-				if (square.getBase().getStarterBase()) {
-					starterBase = "starter ";
-				}
-				out.println("<li><a href=\"index.jsp?page=basedetail&id="
-						+ square.getId()
-						+ "\">"
-						+ square.getBase().getParticipation()
-								.getParticipant().getUsername() + "'s "
-						+ starterBase + "base</a></li>");
-			}
 
 			List<Troop> userTroops = new ArrayList<Troop>();
 			Map<User, Map<TroopType, Integer>> uTroops = new HashMap<User, Map<TroopType, Integer>>();

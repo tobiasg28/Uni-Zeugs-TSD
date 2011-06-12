@@ -6,6 +6,14 @@
 
 	Square square = dao.get(Long.parseLong(request.getParameter("id")));
 
+	Participation player = null;
+	for (Participation p : user.getParticipations()) {
+		if (p.getMap().getId() == square.getMap().getId()) {
+			player = p;
+			break;
+		}
+	}
+	
 %>
 
 <h3>
@@ -13,6 +21,22 @@
 	&rarr; <a href="index.jsp?page=square&amp;id=<%=square.getId() %>">Square <%= square.getId() %></a>
 	&rarr; Base of <%=user.getUsername() %>
 </h3>
+
+
+ 	<!--  begin resources table  -->
+    <% List<ResourceAmount> availableRes = player.getResources(); %>		
+	<table class="resources"><tr class="names">
+	<th rowspan="2">Resources &raquo;</th>
+	<% for (ResourceAmount ra : availableRes) { %>
+	<td><%= ra.getResource().getName() %></td>
+	<% } %>
+	</tr><tr class="values">
+	<% for (ResourceAmount ra : availableRes) { %>
+	<td><%= ra.getAmount() %></td>
+	<% } %>
+	</tr></table>
+	<!-- end resources table -->
+	
 	
 <%
 	BuildingTypeDAO btdao = new BuildingTypeDAO();
@@ -22,48 +46,60 @@
 	}
 %>
 
-Location:
-<%=square.getMap().getName()%>
-(X:
-<%=square.getPositionX()%>/Y:
-<%=square.getPositionY()%>)
-<br />
-Privileged for:
+<%
+	if (request.getAttribute("errorMsg") != null) {
+			out.print(request.getAttribute("errorMsg"));
+			out.print("<br><br>");
+	}
+%>
+
+<ul>
+	<li>Location: <strong><%=square.getMap().getName()%>
+             (X: <%=square.getPositionX()%>,
+              Y: <%=square.getPositionY()%>)</strong></li>
+	<li>Privileged for:
 <%
 	if (square.getPrivilegedFor() != null) {
-		String name = square.getPrivilegedFor().getName().toLowerCase();
-		if (name.equals("food"))
-			name = "meat"; // Yep, DIRTY HACK!
-		out.println("<img src=\"images/big/" + name + ".png\"");
+		out.print("<strong>"+square.getPrivilegedFor().getName()+"</strong>");
 	} else {
 		out.println("<em>nothing</em>");
 	}
-%><br />
-<br />
-
-Resource Count:
-<%
-	for (Participation player : user.getParticipations()) {
-		if (player.getMap().getId() == square.getMap().getId()) {
-			for (ResourceAmount ra : player.getResources()) {
-				out.print(ra.getResource().getName() + "("
-						+ ra.getAmount() + ")   ");
+%>
+    </li>
+    <li>Buildings: <strong><%= square.getBase().getBuildings().size() %> of 4</strong></li>
+	</ul>
+	
+<h4>Buildings in this base</h4>
+<table border="1">
+	<%
+		for (Building b : square.getBase().getBuildings()) {
+			out.print("<tr>");
+			out.print("<td>");
+			out.print(b.getType().getName());
+			out.print(" (Level " + b.getUpgradeLevel() + ")");
+			out.print("</td>");
+			out.print("<td>");
+			if (b.getLevelUpgradeFinish() == null) {
+				out.print("<a href=\"BuildingServlet?id=" + square.getId()
+						+ "&amp;action=upgrade" + "&amp;bid=" + b.getId()
+						+ "\">Upgrade</a> ("
+						+ b.getType().getUpgradeCost().getAmount() + " "
+						+ b.getType().getUpgradeCost().getResource().getName()
+						+ ")");
+			} else {
+				out.print("currently upgrading...");
 			}
+			out.print("</td>");
+			out.print("</tr>");
 		}
-	}
-%>
-<br />
-<%
-	if (request.getAttribute("errorMsg") != null)
-			out.print(request.getAttribute("errorMsg"));
-%>
-<br />
-Building Count: (<%= square.getBase().getBuildings().size() %> / 4) <br/>
+	%>
+</table>
+
+
 <%
 	if (square.getBase().getBuildings().size() < 4) {
 %>
-Buildings Available for Building:
-<br />
+<h4>Create a new building</h4>
 <table border="1">
 	<%
 		HashMap<String, Integer> buildingCount = new HashMap<String, Integer>();
@@ -88,41 +124,16 @@ Buildings Available for Building:
 			}
 	%>
 </table>
-<br />
 <%
 	}
 %>
-Buildings in Base:
-<br />
-<table border="1">
-	<%
-		for (Building b : square.getBase().getBuildings()) {
-			out.print("<tr>");
-			out.print("<td>");
-			out.print(b.getType().getName());
-			out.print(" (Level " + b.getUpgradeLevel() + ")");
-			out.print("</td>");
-			out.print("<td>");
-			out.print("<a href=\"BuildingServlet?id=" + square.getId()
-					+ "&amp;action=upgrade" + "&amp;bid=" + b.getId()
-					+ "\">Upgrade</a> ("
-					+ b.getType().getUpgradeCost().getAmount() + " "
-					+ b.getType().getUpgradeCost().getResource().getName()
-					+ ")");
-			out.print("</td>");
-			out.print("</tr>");
-		}
-	%>
-</table>
+
+
 <%
 	if (square.getBase().getParticipation().getParticipant().getId() != user.getId()) {
 		out.println("-->");
 	}
 %>
+
+
 <jsp:include page="notification.jsp" />
-<div>
-	go back to the <a
-		href="index.jsp?page=square&id=<%=square.getId()%>">square</a> of 
-		<a
-		href="index.jsp?page=map&id=<%=square.getMap().getId()%>"><%=square.getMap().getName()%>
-</div>
