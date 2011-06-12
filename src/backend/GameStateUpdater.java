@@ -94,6 +94,7 @@ public class GameStateUpdater {
 								System.out.println("Kill Troop: "
 										+ attack.get(0).getId());
 							}
+							attack.get(0).setMovementStart(currentGameStep);
 							attack.get(0).setCreated(null);
 							attack.remove(0);
 						}
@@ -107,6 +108,7 @@ public class GameStateUpdater {
 								System.out.println("Kill Troop: "
 										+ defense.get(0).getId());
 							}
+							defense.get(0).setMovementStart(currentGameStep);
 							defense.get(0).setCreated(null);
 							defense.remove(0);
 						}
@@ -165,6 +167,7 @@ public class GameStateUpdater {
 						if(t.getCreated()!=null){
 							System.out.println("Kill Troop: " + t.getId());
 						}
+						t.setMovementStart(currentGameStep);
 						t.setCreated(null);
 						
 					}
@@ -178,6 +181,7 @@ public class GameStateUpdater {
 					if(t.getCreated()!=null){
 						System.out.println("Kill Troop: " + t.getId());
 					}
+					t.setMovementStart(currentGameStep);
 					t.setCreated(null);
 				}
 			}
