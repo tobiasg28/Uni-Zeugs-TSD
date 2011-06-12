@@ -132,7 +132,7 @@ public class GamePlay {
 		} catch (AcceptanceException e) {
 			throw new GamePlayException("ERROR: Not enough Resources",e);
 		}
-		throw new GamePlayException("ERROR: Not enough Resources or Base isn't free");
+		throw new GamePlayException("ERROR: Maximum Buildings on Base reached!");
 	}
 	
 	public static void createTroop(long participationId, long squareId) throws GamePlayException{

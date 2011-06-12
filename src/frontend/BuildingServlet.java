@@ -59,7 +59,6 @@ public class BuildingServlet extends HttpServlet {
 
 		String action = (String) request.getParameter("action");
 		long squareId = Long.parseLong((String) request.getParameter("id"));
-		long buildingTypeId = Long.parseLong(request.getParameter("bt"));
 
 		RequestDispatcher dispatcher = getServletContext()
 				.getRequestDispatcher("/index.jsp?page=basedetail&id=" + squareId);
@@ -73,13 +72,15 @@ public class BuildingServlet extends HttpServlet {
 					System.err.println("BuildingServlet: not participating!");
 				} else {
 					if (action.equals("add")) {
+						long buildingTypeId = Long.parseLong(request.getParameter("bt"));
 						BuildingTypeDAO btdao = new BuildingTypeDAO();
 						BuildingType bt = btdao.get(buildingTypeId);
 						SquareDAO sdao = new SquareDAO();
 						Base base = sdao.get(squareId).getBase();
 						GamePlay.createBuilding(participationId, base.getId(), bt);
 					} else if (action.equals("upgrade")) {
-						// Implement me
+						long buildingId = Long.parseLong(request.getParameter("bid"));
+						GamePlay.upgradeBuilding(participationId, buildingId);
 					} else {
 						System.err.println("BuildingServlet: unknown action="
 								+ action);
