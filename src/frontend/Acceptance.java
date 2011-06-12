@@ -36,9 +36,9 @@ public class Acceptance {
 			throw new AcceptanceException("ERROR: Participation is null");
 		}
 		for (ResourceAmount r : request) {
-			for(ResourceAmount pr : p.getResources()){
-				if (r.getResource().equals(pr.getResource())){
-					if(r.getAmount() > pr.getAmount()){
+			for (ResourceAmount pr : p.getResources()) {
+				if (r.getResource().equals(pr.getResource())) {
+					if (r.getAmount() > pr.getAmount()) {
 						return false;
 					}
 				}
@@ -73,9 +73,11 @@ public class Acceptance {
 					return false;
 				}
 			}
-			for (Troop t : p.getTroops()) {
-				if (t.getCurrentSquare().equals(square)) {
-					return false;
+			if (p.getTroops() != null) {
+				for (Troop t : p.getTroops()) {
+					if (t.getCurrentSquare().equals(square)) {
+						return false;
+					}
 				}
 			}
 		}
