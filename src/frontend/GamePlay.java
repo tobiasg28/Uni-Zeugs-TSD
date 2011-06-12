@@ -48,14 +48,14 @@ public class GamePlay {
 		List<ResourceAmount> need = new ArrayList<ResourceAmount>();
 		for(Resource r : resources){
 			ResourceAmount ra = new ResourceAmount();
-			ra.setAmount(500);
+			ra.setAmount(100);
 			ra.setResource(r);
 			need.add(ra);
 		}
 		try {
 			if(Acceptance.enoughResource(need, participationId) && Acceptance.isSquareFree(square, square.getMap().getId())){
 				for(ResourceAmount ra : p.getResources()){
-					ra.setAmount(ra.getAmount() - 500);
+					ra.setAmount(ra.getAmount() - 100);
 				}
 				Base b = new Base();
 				b.setBuildings(new ArrayList<Building>());

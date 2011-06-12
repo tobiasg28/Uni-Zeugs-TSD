@@ -75,9 +75,11 @@ public class Acceptance {
 					}
 				}
 			}
-			for (Troop t : p.getTroops()) {
-				if (t.getCurrentSquare().equals(square)) {
-					return false;
+			if (p.getTroops() != null) {
+				for (Troop t : p.getTroops()) {
+					if (t.getCurrentSquare().equals(square)) {
+						return false;
+					}
 				}
 			}
 		}
